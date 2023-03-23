@@ -5,11 +5,10 @@ import Search from "@components/search/Search"
 import Show from "@components/buttons/Show"
 
 
-export default function decks() {
+export default function Decks() {
 
   const [cards, setCards] = useState([]);
   const [deck, setDeck] = useState({'id': 'null', 'saved': 'null', 'bias': 'null'});
-
   const [hidden, setHidden] = useState(true);
 
   return (
