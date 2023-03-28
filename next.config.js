@@ -3,4 +3,16 @@ const nextConfig = {
   reactStrictMode: true,
 }
 
-module.exports = nextConfig
+module.exports = () => {
+  const rewrites = () => {
+    return [
+      {
+        source: "/api/:path*",
+        destination: "http://http://18.218.119.251/api/:path*",
+      },
+    ];
+  };
+  return {
+    rewrites,
+  };
+};
