@@ -9,7 +9,7 @@ export default function Show({ setCards, setDeck, setHidden }) {
     const [empty, setEmpty] = useState(true);
 
     const Show = () => {
-        fetch('http://18.218.119.251/api/show_deck', {
+        fetch('/api/show_deck', {
             method: "GET"
         }
         ).then(
