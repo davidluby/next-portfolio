@@ -8,7 +8,7 @@ module.exports = () => {
     return [
       {
         source: "/api/:path*",
-        destination: "http://http://18.218.119.251:80/api/:path*",
+        destination: "http://http://18.218.119.251:8080/api/:path*",
       },
     ];
   };
