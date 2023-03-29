@@ -17,7 +17,6 @@ export default function Search({ cards, setCards, deck, setDeck, hidden, setHidd
         if (event.key ===  "Enter") {
             fetch('https://18.218.119.251/api/get_data/', {
                 method: "POST",
-                mode: "no-cors",
                 headers: {
                     "Content-Type":"application/json"
                 },
