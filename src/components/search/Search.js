@@ -16,21 +16,22 @@ export default function Search({ cards, setCards, deck, setDeck, hidden, setHidd
     const searchName = (event) => {
         if (event.key ===  "Enter") {
             fetch('https://18.218.119.251/api/get_data/', {
-            method: "POST",
-            headers: {
-                "Content-Type":"application/json"
-            },
-            body: JSON.stringify(name)
-        }).then(
-            response => response.json()
-        .then(
-            data => {
-                setPlayerData(JSON.parse(data.player_data));
-                setName("");
-                setSearching(false);
+                method: "POST",
+                mode: "no-cors",
+                headers: {
+                    "Content-Type":"application/json"
+                },
+                body: JSON.stringify(name)
+            }).then(
+                response => response.json()
+            .then(
+                data => {
+                    setPlayerData(JSON.parse(data.player_data));
+                    setName("");
+                    setSearching(false);
                 }
             )
-        )
+            )
         }
     }
 
