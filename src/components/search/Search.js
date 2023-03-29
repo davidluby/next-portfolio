@@ -15,7 +15,7 @@ export default function Search({ cards, setCards, deck, setDeck, hidden, setHidd
     
     const searchName = (event) => {
         if (event.key ===  "Enter") {
-            fetch('https://18.218.119.251/api/get_data/', {
+            fetch('https://18.218.119.251/api/get_data', {
                 method: "POST",
                 headers: {
                     "Content-Type":"application/json"
