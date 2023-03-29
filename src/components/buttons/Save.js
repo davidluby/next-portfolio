@@ -7,7 +7,7 @@ export default function Save({cards, deck}) {
         }
         else {
             cards.unshift(deck)
-            fetch('/api/intake_deck', {
+            fetch('https://18.218.119.251/api/intake_deck', {
                 method: "POST",
                 headers: {
                     "Content-Type":"application/json"
