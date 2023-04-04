@@ -1,8 +1,7 @@
-import React, { useState } from 'react'
-
-import Deck from "@components/interface/Deck"
-import New from "@components/buttons/New"
-import Save from "@components/buttons/Save"
+import React from 'react'
+import Deck from "@components/decks/Deck"
+import New from "@components/decks/New"
+import Save from "@components/decks/Save"
 
 export default function Interface({ cards, setCards, deck, setDeck }) {
 

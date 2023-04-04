@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import Card from "@components/card/Card"
-import Add from "@components/buttons/Add"
-import Interface from "@components/interface/Interface"
+import Card from "@components/decks/Card"
+import Add from "@components/decks/Add"
+import Interface from "@components/decks/Interface"
 
 export default function Search({ cards, setCards, deck, setDeck, hidden, setHidden }) {
     const [name, setName] = useState("");

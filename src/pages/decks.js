@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
-
-
-import Search from "@components/search/Search"
-import Show from "@components/buttons/Show"
+import Search from "@components/decks/Search"
+import Show from "@components/decks/Show"
 
 
 export default function Decks() {

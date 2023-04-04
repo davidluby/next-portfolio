@@ -1,7 +1,7 @@
 import React from 'react'
-import Card from "@components/card/Card"
-import ExpandCards from "@components/buttons/ExpandCards"
-import Delete from "@components/buttons/Remove"
+import Card from "@components/decks/Card"
+import ExpandCards from "@components/decks/ExpandCards"
+import Remove from "@components/decks/Remove"
 
 const zoomCard = (idx) => {
     const zoom = document.querySelector("#zoomCard-"+idx);
@@ -26,7 +26,7 @@ export default function Deck({ cards, setCards }) {
                                     onClick={() => zoomCard(idx)}>
                                     <Card data={item} loc={'a'+idx} />
                                 </div>
-                                <Delete cards={cards} setCards={setCards} loc={idx} />
+                                <Remove cards={cards} setCards={setCards} loc={idx} />
                             </div>
                         })
                 }

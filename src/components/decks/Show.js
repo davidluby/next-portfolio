@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react'
-
-import Card from "@components/card/Card"
-import Edit from "@components/buttons/Edit"
-import Delete from "@components/buttons/Delete"
+import React, { useState } from 'react'
+import Card from "@src/components/decks/Card"
+import Edit from "@src/components/decks/Edit"
+import Delete from "@src/components/decks/Delete"
 
 export default function Show({ setCards, setDeck, setHidden }) {
     const [dataDecks, setDataDecks] = useState("");
