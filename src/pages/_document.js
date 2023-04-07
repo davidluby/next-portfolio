@@ -3,7 +3,7 @@ import Nav from "@components/nav/Nav";
 
 export default function Document() {
   return (
-    <Html lang="en" className="base">
+    <Html lang="en">
       <Head />
       <body>
         <Nav />

@@ -10,7 +10,7 @@ function Nav() {
         <ul className="flex items-center justify-center">
             <Link href="/"><li className="nav-logo"></li></Link>
             <Link href="/resume"><li className="nav-button">Resume</li></Link>
-            <Link href="/decks"><li className="nav-ball"></li></Link>
+            <Link href="/decks"><li className="nav-button">NBA Cards</li></Link>
         </ul>
     </nav>
   )

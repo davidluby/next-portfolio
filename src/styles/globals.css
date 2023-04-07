@@ -2,7 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Navbar globals */
+/* Globals */
+h1 {
+    font-size: 1.4rem;
+}
+h2 {
+    font-size: 1.25rem;
+}
+
+/* Navbar */
 .nav-logo {
     border-radius: 50%;
     width: 2.5rem;
@@ -44,6 +52,30 @@
     border-color: rgb(255, 255, 255);
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.2));
 }
+
+/* Resume */
+.logo-linked {
+    background-image: url("/logo-linked.png");
+    background-size: 85%;
+    transition: all 500ms;
+}
+.logo-linked:hover {
+    background-image: url("/logo-linked.jpg");
+    background-size: 100%;
+}
+.logo-github {
+    background-image: url("/logo-github.png");
+    background-size: 85%;
+    transition: all 500ms;
+}
+.logo-github:hover {
+    background-image: url("/logo-github.jpg");
+    background-size: 100%;
+}
+
+
+
+/* Decks */
 .card-size {
     width: 18rem;
     height: 26rem;

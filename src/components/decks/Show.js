@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import Card from "@src/components/decks/Card"
-import Edit from "@src/components/decks/Edit"
-import Delete from "@src/components/decks/Delete"
+import Card from "@components/decks/Card"
+import Edit from "@components/decks/Edit"
+import Delete from "@components/decks/Delete"
 
 export default function Show({ setCards, setDeck, setHidden }) {
     const [dataDecks, setDataDecks] = useState("");
@@ -9,7 +9,7 @@ export default function Show({ setCards, setDeck, setHidden }) {
 
     const Show = () => {
         fetch('https://davidluby.com/api/show_deck', {
-            method: "GET"
+            method: "GET",
         }
         ).then(
             response => response.json()
