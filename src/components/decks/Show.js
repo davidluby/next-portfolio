@@ -23,7 +23,7 @@ export default function Show({ setCards, setDeck, setHidden }) {
     }
 
   return (
-    <div>
+    <div className="flex flex-col justify-center">
         <button className="bg-green-700 hover:bg-green-900 transition all duration-500 text-white font-bold py-2 px-4 rounded-full"
                 onClick={Show}>
             Show Saved Decks
@@ -32,19 +32,23 @@ export default function Show({ setCards, setDeck, setHidden }) {
                     const dataCards = deck.slice(1);
                     const dataDeck = deck[0];
 
-                    return <div key={idx}>
-                            <Edit dataCards={dataCards} setCards={setCards} dataDeck={dataDeck} setDeck={setDeck} setHidden={setHidden} />
-                            <Delete dataDeck={dataDeck} />
-                                Deck {dataDeck.id} -- Bias: {dataDeck.bias} -- Time saved: {dataDeck.saved}
-                                <div className="flex flex-row justify-center">
-                                    {dataCards.map(function(card, jdx) {
-                                        return <div key={jdx}>
-                                                    <Card data={card} loc={idx.toString()+jdx.toString()} />
-                                                </div>
+                    return <div className="flex flex-col items-center" key={idx}>
+                        <div className="flex flex-row justify-center">
+                            {dataCards.map(function(card, jdx) {
+                                return <div key={jdx}>
+                                        <Card data={card} loc={idx.toString()+jdx.toString()} />
+                                    </div>
                                         })
                                     }
-                                </div>
-                            </div>
+                        </div>
+                        <div className="flex flex-row justify-evenly">
+                            <Edit dataCards={dataCards} setCards={setCards} dataDeck={dataDeck} setDeck={setDeck} setHidden={setHidden} />
+                            <Delete dataDeck={dataDeck} />
+                            <p>
+                                Deck {dataDeck.id} -- Bias: {dataDeck.bias} -- Time saved: {dataDeck.saved}
+                            </p>
+                        </div>
+                        </div>
                 }) : null
         }
     </div>

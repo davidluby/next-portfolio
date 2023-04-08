@@ -10,7 +10,7 @@ export default function Decks() {
   const [hidden, setHidden] = useState(true);
 
   return (
-    <div className="flex flex-col items-center -mt-5 px-10 border-4 border-red-300">
+    <div className="flex flex-col items-center -mt-5 px-10">
       <Search cards={cards} setCards={setCards} deck={deck} setDeck={setDeck} hidden={hidden} setHidden={setHidden} />
       <Show setCards={setCards} setDeck={setDeck} hidden={hidden} setHidden={setHidden} />
     </div>

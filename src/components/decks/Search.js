@@ -35,10 +35,8 @@ export default function Search({ cards, setCards, deck, setDeck, hidden, setHidd
     }
 
     return (
-        <div className="flex flex-col items-center w-full border-4 border-green-400">
-
-
-            <div className="flex flex-col items-center w-1/2 relative border-4 border-yellow-400">
+        <div className="flex flex-col items-center w-full mb-20">
+            <div className="flex flex-col items-center w-1/2 relative">
                 <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                     <svg aria-hidden="true" className="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                 </div>
@@ -49,17 +47,15 @@ export default function Search({ cards, setCards, deck, setDeck, hidden, setHidd
                     onKeyPress={searchName}>
                 </input>
             </div>
-
-
-            <div className="flex flex-col justify-center brk:flex-row brk:justify-evenly w-full border-4 border-red-400">
-                <div className="flex flex-col items-center border-4 border-orange-300">
-                    <div className="flex items-center justify-center scale-75 border-4 border-green-700">
+            <div className="flex flex-col justify-center brk:flex-row brk:justify-evenly w-full">
+                <div className="flex flex-col items-center">
+                    <div className="flex items-center justify-center scale-75">
                         {!searching ? <div style={{animation : "inAnimation 500ms ease-in"}} >
                                         <Card data={playerData} loc="main" />
                                     </div>
                                      : <p className="text-center border-4">Enter an active NBA player&apos;s name above</p>}
                     </div>
-                    <div className="flex flex-row space-x-4 border-4 border-yellow-400">
+                    <div className="flex flex-row space-x-4">
                         {!searching ? <Add cards={cards} setCards={setCards} playerData={playerData} setHidden={setHidden} /> : null}
                     </div>
                 </div>

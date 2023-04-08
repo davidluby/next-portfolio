@@ -13,8 +13,10 @@ h2 {
 /* Navbar */
 .nav-logo {
     border-radius: 50%;
-    width: 2.5rem;
-    height: 2.5rem;
+    margin-left: .5rem;
+    margin-right: .5rem;
+    width: 3rem;
+    height: 3rem;
     background-repeat: no-repeat;
     background-position: center;
     background-image: url("/logo-trans.png");
@@ -40,8 +42,8 @@ h2 {
     background-size: 100%;
 }
 .nav-button {
-    font-size: 1.3rem;
-    padding: .3rem;
+    font-size: 1.5rem;
+    padding: .5rem;
     border: solid;
     border-width: 0rem;
     border-bottom-width: .15rem;

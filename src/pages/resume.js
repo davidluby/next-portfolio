@@ -121,7 +121,7 @@ const changeSlide = (num) => {
                     </ul>
                     <div className="flex flex-row justify-between mt-10">
                         <h2>Federal Aviation Administration - Washington, DC</h2>
-                        <h2>June 2021-Aug 2021</h2>
+                        <h2>June 2021 - Aug 2021</h2>
                     </div>
                     <p><i>Systems Engineering Intern</i></p>
                     <ul className="list-disc list-inside">
@@ -141,7 +141,7 @@ const changeSlide = (num) => {
                     </ul>
                     <div className="flex flex-row justify-between mt-10">
                         <h2>MATLAB Grader - Durham, NH</h2>
-                        <h2>Sep 2021-Dec 2021</h2>
+                        <h2>Sep 2021 - Dec 2021</h2>
                     </div>
                     <p><i>Assignment Grader</i></p>
                     <ul className="list-disc list-inside">
@@ -164,7 +164,10 @@ const changeSlide = (num) => {
                         <h2>Bachelor of Science: Mechanical Engineering</h2>
                         <h2>Aug 2018 - Dec 2022</h2>
                     </div>
-                    <p><i>University of New Hampshire</i></p>
+                    <div className="flex flex-row justify-between">
+                        <p><i>University of New Hampshire</i></p>
+                        <p>GPA: 3.1</p>
+                    </div>
                     <ul className="list-disc list-inside">
                         <li>
                             Intramurals: Flag Football, Softball, Soccer

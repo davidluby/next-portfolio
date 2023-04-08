@@ -16,7 +16,7 @@ const zoomCard = (idx) => {
 export default function Deck({ cards, setCards }) {
   return (
     <div className="flex flex-col">
-        <div className="flex flex-row justify-center -space-x-72 border-4 border-red-500"
+        <div className="flex flex-row justify-center -space-x-72"
             id="expand">
                 {cards.map(function(item, idx) {
                     return <div className="relative scale-[.65] bottom-0 hover:bottom-2 transition-all ease-in duration-300"
