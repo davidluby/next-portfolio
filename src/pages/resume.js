@@ -4,7 +4,7 @@ import Slideshow from "@components/Slideshow"
 export default function Resume(){
 
 const slides = [
-    ["Data structures and algorithms", "Fullstack web development", ["/c.png", "/python.png", "/matlab.png", "/js.png", "/sql.png", "/html.png", "/css.png", "tw.png", "/react.png", "/next.png", "/flask.png", "git.png"]],
+    ["Data structures and algorithms", "Fullstack web development", ["c.png", "python.png", "matlab.png", "js.png", "sql.png", "html.png", "css.png", "tw.png", "react.png", "next.png", "flask.png", "git.png"]],
     ["Mechatronic system modeling (DC and stepper motors, IR, Hall Effect, and color sensors)", "Microprocessor programming and component interfacing (datasheets)", "C, Python, MATLAB, Atmel Microchip Studio"],
     ["Version-controlled product development (SOLIDWORKS PDM)", "Control system, finite element, and statistical analysis", "MATLAB, SIMULINK, SOLIDWORKS, Excel, JMP"],
     ["AWS, EC2, Apache, WSGI, Flask, CI/CD", "Windows, Linux, Git, GitHub"],
@@ -73,9 +73,9 @@ const changeSlide = (num) => {
                             {content}
                             </div>
                     } else {
-                        return <div className="flex flex-wrap justify-center space-x-2">
+                        return <div key={idx} className="flex flex-wrap justify-center space-x-2">
                             {content.map(function(pic, jdx) {
-                            return <img key={jdx} src={pic} className="h-16 w-auto"></img>
+                            return <img key={jdx} src={"/resume/"+pic} className="h-16 w-auto"></img>
                         })}
                         </div>
                     }
