@@ -1,19 +1,25 @@
 import React, { useState } from 'react'
-import Slideshow from "@components/Slideshow"
 
 export default function Resume(){
 
 const slides = [
     ["Data structures and algorithms", "Fullstack web development", ["c.png", "python.png", "matlab.png", "js.png", "sql.png", "html.png", "css.png", "tw.png", "react.png", "next.png", "flask.png", "git.png"]],
-    ["Mechatronic system modeling (DC and stepper motors, IR, Hall Effect, and color sensors)", "Microprocessor programming and component interfacing (datasheets)", "C, Python, MATLAB, Atmel Microchip Studio"],
-    ["Version-controlled product development (SOLIDWORKS PDM)", "Control system, finite element, and statistical analysis", "MATLAB, SIMULINK, SOLIDWORKS, Excel, JMP"],
-    ["AWS, EC2, Apache, WSGI, Flask, CI/CD", "Windows, Linux, Git, GitHub"],
+    ["Mechatronic system modeling (DC and stepper motors, IR, Hall Effect, and color sensors)", "Microprocessor programming and component interfacing (datasheets)", ["c.png", "python.png", "matlab.png", "atmel.png", "arduino.png"]],
+    ["Version-controlled product development (SOLIDWORKS PDM)", "Control system, finite element, and statistical analysis", "MATLAB, SIMULINK, SOLIDWORKS, Excel, JMP",["matlab.png", "simulink.png", "sw.png", "pdm.png", "excel.png", "jmp.png"] ],
+    ["AWS, EC2, Apache, WSGI, Flask, CI/CD", "Windows, Linux, Git, GitHub", ["aws.png", "apache.png", "mssql.png", "bash.png","ps.png","cmd.png","linux.png"]],
 ];
 
 const [slide, setSlide] = useState(slides[0]);
+const [index, setIndex] = useState(0);
 
 const changeSlide = (num) => {
     setSlide(slides[num])
+    var tab = document.querySelector("#tog"+index)
+    tab.classList.toggle("bg-gray-200")
+    const tab2 = document.querySelector("#tog"+num)
+    tab2.classList.toggle("bg-gray-200")
+    setIndex(num)
+
 }
 
     return (
@@ -45,41 +51,47 @@ const changeSlide = (num) => {
                     </ul>
                 </div>
             </div>
-            <div className="flex flex-col w-[40rem] px-12 py-4 items-center shadow-lg rounded-xl ring-1 ring-black/5">
+            <div className="flex flex-col w-[35rem] h-[23rem] px-12 py-4 items-center shadow-lg rounded-xl ring-1 ring-black/5">
                 <h1 className="pb-2">
                     <b>Technical Skills</b>
                 </h1>
                 <ul className="flex space-x-2 border-b-2 mb-2">
                     <li>
-                        <button className="p-2 inline-block rounded-t-lg hover:bg-gray-200"
-                            onClick={() => changeSlide(0)}>Software</button>
+                        <button className="py-3 px-3 inline-block rounded-t-lg bg-gray-200 hover:bg-gray-200"
+                            onClick={() => changeSlide(0)}
+                            id="tog0">Software</button>
                     </li>
                     <li>
-                        <button className="p-2 inline-block rounded-t-lg hover:bg-gray-200"
-                            onClick={() => changeSlide(1)}>Firmware</button>
+                        <button className="py-3 px-3 inline-block rounded-t-lg hover:bg-gray-200"
+                            onClick={() => changeSlide(1)}
+                            id="tog1">Firmware</button>
                     </li>
                     <li>
-                        <button className="p-2 inline-block rounded-t-lg hover:bg-gray-200"
-                            onClick={() => changeSlide(2)}>Mechanical</button>
+                        <button className="py-3 px-3 inline-block rounded-t-lg hover:bg-gray-200"
+                            onClick={() => changeSlide(2)}
+                            id="tog2">Mechanical</button>
                     </li>
                     <li>
-                        <button className="p-2 inline-block rounded-t-lg hover:bg-gray-200"
-                            onClick={() => changeSlide(3)}>DevOps</button>
+                        <button className="py-3 px-3 inline-block rounded-t-lg hover:bg-gray-200"
+                            onClick={() => changeSlide(3)}
+                            id="tog3">DevOps</button>
                     </li>
                 </ul>
+                <ul className="flex flex-col list-disc list-inside">
                 {slide.map(function(content,idx) {
                     if (idx != slide.length-1) {
-                        return <div key={idx}>
+                        return <li key={idx}>
                             {content}
-                            </div>
+                            </li>
                     } else {
-                        return <div key={idx} className="flex flex-wrap justify-center space-x-2">
+                        return <div key={idx} className="flex flex-wrap justify-center mt-5 space-x-2">
                             {content.map(function(pic, jdx) {
-                            return <img key={jdx} src={"/resume/"+pic} className="h-16 w-auto"></img>
+                            return <img key={jdx} src={"/resume/"+pic} className="h-12 w-auto"></img>
                         })}
                         </div>
                     }
                 })}
+                </ul>
             </div>
         </div>
     )
