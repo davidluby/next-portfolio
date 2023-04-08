@@ -28,7 +28,7 @@ const changeSlide = (num) => {
                         <i>BS, Mechanical Engineering</i>
                     </p>
                     <p>
-                        University of New Hampshire '22
+                        University of New Hampshire 2022
                     </p>
                     <ul className="flex flex-row justify-center space-x-2">
                         <li className ="w-7 h-7">
