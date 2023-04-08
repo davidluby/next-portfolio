@@ -53,7 +53,7 @@ export default function Search({ cards, setCards, deck, setDeck, hidden, setHidd
                         {!searching ? <div style={{animation : "inAnimation 500ms ease-in"}} >
                                         <Card data={playerData} loc="main" />
                                     </div>
-                                     : <p className="text-center border-4">Enter an active NBA player&apos;s name above</p>}
+                                     : <p className="text-center">Enter an active NBA player&apos;s name above</p>}
                     </div>
                     <div className="flex flex-row space-x-4">
                         {!searching ? <Add cards={cards} setCards={setCards} playerData={playerData} setHidden={setHidden} /> : null}
