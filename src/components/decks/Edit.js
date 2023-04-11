@@ -7,7 +7,7 @@ export default function Edit({dataCards, setCards, dataDeck, setDeck, setHidden}
         setHidden(false);
     };
   return (
-    <button className="bg-green-700 hover:bg-green-900 transition all duration-500 text-white font-bold py-2 px-4 rounded-full"
+    <button className="bg-green-700 hover:bg-green-600 transition all duration-500 text-white font-bold py-2 px-4 rounded-full"
         onClick={editDeck}>
         Edit Deck
     </button>

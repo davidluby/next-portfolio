@@ -3,37 +3,44 @@ import Card from "@components/decks/Card"
 import Edit from "@components/decks/Edit"
 import Delete from "@components/decks/Delete"
 
-export default function Show({ setCards, setDeck, setHidden }) {
-    const [dataDecks, setDataDecks] = useState("");
-    const [empty, setEmpty] = useState(true);
+export default function Show({ empty, setEmpty, setHidden, setCards, setDeck }) {
+    const [dataDecks, setDataDecks] = useState();
+    const [reveal, setReveal] = useState(true);
+    const [status, setStatus] = useState("Show")
 
     const Show = () => {
-        fetch('https://davidluby.com/api/show_deck', {
+        fetch('/api/show_deck', {
             method: "GET",
         }
         ).then(
             response => response.json()
             .then(
                 data => {
-                    setDataDecks(JSON.parse(data))
-                    setEmpty(false)
+                    setDataDecks(JSON.parse(data));
+                    setEmpty(false);
+                    setReveal(false);
+                    setStatus("Refresh")
                 }
             )
         )
     }
 
   return (
-    <div className="flex flex-col justify-center">
-        <button className="bg-green-700 hover:bg-green-900 transition all duration-500 text-white font-bold py-2 px-4 rounded-full"
+    <div className="flex flex-col items-center">
+        <button className="bg-green-700 hover:bg-green-600 transition all duration-500 text-white font-bold py-2 px-4 rounded-full"
                 onClick={Show}>
-            Show Saved Decks
+            {status} Saved Decks
         </button>
-        { !empty ? dataDecks.map(function(deck, idx) {
+        { (!empty && !reveal) ? dataDecks.map(function(deck, idx) {
                     const dataCards = deck.slice(1);
                     const dataDeck = deck[0];
 
-                    return <div className="flex flex-col items-center" key={idx}>
-                        <div className="flex flex-row justify-center">
+                    return <div className="flex flex-col items-center mt-20 p-10 shadow-lg rounded-xl ring-1 ring-black/5" key={idx}>
+                        <div className="flex flex-row space-x-10">
+                            <p className="border-b-2 border-green-700">Deck: {dataDeck.id}</p>
+                            <p className="border-b-2 border-green-700">Last saved: {dataDeck.saved}</p>
+                        </div>
+                        <div className="flex flex-col big:flex-row justify-center my-4">
                             {dataCards.map(function(card, jdx) {
                                 return <div key={jdx}>
                                         <Card data={card} loc={idx.toString()+jdx.toString()} />
@@ -41,12 +48,9 @@ export default function Show({ setCards, setDeck, setHidden }) {
                                         })
                                     }
                         </div>
-                        <div className="flex flex-row justify-evenly">
+                        <div className="flex flex-row space-x-10">
                             <Edit dataCards={dataCards} setCards={setCards} dataDeck={dataDeck} setDeck={setDeck} setHidden={setHidden} />
                             <Delete dataDeck={dataDeck} />
-                            <p>
-                                Deck {dataDeck.id} -- Bias: {dataDeck.bias} -- Time saved: {dataDeck.saved}
-                            </p>
                         </div>
                         </div>
                 }) : null

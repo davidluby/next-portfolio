@@ -7,7 +7,7 @@ export default function Save({cards, deck}) {
         }
         else {
             cards.unshift(deck)
-            fetch('https://davidluby.com/api/intake_deck', {
+            fetch('/api/intake_deck', {
                 method: "POST",
                 headers: {
                     "Content-Type":"application/json"
@@ -20,7 +20,7 @@ export default function Save({cards, deck}) {
     }
     
   return (
-    <button className="bg-green-700 hover:bg-green-900 transition all duration-500 text-white font-bold py-2 px-4 rounded-full"
+    <button className="bg-green-700 hover:bg-green-600 transition all duration-500 text-white font-bold py-2 px-4 rounded-full"
         onClick={saveData}>
         Save Deck
     </button>

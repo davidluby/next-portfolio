@@ -1,3 +1,5 @@
+import Interface from "@components/decks/Interface"
+
 
 export default function Home() {
     

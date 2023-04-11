@@ -27,19 +27,19 @@ export default function Card({ data, loc }) {
 
             <div className="absolute inset-0 [transform:rotateY(180deg)] [backface-visibility:hidden]"
                 id="flipState">
-                <div className="flex flex-col items-center justify-evenly h-full w-full p-4 rounded-xl bg-black/60 text-white">
+                <div className="flex flex-col items-center justify-evenly h-full w-full rounded-xl bg-black/60 text-white">
                     <div className="flex flex-row space-x-6">
                         <img src={data.pic} className="rounded-full"/>
                         <div className="flex flex-row space-x-3">
                             <div className="flex flex-col justify-evenly">
-                                <p> Age: </p>
-                                <p> Team: </p>
                                 <p> Pos: </p>
+                                <p> Team: </p>
+                                <p> Age: </p>
                             </div>
                             <div className="flex flex-col justify-evenly">
-                                <p> {data.age} </p>
-                                <p> {data.team} </p>
                                 <p> {data.pos} </p>
+                                <p> {data.team} </p>
+                                <p> {data.age} </p>
                             </div>
                         </div>
                     </div>
@@ -73,14 +73,6 @@ export default function Card({ data, loc }) {
                             <Overall category="Defense" overall={defenseRTG} />
                         </div>
                     </div>
-                    <p className="text-xs text-center">All player statistics, pictures, and data taken from <a className="underline text-blue-700 hover:text-blue-400"
-                            href="https://www.basketball-reference.com"
-                            target="_blank"
-                            rel="noopener noreferrer">www.basketball-reference.com</a>. This demonstration is intentionally limited to respect the <a className="underline text-blue-700 hover:text-blue-400"
-                                href="https://www.sports-reference.com/data_use.html"
-                                target="_blank"
-                                rel="noopener noreferrer">guidlines</a> issued by Sports Reference.
-                    </p>
                 </div>
             </div>
         </div>  
