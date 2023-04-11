@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function Delete({ dataDeck }) {
     const deleteDeck = () => {
-    	fetch('/api/delete_deck', {
+    	fetch('https://davidluby.com/api/delete_deck', {
     		method: "POST",
 			headers: {
 				"Content-Type":"application/json"

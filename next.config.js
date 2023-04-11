@@ -1,13 +1,6 @@
-module.exports = () => {
-  const rewrites = () => {
-    return [
-      {
-        source: "/api/:path*",
-        destination: "https://davidluby.com/api/:path*",
-      },
-    ];
-  };
-  return {
-    rewrites,
-  };
-};
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  reactStrictMode: true,
+}
+
+module.exports = nextConfig

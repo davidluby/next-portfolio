@@ -9,7 +9,7 @@ export default function Show({ empty, setEmpty, setHidden, setCards, setDeck }) 
     const [status, setStatus] = useState("Show")
 
     const Show = () => {
-        fetch('/api/show_deck', {
+        fetch('https://davidluby.com/api/show_deck', {
             method: "GET",
         }
         ).then(

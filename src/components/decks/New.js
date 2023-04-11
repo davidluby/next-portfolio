@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function New({ setDeck }) {
     const initialize = () => {
-    	setDeck({'id': 'null', 'saved': 'null'});
+    	setDeck({'id': 'null', 'saved': 'null', 'bias': 'null'});
     };
     
   return (
