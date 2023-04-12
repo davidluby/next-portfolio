@@ -10,7 +10,7 @@ export default function Interface({ searching, playerData, empty, setEmpty, card
 
 	return (
 		<div className="shadow-lg rounded-xl ring-1 ring-black/5 p-10">
-			<div id="editID" className="flex flex-row justify-center my-5 space-x-20">
+			<div className="flex flex-row justify-center my-5 space-x-20">
 				{ !searching ? <div className="flex items-center" style={{animation : "inAnimation 500ms ease-in"}}>
 					<Card data={playerData} loc="main" />
 					</div> : null}
