@@ -25,9 +25,9 @@ export default function Interface({ searching, playerData, empty, setEmpty, card
 		</div>
 		<div className="flex flex-row justify-center space-x-2">
 			<Add playerData={playerData} cards={cards} setCards={setCards} setEmpty={setEmpty} />
-			{ (!empty && (cards.length > 1)) ? <ExpandCards /> : null}
 			{ !empty ? <Save cards={cards} deck={deck} /> : null}
 			{ !empty ? <New setDeck={setDeck} /> : null}
+			{ (!empty && (cards.length > 1)) ? <ExpandCards /> : null}
 		</div>
     </div>
   )
