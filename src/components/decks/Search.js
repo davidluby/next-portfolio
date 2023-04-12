@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 
 export default function Search({ setPlayerData, setSearching, setHidden }) {
     const [name, setName] = useState("");
+    const [active, setActive] = useState(false);
 
 
     const handleSubmit = event => {
@@ -24,6 +25,8 @@ export default function Search({ setPlayerData, setSearching, setHidden }) {
                     setName("");
                     setSearching(false);
                     setHidden(false);
+                    setActive(true);
+                    setTimeout(setActive(false), 10000);
                 }
             )
             )
@@ -39,7 +42,8 @@ export default function Search({ setPlayerData, setSearching, setHidden }) {
                 placeholder="Search"
                 onChange={handleSubmit}
                 value={name}
-                onKeyPress={searchName}>
+                onKeyPress={searchName}
+                disabled={active}>
             </input>
         </div>
   

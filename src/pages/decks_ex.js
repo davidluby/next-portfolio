@@ -10,7 +10,7 @@ export default function DecksEx() {
 			</h1>
 			<ul className="ml-10 list-disc list-inside">
 				<li>it has never and will never be monetized</li>
-				<li>search function globally limited to once per minute to prevent performance issues on Sports Reference sites</li>
+				<li>search function is limited to once per minute to prevent performance issues on Sports Reference sites</li>
 				<li className="ml-10">this represents the only interaction with Sports Reference</li>
 				<li>data, images, statistics, etc. from Sports Reference are blurred</li>
 				<li>the database that stores card information is cleared after the tenth deck submission</li>
