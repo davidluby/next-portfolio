@@ -15,9 +15,9 @@ const [index, setIndex] = useState(0);
 const changeSlide = (num) => {
     setSlide(slides[num])
     var tab = document.querySelector("#tog"+index)
-    tab.classList.toggle("bg-gray-200")
+    tab.classList.toggle("bg-[#007A33;]")
     const tab2 = document.querySelector("#tog"+num)
-    tab2.classList.toggle("bg-gray-200")
+    tab2.classList.toggle("bg-[#007A33;]")
     setIndex(num)
 
 }
@@ -56,24 +56,24 @@ const changeSlide = (num) => {
                     <h1 className="pb-2">
                         <b><i>Technical Skills</i></b>
                     </h1>
-                    <ul className="flex space-x-2 border-b-2 mb-2">
+                    <ul className="flex flex-row space-x-2 mb-2 border-b-2 border-[#BA9653;]">
                         <li>
-                            <button className="py-3 px-3 inline-block rounded-t-lg bg-gray-200 hover:bg-gray-200"
+                            <button className="py-3 px-3 inline-block rounded-t-lg bg-[#007A33;] hover:bg-[#007A33;]"
                                 onClick={() => changeSlide(0)}
                                 id="tog0">Software</button>
                         </li>
                         <li>
-                            <button className="py-3 px-3 inline-block rounded-t-lg hover:bg-gray-200"
+                            <button className="py-3 px-3 inline-block rounded-t-lg hover:bg-[#007A33;]"
                                 onClick={() => changeSlide(1)}
                                 id="tog1">Firmware</button>
                         </li>
                         <li>
-                            <button className="py-3 px-3 inline-block rounded-t-lg hover:bg-gray-200"
+                            <button className="py-3 px-3 inline-block rounded-t-lg hover:bg-[#007A33;]"
                                 onClick={() => changeSlide(2)}
                                 id="tog2">Mechanical</button>
                         </li>
                         <li>
-                            <button className="py-3 px-3 inline-block rounded-t-lg hover:bg-gray-200"
+                            <button className="py-3 px-3 inline-block rounded-t-lg hover:bg-[#007A33;]"
                                 onClick={() => changeSlide(3)}
                                 id="tog3">DevOps</button>
                         </li>

@@ -46,12 +46,12 @@ h2 {
     padding: .5rem;
     border: solid;
     border-width: 0rem;
-    border-bottom-width: .15rem;
+    border-bottom-width: .25rem;
     border-color: rgba(255, 255, 255, 0);
     transition: all 300ms;
 }
 .nav-button:hover {
-    border-color: rgb(255, 255, 255);
+    border-color: #BA9653;
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.2));
 }
 

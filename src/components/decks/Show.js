@@ -6,7 +6,7 @@ import Delete from "@components/decks/Delete"
 export default function Show({ empty, setEmpty, setHidden, setCards, setDeck }) {
     const [dataDecks, setDataDecks] = useState();
     const [reveal, setReveal] = useState(true);
-    const [status, setStatus] = useState("Show")
+    const [status, setStatus] = useState("Load")
 
     const Show = () => {
         fetch('https://davidluby.com/api/show_deck', {

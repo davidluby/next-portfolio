@@ -16,19 +16,42 @@ export default function Decks() {
 
 
   return (
-    <div className="flex flex-col items-center -mt-5 px-10">
-		<div className="my-10 w-2/3">
+    <div className="flex flex-col items-center -my-5 px-10">
+		<div className="mb-10 w-2/3">
+			<h1>
+				Quick Start
+			</h1>
 			<p>
-				The application below communicates with an API hosted on an AWS Amazon Linux 2 instance to demonstrate fullstack CRUD functionality. Here are a few limitations:
+				The following application is intended to demonstrate fullstack competency. Please visit the <a className="underline text-blue-700 hover:text-blue-400"
+					href="https://main--davidluby.netlify.app/decks_ex"
+					target="_blank"
+					rel="noopener noreferrer">explanation</a> page for a description of what is going on behind the scenes.
 			</p>
-			<p className="text-xs text-center">All player statistics, pictures, and data taken from <a className="underline text-blue-700 hover:text-blue-400"
+			<p className="mt-4">
+				Click on the search bar and type in an NBA player&#x27;s name. Limitations to the search algorithm have the following consequences:
+			</p>
+			<ul className="list-disc list-inside">
+				<li className="ml-10"><b>only one search is allowed each minute (load the saved decks and edit one to avoid waiting)</b></li>
+				<li className="ml-10">the player must still be playing in the NBA</li>
+				<li className="ml-10">names typed into the search bar must be spelled perfectly</li>
+				<li className="ml-10">players with prefixes, suffixes, or hyphens&#8212;anything other than a first and last name&#8212;rarely work</li>
+				<li className="ml-10">players traded this season will appear with a blank background</li>
+			</ul>
+			<p className="mt-4">
+				Make sure to load/refresh the saved decks whenever a deck is saved, overwritten, or deleted, or the changes will not appear. Finally, this works well in Chromium browsers (Edge, Chrome, FireFox, etc.) but not in Safari.
+			</p>
+			<h1 className="mt-4">
+				Disclaimer
+			</h1>
+			<p>
+				<i>All player pictures, statistics, and data are property of <a className="underline text-blue-700 hover:text-blue-400"
                 href="https://www.basketball-reference.com"
                 target="_blank"
-                rel="noopener noreferrer">www.basketball-reference.com</a>. This demonstration is intentionally limited to respect the <a className="underline text-blue-700 hover:text-blue-400"
+                rel="noopener noreferrer">www.basketball-reference.com</a>. This demonstration is intentionally limited to better align with the <a className="underline text-blue-700 hover:text-blue-400"
                 href="https://www.sports-reference.com/data_use.html"
                 target="_blank"
-                rel="noopener noreferrer">guidlines</a> issued by Sports Reference.
-            </p>
+                rel="noopener noreferrer">guidelines</a> issued by Sports Reference. Measures taken to limit this site&#x27;s footprint on Sports References&#x27; are described on the explanation page.</i>
+      		</p>
 		</div>
 		<Search setPlayerData={setPlayerData} setSearching={setSearching} setHidden={setHidden} />
 		<div className="p-10 mb-10">
@@ -38,5 +61,5 @@ export default function Decks() {
 		</div>
       	<Show setHidden={setHidden} empty={empty} setEmpty={setEmpty} setCards={setCards} setDeck={setDeck} />
     </div>
-  )
+	)
 }
