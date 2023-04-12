@@ -26,7 +26,10 @@ export default function Search({ setPlayerData, setSearching, setHidden }) {
                     setSearching(false);
                     setHidden(false);
                     setActive(true);
-                    setTimeout(setActive(false), 10000);
+                    alert("The search function will be disabled for the next minute. Consider adding this card five times to save time and get the full picture.")
+                    setTimeout(() => {
+                        setActive(active => !active)
+                    }, 5000);
                 }
             )
             )
