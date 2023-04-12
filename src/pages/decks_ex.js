@@ -40,7 +40,10 @@ export default function DecksEx() {
 			</p>
 			<img src="/system.png"></img>
 			<p>
-				I regret that this website&#8212;in particular, this application&#8212;is not very responsive (4/12/2023), but I feel it is enough to post during a job search. Once again, if you see anything broken or poorly-done, challenge me to fix it!
+				The backend repository uses Git, GitHub, AWS CodePipeline, and AWS CodeDeploy for CI/CD deployment to the Amazon Linux 2 instance where this is hosted. Similarly, the frontend uses Git and GitHub to deploy directly to Netlify.
+			</p>
+			<p className="mt-4">
+				I regret that this website&#8212;in particular, this application&#8212;is not very responsive (4/13/2023), but I feel it is enough to post. Once again, if you see anything broken or poorly-done, challenge me to fix it!
 			</p>
 		</div>
     </div>

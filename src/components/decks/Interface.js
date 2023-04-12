@@ -23,7 +23,7 @@ export default function Interface({ searching, playerData, empty, setEmpty, card
       			</div>
 				: null }
 		</div>
-		<div className="flex flex-row justify-evenly">
+		<div className="flex flex-row space-x-2">
 			<Add playerData={playerData} cards={cards} setCards={setCards} setEmpty={setEmpty} />
 			{ !empty ? <ExpandCards /> : null}
 			{ !empty ? <Save cards={cards} deck={deck} /> : null}

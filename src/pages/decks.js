@@ -40,7 +40,7 @@ export default function Decks() {
 				The following application is intended to demonstrate fullstack competency. Please visit the <a className="underline text-blue-700 hover:text-blue-400"
 					href="https://main--davidluby.netlify.app/decks_ex"
 					target="_blank"
-					rel="noopener noreferrer">explanation</a> page for a description of what is going on behind the scenes.
+					rel="noopener noreferrer">explanation</a> page for a description of what is going on behind the scenes. Below is really a bug list for things I do not have time to fix. I am heading back to C and microcontrollers.
 			</p>
 			<p className="mt-4">
 				Click on the search bar and type in an NBA player&#x27;s name. Limitations to the search algorithm have the following consequences:
@@ -53,7 +53,7 @@ export default function Decks() {
 				<li className="ml-10">players traded this season will appear with a blank background</li>
 			</ul>
 			<p className="mt-4">
-				Make sure to load/refresh the saved decks whenever a deck is saved, overwritten, or deleted, or the changes will not appear. Finally, this works well in Chromium browsers (Edge, Chrome, FireFox, etc.) but not in Safari.
+				Make sure to load/refresh the saved decks whenever a deck is saved, overwritten, or deleted, or the changes will not appear. Finally, this works well in Chromium browsers (Chrome, Edge, FireFox, etc.), it does not in Safari, and no others were checked.
 			</p>
 		</div>
 		<Search setPlayerData={setPlayerData} setSearching={setSearching} setHidden={setHidden} />
