@@ -27,7 +27,7 @@ export default function Search({ setPlayerData, setSearching, setHidden }) {
                     setSearching(false);
                     setHidden(false);
                     setActive(true);
-                    setPlaceholder("Search function disabled for one minute. Condsider adding this card five times and editing later.")
+                    setPlaceholder("Search disabled for one minute. Add this card five times and edit later.")
                     setTimeout(() => {
                         setActive(active => !active)
                         setPlaceholder("Search")
