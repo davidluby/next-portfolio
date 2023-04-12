@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 export default function Add({ playerData, cards, setCards, setEmpty }) {
     const [full, setFull] = useState(false);
