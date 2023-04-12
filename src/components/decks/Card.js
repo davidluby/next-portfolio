@@ -29,14 +29,14 @@ export default function Card({ data, loc }) {
                 id="flipState">
                 <div className="flex flex-col items-center justify-evenly h-full w-full rounded-xl bg-black/60 text-white">
                     <div className="flex flex-row space-x-6">
-                        <img src={data.pic} className="rounded-full"/>
+                        <img src={data.pic} className="rounded-full blur-sm"/>
                         <div className="flex flex-row space-x-3">
                             <div className="flex flex-col justify-evenly">
                                 <p> Pos: </p>
                                 <p> Team: </p>
                                 <p> Age: </p>
                             </div>
-                            <div className="flex flex-col justify-evenly">
+                            <div className="flex flex-col justify-evenly blur-sm">
                                 <p> {data.pos} </p>
                                 <p> {data.team} </p>
                                 <p> {data.age} </p>
@@ -57,15 +57,15 @@ export default function Card({ data, loc }) {
                             <p> TOV </p>
                             <p> FG% </p>
                             <p> 3P% </p>
-                            <p className=""> {data.min} </p>
-                            <p className=""> {data.ppg} </p>
-                            <p className=""> {data.reb} </p>
-                            <p className=""> {data.ast} </p>
-                            <p className=""> {data.stl} </p>
-                            <p className=""> {data.blk} </p>
-                            <p className=""> {data.tov} </p>
-                            <p className=""> {(data.fg*100).toFixed(1)} </p>
-                            <p className=""> {(data.thr*100).toFixed(1)} </p>
+                            <p className="blur-sm"> {data.min} </p>
+                            <p className="blur-sm"> {data.ppg} </p>
+                            <p className="blur-sm"> {data.reb} </p>
+                            <p className="blur-sm"> {data.ast} </p>
+                            <p className="blur-sm"> {data.stl} </p>
+                            <p className="blur-sm"> {data.blk} </p>
+                            <p className="blur-sm"> {data.tov} </p>
+                            <p className="blur-sm"> {(data.fg*100).toFixed(1)} </p>
+                            <p className="blur-sm"> {(data.thr*100).toFixed(1)} </p>
                         </div>
                         <div>
                             <Overall category="Overall" overall={overallRTG} />

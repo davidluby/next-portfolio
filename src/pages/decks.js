@@ -16,9 +16,24 @@ export default function Decks() {
 
 
   return (
-    <div className="flex flex-col items-center -my-5 px-10">
-		<div className="mb-10 w-2/3">
+    <div className="flex flex-col items-center px-10">
+		<div className="mb-10 w-5/6 px-12 py-4 items-center shadow-lg rounded-xl ring-1 ring-black/5">
 			<h1>
+				Disclaimer
+			</h1>
+			<p>
+				<i>All player pictures, statistics, and data are property of <a className="underline text-blue-700 hover:text-blue-400"
+                href="https://www.basketball-reference.com"
+                target="_blank"
+                rel="noopener noreferrer">www.basketball-reference.com</a>. This demonstration is intentionally limited to better align with the <a className="underline text-blue-700 hover:text-blue-400"
+                href="https://www.sports-reference.com/data_use.html"
+                target="_blank"
+                rel="noopener noreferrer">guidelines</a> issued by Sports Reference. Measures taken to limit this site&#x27;s footprint on Sports References&#x27; are described on the <a className="underline text-blue-700 hover:text-blue-400"
+				href="https://main--davidluby.netlify.app/decks_ex"
+				target="_blank"
+				rel="noopener noreferrer">explanation</a> page.</i>
+      		</p>
+			<h1 className="mt-4">
 				Quick Start
 			</h1>
 			<p>
@@ -40,24 +55,12 @@ export default function Decks() {
 			<p className="mt-4">
 				Make sure to load/refresh the saved decks whenever a deck is saved, overwritten, or deleted, or the changes will not appear. Finally, this works well in Chromium browsers (Edge, Chrome, FireFox, etc.) but not in Safari.
 			</p>
-			<h1 className="mt-4">
-				Disclaimer
-			</h1>
-			<p>
-				<i>All player pictures, statistics, and data are property of <a className="underline text-blue-700 hover:text-blue-400"
-                href="https://www.basketball-reference.com"
-                target="_blank"
-                rel="noopener noreferrer">www.basketball-reference.com</a>. This demonstration is intentionally limited to better align with the <a className="underline text-blue-700 hover:text-blue-400"
-                href="https://www.sports-reference.com/data_use.html"
-                target="_blank"
-                rel="noopener noreferrer">guidelines</a> issued by Sports Reference. Measures taken to limit this site&#x27;s footprint on Sports References&#x27; are described on the explanation page.</i>
-      		</p>
 		</div>
 		<Search setPlayerData={setPlayerData} setSearching={setSearching} setHidden={setHidden} />
-		<div className="p-10 mb-10">
+		<div className="p-10">
 			{ !hidden ? <Interface searching={searching} playerData={playerData} empty={empty} setEmpty={setEmpty}
 							cards={cards} setCards={setCards} deck={deck} setDeck={setDeck} />
-				: <p>Enter an <i>active</i> NBA player&apos;s name above</p>}
+				: <h1>Enter an <i>active</i> NBA player&apos;s name above</h1>}
 		</div>
       	<Show setHidden={setHidden} empty={empty} setEmpty={setEmpty} setCards={setCards} setDeck={setDeck} />
     </div>

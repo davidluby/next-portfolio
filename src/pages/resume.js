@@ -56,7 +56,7 @@ const changeSlide = (num) => {
                     <h1 className="pb-2">
                         <b><i>Technical Skills</i></b>
                     </h1>
-                    <ul className="flex flex-row space-x-2 mb-2 border-b-2 border-[#BA9653;]">
+                    <ul className="flex flex-row space-x-2 mb-2 border-b-[.25rem] border-[#BA9653;]">
                         <li>
                             <button className="py-3 px-3 inline-block rounded-t-lg bg-[#007A33;] hover:bg-[#007A33;]"
                                 onClick={() => changeSlide(0)}

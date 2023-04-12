@@ -26,7 +26,7 @@ export default function Show({ empty, setEmpty, setHidden, setCards, setDeck }) 
     }
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center my-10">
         <button className="bg-green-700 hover:bg-green-600 transition all duration-500 text-white font-bold py-2 px-4 rounded-full"
                 onClick={Show}>
             {status} Saved Decks
