@@ -21,10 +21,10 @@ export default function DecksEx() {
 				How B-Ball Cards application application works:
 			</h1>
     		<p>
-        		The application interface deployed <a className="underline text-blue-700 hover:text-blue-400"
+        		The application interface <a className="underline text-blue-700 hover:text-blue-400"
                 href="https://main--davidluby.netlify.app/decks"
                 target="_blank"
-                rel="noopener noreferrer">here</a> is served via next.js, communicating with an API facilitated by Flask, mod_wsgi, and Apache hosted on an AWS EC2 instance. The API retrieves data directly from the internet and from an AWS MSSQL RDS instance, where data is also stored. Two testing endpoints are available <a className="underline text-blue-700 hover:text-blue-400"
+                rel="noopener noreferrer">here</a> uses next.js and is deployed on Netlify, communicating with an API served by Flask, mod_wsgi, and Apache deployed on an AWS EC2 instance. The API retrieves data directly from the internet and from an AWS MSSQL RDS instance, where data is also stored. Two testing endpoints are available <a className="underline text-blue-700 hover:text-blue-400"
                 href="https://davidluby.com/plain_test"
                 target="_blank"
                 rel="noopener noreferrer">here</a> and <a className="underline text-blue-700 hover:text-blue-400"
