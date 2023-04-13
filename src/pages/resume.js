@@ -24,7 +24,7 @@ const changeSlide = (num) => {
 
     return (
         <div className="flex flex-col">
-            <div className="flex flex-row justify-evenly items-center">
+            <div className="flex flex-col items-center space-y-16 res:flex-row res:justify-evenly">
                 <div className="relative flex items-center h-36 w-[35rem] shadow-lg rounded-xl ring-1 ring-black/5">
                     <img className=" absolute w-48 h-48 rounded-full -left-6 shadow-lg" src="headshot.jpg"></img>
                     <div className="pl-52">
