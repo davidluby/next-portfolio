@@ -1,12 +1,13 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Card from "@components/decks/Card"
+import Show from "@components/decks/Show"
 import Add from "@components/decks/Add"
 import Deck from "@components/decks/Deck"
 import New from "@components/decks/New"
 import Save from "@components/decks/Save"
 import ExpandCards from "@components/decks/ExpandCards"
 
-export default function Interface({ searching, playerData, empty, setEmpty, cards, setCards, deck, setDeck }) {
+export default function Interface({ setHidden, searching, playerData, empty, setEmpty, cards, setCards, deck, setDeck }) {
 
 	return (
 		<div className="shadow-lg rounded-xl ring-1 ring-black/5 p-10">
@@ -24,6 +25,7 @@ export default function Interface({ searching, playerData, empty, setEmpty, card
 					: null }
 			</div>
 			<div className="flex flex-row justify-center space-x-2">
+				<Show setHidden={setHidden} empty={empty} setEmpty={setEmpty} setCards={setCards} setDeck={setDeck} />
 				<Add playerData={playerData} cards={cards} setCards={setCards} setEmpty={setEmpty} />
 				{ !empty ? <Save cards={cards} deck={deck} /> : null}
 				{ !empty ? <New setDeck={setDeck} /> : null}

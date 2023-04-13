@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import Search from "@components/decks/Search"
-import Show from "@components/decks/Show"
 import Interface from "@components/decks/Interface"
 
 
@@ -31,7 +30,7 @@ export default function Decks() {
                 rel="noopener noreferrer">guidelines</a> issued by Sports Reference. Measures taken to limit this site&#x27;s footprint on Sports References&#x27; are described on the <a className="underline text-blue-700 hover:text-blue-400"
 				href="https://main--davidluby.netlify.app/decks_ex"
 				target="_blank"
-				rel="noopener noreferrer">explanation</a> page.</i>
+				rel="noopener noreferrer">explanation</a> page.<b> Data, images, statistics, etc. from Sports Reference are blurred.</b></i>
       		</p>
 			<h1 className="mt-4">
 				Quick Start
@@ -43,10 +42,10 @@ export default function Decks() {
 					rel="noopener noreferrer">explanation</a> page for a description of what is going on behind the scenes. Below is really a bug list for things I do not have time to fix. I am heading back to C and microcontrollers.
 			</p>
 			<p className="mt-4">
-				Click on the search bar and type in an NBA player&#x27;s name. Limitations to the search algorithm have the following consequences:
+				Click on the search bar and type in an NBA player&#x27;s name. <b>Limitations to the search algorithm have the following consequences:</b>
 			</p>
 			<ul className="list-disc list-inside">
-				<li className="ml-10"><b>only one search is allowed each minute (load the saved decks and edit one to avoid waiting)</b></li>
+				<li className="ml-10">only one search is allowed each minute (load the saved decks and edit one to avoid waiting, or fill one deck with the same card)</li>
 				<li className="ml-10">the player must still be playing in the NBA</li>
 				<li className="ml-10">names typed into the search bar must be spelled perfectly</li>
 				<li className="ml-10">players with prefixes, suffixes, or hyphens&#8212;anything other than a first and last name&#8212;rarely work</li>
@@ -58,11 +57,10 @@ export default function Decks() {
 		</div>
 		<Search setPlayerData={setPlayerData} setSearching={setSearching} setHidden={setHidden} />
 		<div className="p-10">
-			{ !hidden ? <Interface searching={searching} playerData={playerData} empty={empty} setEmpty={setEmpty}
+			{ !hidden ? <Interface setHidden={setHidden} searching={searching} playerData={playerData} empty={empty} setEmpty={setEmpty}
 							cards={cards} setCards={setCards} deck={deck} setDeck={setDeck} />
 				: <h1>Enter an <i>active</i> NBA player&apos;s name above</h1>}
 		</div>
-      	<Show setHidden={setHidden} empty={empty} setEmpty={setEmpty} setCards={setCards} setDeck={setDeck} />
     </div>
 	)
 }
