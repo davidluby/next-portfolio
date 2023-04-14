@@ -59,7 +59,7 @@ export default function Decks() {
 		<div className="p-10">
 			{ !hidden ? <Interface setHidden={setHidden} searching={searching} playerData={playerData} empty={empty} setEmpty={setEmpty}
 							cards={cards} setCards={setCards} deck={deck} setDeck={setDeck} />
-				: <h1><b>Enter an <i>active</i> NBA player&apos;s name above. Try typing in "Al Horford" (remove quotes) if you need a name.</b></h1>}
+				: <h1><b>Enter an <i>active</i> NBA player&apos;s name above. Try typing in &#34;Al Horford&#34; (remove quotes) if you need a name.</b></h1>}
 		</div>
     </div>
 	)
