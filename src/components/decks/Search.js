@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 export default function Search({ setPlayerData, setSearching, setHidden }) {
     const [name, setName] = useState("");
     const [active, setActive] = useState(false);
-    const [placeholder, setPlaceholder] = useState("Search")
+    const [placeholder, setPlaceholder] = useState("Search for a player")
 
 
     const handleSubmit = event => {
@@ -27,10 +27,10 @@ export default function Search({ setPlayerData, setSearching, setHidden }) {
                     setSearching(false);
                     setHidden(false);
                     setActive(true);
-                    setPlaceholder("Search disabled for one minute. Fill the deck with a few cards and edit later.")
+                    setPlaceholder("Search disabled for one minute. Fill the deck with repeated cards and edit later.")
                     setTimeout(() => {
                         setActive(active => !active)
-                        setPlaceholder("Search")
+                        setPlaceholder("Search for a player")
                     }, 60000);
                 }
             )

@@ -9,22 +9,22 @@ export default function DecksEx() {
 				How the B-Ball Cards application respects Sports Reference guidelines:
 			</h1>
 			<ul className="ml-10 list-disc list-inside">
-				<li>it has never and will never be monetized</li>
-				<li>search function is limited to once per minute to prevent performance issues on Sports Reference sites</li>
-				<li className="ml-10">this represents the only interaction with Sports Reference</li>
-				<li>data, images, statistics, etc. from Sports Reference are blurred</li>
-				<li>the database that stores card information is cleared after the tenth deck submission</li>
+				<li>it has never and will never be monetized or advertised commercially (no SEO)</li>
+				<li>search function is limited to once per minute to prevent adverse performance impacts on Sports Reference sites</li>
+				<li className="ml-10">this represents the only direct interaction with Sports Reference websites</li>
+				<li>data, images, statistics, etc. presented on this site from Sports Reference are blurred such that the data is not used in a manner that competes with Sports Reference&#x27;s services</li>
+				<li>the database that stores deck data is cleared after the 20<sup>th</sup> deck submission such that the data is not used in a manner that competes with Sports Reference&#x27;s services</li>
 			</ul>
 		</div>
 		<div className="my-10 w-5/6 px-12 py-4 items-center shadow-lg rounded-xl ring-1 ring-black/5">
 			<h1>
-				How B-Ball Cards application application works:
+				How the B-Ball Cards application application works:
 			</h1>
     		<p>
-        		The application interface <a className="underline text-blue-700 hover:text-blue-400"
+        		The <a className="underline text-blue-700 hover:text-blue-400"
                 href="https://main--davidluby.netlify.app/decks"
                 target="_blank"
-                rel="noopener noreferrer">here</a> uses next.js and is deployed on Netlify, communicating with an API served by Flask, mod_wsgi, and Apache deployed on an AWS EC2 instance. The API retrieves data directly from the internet and from an AWS MSSQL RDS instance, where data is also stored. Two testing endpoints are available <a className="underline text-blue-700 hover:text-blue-400"
+                rel="noopener noreferrer">appilcation frontend</a> is built on next.js and deployed on Netlify, communicating with an API via an Apache web server deployed on an AWS EC2 instance backed by a WSGI Flask application. The API retrieves data directly from the internet and from an AWS MSSQL RDS instance, where data is also stored. Two testing endpoints are available <a className="underline text-blue-700 hover:text-blue-400"
                 href="https://davidluby.com/plain_test"
                 target="_blank"
                 rel="noopener noreferrer">here</a> and <a className="underline text-blue-700 hover:text-blue-400"
@@ -38,13 +38,13 @@ export default function DecksEx() {
                 target="_blank"
                 rel="noopener noreferrer">backend</a> repositories are public on GitHub. Below is a block diagram drawn before any of the application materialized. It is still valid.
 			</p>
-			<img src="/system.png"></img>
-			<p>
+			<p className="mt-4">
 				The backend repository uses Git, GitHub, AWS CodePipeline, and AWS CodeDeploy for CI/CD deployment to the Amazon Linux 2 instance where this is hosted. Similarly, the frontend uses Git and GitHub to deploy directly to Netlify.
 			</p>
 			<p className="mt-4">
-				I regret that this website&#8212;in particular, this application&#8212;is not very responsive (4/13/2023), but I feel it is enough to post. Once again, if you see anything broken or poorly-done, challenge me to fix it!
+				I regret that this website&#8212;in particular, this application&#8212;is not very responsive (4/13/2023), but I feel it demonstrates fullstack competency, my desire to continue learning, and is enough to post. If you see anything broken or poorly-done, I probably know about it, so challenge me to fix it!
 			</p>
+			<img src="/system.png"></img>
 		</div>
     </div>
 	)
