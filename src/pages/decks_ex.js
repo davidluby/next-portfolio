@@ -42,9 +42,9 @@ export default function DecksEx() {
 				The backend repository uses Git, GitHub, AWS CodePipeline, and AWS CodeDeploy for CI/CD deployment to the Amazon Linux 2 instance where this is hosted. Similarly, the frontend uses Git and GitHub to deploy directly to Netlify.
 			</p>
 			<p className="mt-4">
-				I regret that this website&#8212;in particular, this application&#8212;is not very responsive (4/13/2023), but I feel it demonstrates fullstack competency, my desire to continue learning, and is enough to post. If you see anything broken or poorly-done, I probably know about it, so challenge me to fix it!
+				I regret that this website&#8212;in particular, this application&#8212;is not very responsive (4/13/2023), but I feel it demonstrates fullstack competency and is enough to post. If you see anything broken or poorly-done, I probably know about it, so challenge me to fix it! <b>And, yes, this is wildly overengineered for my purposes, but it was a great learning experience.</b>
 			</p>
-			<img src="/system.png"></img>
+			<img className="mt-10" src="/system.png"></img>
 		</div>
     </div>
 	)

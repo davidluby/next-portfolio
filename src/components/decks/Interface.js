@@ -1,11 +1,12 @@
 import React from 'react'
 import Card from "@components/decks/Card"
-import Show from "@components/decks/Show"
 import Add from "@components/decks/Add"
 import Deck from "@components/decks/Deck"
 import New from "@components/decks/New"
 import Save from "@components/decks/Save"
 import ExpandCards from "@components/decks/ExpandCards"
+import Show from "@components/decks/Show"
+import Help from "@components/decks/Help"
 
 export default function Interface({ setHidden, searching, playerData, empty, setEmpty, cards, setCards, deck, setDeck }) {
 
@@ -30,7 +31,10 @@ export default function Interface({ setHidden, searching, playerData, empty, set
 				{ !empty ? <New setDeck={setDeck} /> : null}
 				{ (!empty && (cards.length > 1)) ? <ExpandCards /> : null}
 			</div>
-			<Show setHidden={setHidden} empty={empty} setEmpty={setEmpty} setCards={setCards} setDeck={setDeck} />
+			<div className="flex flex-row items-center space-x-2">
+				<Show setHidden={setHidden} empty={empty} setEmpty={setEmpty} setCards={setCards} setDeck={setDeck} />
+				<Help />
+			</div>
 		</div>
 	)
 }
