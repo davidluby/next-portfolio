@@ -4,11 +4,11 @@ export default function DecksEx() {
 
   return (
     <div className="flex flex-col items-center my-20">
-		<div className="w-[97%] res:w-5/6 px-5 py-5 res:p-12 shadow-lg rounded-xl ring-1 ring-black/5">
+		<div className="w-[97%] res:w-5/6 p-5 res:p-12 shadow-lg rounded-xl ring-1 ring-black/5">
 			<h1>
 				How the B-Ball Cards application respects Sports Reference guidelines:
 			</h1>
-			<ul className="ml-10 list-disc list-inside">
+			<ul className="list-disc list-inside">
 				<li>it has never and will never be monetized or advertised commercially (no SEO)</li>
 				<li>search function is limited to once per minute to prevent adverse performance impacts on Sports Reference sites</li>
 				<li className="ml-10">this represents the only direct interaction with Sports Reference websites</li>
@@ -16,7 +16,7 @@ export default function DecksEx() {
 				<li>the database that stores deck data is cleared after the 20<sup>th</sup> deck submission such that the data is not used in a manner that competes with Sports Reference&#x27;s services</li>
 			</ul>
 		</div>
-		<div className="w-[97%] res:w-5/6 px-5 py-5 res:p-12 mt-20 shadow-lg rounded-xl ring-1 ring-black/5">
+		<div className="w-[97%] res:w-5/6 p-5 res:p-12 mt-20 shadow-lg rounded-xl ring-1 ring-black/5">
 			<h1>
 				How the B-Ball Cards application application works:
 			</h1>

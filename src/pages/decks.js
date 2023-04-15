@@ -15,14 +15,14 @@ export default function Decks() {
 
 
   return (
-    <div className="flex flex-col items-center my-20">
+    <div className="flex flex-col items-center my-20 border-4">
 		<Search setPlayerData={setPlayerData} setSearching={setSearching} setHidden={setHidden} />
 		<div>
 			{ !hidden ? <Interface setHidden={setHidden} searching={searching} playerData={playerData} empty={empty} setEmpty={setEmpty}
 							cards={cards} setCards={setCards} deck={deck} setDeck={setDeck} />
 				: <h1 className="p-5 res:p-0 res:mt-20 text-center"><b>Enter an <i>active</i> NBA player&apos;s name above. Try typing in &#34;Al Horford&#34; (remove quotes) if you need a name.</b></h1>}
 		</div>
-		<div id="helpID" className="w-[97%] res:w-5/6 px-5 py-5 res:p-12 mt-20 shadow-lg rounded-xl ring-1 ring-black/5">
+		<div id="helpID" className="w-[97%] res:w-5/6 p-5 res:p-12 mt-20 shadow-lg rounded-xl ring-1 ring-black/5">
 			<h1>
 				Quick Start
 			</h1>
@@ -35,12 +35,12 @@ export default function Decks() {
 			<p className="mt-4">
 				<b>Click on the search bar and type in an NBA player&#x27;s name.</b> Limitations to the search algorithm have the following consequences:
 			</p>
-			<ul className="list-disc list-inside">
-				<li className="ml-10">only one search is allowed each minute (fill decks with repeated cards, or edit an existing deck)</li>
-				<li className="ml-10">the player must still be playing in the NBA</li>
-				<li className="ml-10">names typed into the search bar should be spelled perfectly</li>
-				<li className="ml-10">players with prefixes, suffixes, or hyphens&#8212;anything other than a first and last name&#8212;rarely work</li>
-				<li className="ml-10">players traded this season will appear with a blank background and some incorrect data</li>
+			<ul className="list-disc list-inside res:ml-10">
+				<li>only one search is allowed each minute (fill decks with repeated cards, or edit an existing deck)</li>
+				<li>the player must still be playing in the NBA</li>
+				<li>names typed into the search bar should be spelled perfectly</li>
+				<li>players with prefixes, suffixes, or hyphens&#8212;anything other than a first and last name&#8212;rarely work</li>
+				<li>players traded this season will appear with a blank background and some incorrect data</li>
 			</ul>
 			<p className="mt-4">
 				Make sure to load/refresh the saved decks whenever a deck is saved, overwritten, or deleted, or the changes will not appear. Finally, <b>this works well in Chromium browsers (Chrome, Edge, FireFox, etc.)</b>, it does not in Safari, and no others were checked.

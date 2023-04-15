@@ -45,7 +45,7 @@ export default function Simulator() {
     }, [])
     
     return (
-        <div className="w-[97%] res:w-5/6 px-5 py-5 res:p-12 mt-20 shadow-lg rounded-xl ring-1 ring-black/5">
+        <div className="w-[97%] res:w-5/6 p-5 res:p-12 mt-20 shadow-lg rounded-xl ring-1 ring-black/5">
             <canvas id="myCanvas" className="w-full border-2"></canvas>
         </div>
     )

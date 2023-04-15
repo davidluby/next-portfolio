@@ -60,7 +60,7 @@ export default function Resume(){
                         </p>
                     </div>
                 </div>
-                <div className="flex flex-col res:w-2/5 px-5 py-5 res:p-12 mt-20 res:mt-0 shadow-lg rounded-xl ring-1 ring-black/5">
+                <div className="flex flex-col res:w-2/5 p-5 res:p-12 mt-20 res:mt-0 shadow-lg rounded-xl ring-1 ring-black/5">
                     <h1 className="pb-2 text-center">
                         <b><i>Technical Skills</i></b>
                     </h1>
@@ -96,7 +96,7 @@ export default function Resume(){
                     </ul>
                 </div>
             </div>
-            <div className="w-[97%] res:w-5/6 px-5 py-5 res:p-12 mt-20 shadow-lg rounded-xl ring-1 ring-black/5">
+            <div className="w-[97%] res:w-5/6 p-5 res:p-12 mt-20 shadow-lg rounded-xl ring-1 ring-black/5">
                 <h1>
                     <b><i>Work Experience</i></b>
                 </h1>
@@ -154,7 +154,7 @@ export default function Resume(){
                     </li>   
                 </ul>
             </div>
-            <div className="w-[97%] res:w-5/6 px-5 py-5 res:p-12 mt-20 shadow-lg rounded-xl ring-1 ring-black/5">
+            <div className="w-[97%] res:w-5/6 p-5 res:p-12 mt-20 shadow-lg rounded-xl ring-1 ring-black/5">
                 <h1>
                     <b><i>Education</i></b>
                 </h1>
@@ -175,7 +175,7 @@ export default function Resume(){
                     </li>   
                 </ul>
             </div>
-            <div className="w-[97%] res:w-5/6 px-5 py-5 res:p-12 mt-20 shadow-lg rounded-xl ring-1 ring-black/5">
+            <div className="w-[97%] res:w-5/6 p-5 res:p-12 mt-20 shadow-lg rounded-xl ring-1 ring-black/5">
                 <h1>
                     <b><i>Certifications</i></b>
                 </h1>
