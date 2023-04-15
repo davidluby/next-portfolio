@@ -11,7 +11,7 @@ import Help from "@components/decks/Help"
 export default function Interface({ setHidden, searching, playerData, empty, setEmpty, cards, setCards, deck, setDeck }) {
 
 	return (
-		<div className="shadow-lg rounded-xl ring-1 ring-black/5 p-10">
+		<div className="w-[97%] res:w-5/6 px-5 py-5 res:p-12 mt-20 shadow-lg rounded-xl ring-1 ring-black/5">
 			<div className="flex flex-row justify-center my-5 space-x-20">
 				{ !searching ? <div className="flex items-center" style={{animation : "inAnimation 500ms ease-in"}}>
 					<Card data={playerData} loc="main" />

@@ -7,7 +7,7 @@ module.exports = {
   theme: {
     screens: {
       'big': '1500px',
-      'res': '1250px'
+      'res': '950px'
     },
     fontFamily: {
       'base': ["Segoe UI Variable", "Trebuchet MS", "Arial", "Helvetica", "sans-serif", "Times New Roman"]

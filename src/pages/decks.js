@@ -15,14 +15,14 @@ export default function Decks() {
 
 
   return (
-    <div className="flex flex-col items-center px-10">
+    <div className="flex flex-col items-center my-20">
 		<Search setPlayerData={setPlayerData} setSearching={setSearching} setHidden={setHidden} />
-		<div className="p-10">
+		<div>
 			{ !hidden ? <Interface setHidden={setHidden} searching={searching} playerData={playerData} empty={empty} setEmpty={setEmpty}
 							cards={cards} setCards={setCards} deck={deck} setDeck={setDeck} />
-				: <h1><b>Enter an <i>active</i> NBA player&apos;s name above. Try typing in &#34;Al Horford&#34; (remove quotes) if you need a name.</b></h1>}
+				: <h1 className="p-5 res:p-0 res:mt-20 text-center"><b>Enter an <i>active</i> NBA player&apos;s name above. Try typing in &#34;Al Horford&#34; (remove quotes) if you need a name.</b></h1>}
 		</div>
-		<div id="helpID" className="mb-10 w-5/6 px-12 py-4 items-center shadow-lg rounded-xl ring-1 ring-black/5">
+		<div id="helpID" className="w-[97%] res:w-5/6 px-5 py-5 res:p-12 mt-20 shadow-lg rounded-xl ring-1 ring-black/5">
 			<h1>
 				Quick Start
 			</h1>
