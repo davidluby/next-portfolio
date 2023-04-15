@@ -26,15 +26,13 @@ export default function Interface({ setHidden, searching, playerData, empty, set
 					: null }
 			</div>
 			<div className="flex flex-row justify-center items-center space-x-2">
+				<Help />
 				<Add playerData={playerData} cards={cards} setCards={setCards} setEmpty={setEmpty} />
 				{ !empty ? <Save cards={cards} deck={deck} /> : null}
 				{ !empty ? <New setDeck={setDeck} /> : null}
 				{ (!empty && (cards.length > 1)) ? <ExpandCards /> : null}
 			</div>
-			<div className="flex flex-row justify-center items-center space-x-2">
-				<Show setHidden={setHidden} empty={empty} setEmpty={setEmpty} setCards={setCards} setDeck={setDeck} />
-				<Help />
-			</div>
+			<Show setHidden={setHidden} empty={empty} setEmpty={setEmpty} setCards={setCards} setDeck={setDeck} />
 		</div>
 	)
 }
