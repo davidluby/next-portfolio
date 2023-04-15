@@ -35,7 +35,7 @@ export default function Show({ empty, setEmpty, setHidden, setCards, setDeck }) 
                     const dataCards = deck.slice(1);
                     const dataDeck = deck[0];
 
-                    return <div className="flex flex-col items-center w-[97%] res:w-5/6 p-5 res:p-12 mt-20 shadow-lg rounded-xl ring-1 ring-black/5 border-4 border-red-300" key={idx}>
+                    return <div className="flex flex-col items-center p-5 res:p-12 mt-20 shadow-lg rounded-xl ring-1 ring-black/5 border-4 border-red-300" key={idx}>
                         <div className="flex flex-row space-x-10">
                             <p className="border-b-2 border-green-700">Deck: {dataDeck.id}</p>
                             <p className="border-b-2 border-green-700">Last saved: {dataDeck.saved}</p>
