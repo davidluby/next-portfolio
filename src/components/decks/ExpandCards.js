@@ -5,7 +5,8 @@ export default function ExpandCards() {
     const expand = () => {
 		const stack = document.querySelector("#expand");
 		stack.classList.toggle("-space-x-72");
-		stack.classList.toggle("-space-x-[21.5rem]");
+		stack.classList.toggle("-space-x-[20rem]");
+		stack.classList.toggle("app:-space-x-[21.5rem]");
 
 		if (text == "Stack Deck"){
 			setText("Fan Deck")

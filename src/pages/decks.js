@@ -15,7 +15,7 @@ export default function Decks() {
 
 
   return (
-    <div className="flex flex-col items-center my-20">
+    <div className="flex flex-col items-center mt-10 mb-20">
 		<Search setPlayerData={setPlayerData} setSearching={setSearching} setHidden={setHidden} />
 		<div className="flex justify-center w-full">
 			{ !hidden ? <Interface setHidden={setHidden} searching={searching} playerData={playerData} empty={empty} setEmpty={setEmpty}
