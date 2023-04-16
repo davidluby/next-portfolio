@@ -9,7 +9,7 @@ export default function ExpandCards() {
 		stack.classList.toggle("app:-space-x-[21.5rem]");
 
 		if (text == "Stack Deck"){
-			setText("Fan Deck")
+			setText("Spread Deck")
 		}
 		else {
 			setText("Stack Deck")

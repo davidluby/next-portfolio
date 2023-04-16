@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Save({cards, deck}) {
+export default function Save({cards, deck, setDataDecks, setEmpty, setReveal }) {
     const saveData = () => {
         if (cards.length != 5) {
             alert("Each deck submission must have five cards.")
@@ -16,6 +16,19 @@ export default function Save({cards, deck}) {
                 }
             )
             cards.shift()
+
+            fetch('/api/show_deck', {
+                method: "GET",
+                }).then(
+                response => response.json()
+                .then(
+                    data => {
+                        setDataDecks(JSON.parse(data));
+                        setEmpty(false);
+                        setReveal(false);
+                    }
+                )
+            )
         }
     }
     

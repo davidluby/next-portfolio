@@ -14,26 +14,34 @@ export default function Interface({ setHidden, searching, playerData, empty, set
 	const [dataDecks, setDataDecks] = useState();
     const [reveal, setReveal] = useState(true);
 
+	const toFront = (idx, jdx) => {
+		const id = "#front-" + idx + jdx
+		console.log(id)
+        const flip = document.querySelector(id)
+		flip.classList.toggle("z-0")
+        flip.classList.toggle("z-50")
+	}
+
 	return (
 		<div className="flex flex-col items-center w-full">
-			<div className="w-[97%] app:w-5/6 p-5 app:p-12 mt-20 shadow-lg rounded-xl ring-1 ring-black/5">
-				<div className="flex flex-col app:flex-row app:justify-evenly items-center w-full mb-10">
+			<div className="flex flex-col items-center w-[97%] app:w-5/6 p-5 app:p-12 mt-20 shadow-lg rounded-xl ring-1 ring-black/5">
+				<div className="flex flex-col app:flex-row app:justify-evenly items-center w-full">
 					{ !searching ? <div className="flex items-center" style={{animation : "inAnimation 500ms ease-in"}}>
 						<Card data={playerData} loc="main" />
 						</div> : null}
-					{ !empty ? <div className="w-[28rem]" style={{animation : "inAnimation 500ms ease-in"}}>
+					{ !empty ? <div className="flex flex-col items-center w-full app:w-[28rem]" style={{animation : "inAnimation 500ms ease-in"}}>
+							<div className="flex flex-row justify-evenly w-full mb-5 mt-5 app:mt-0">
+								<p className="border-b-2 border-green-700">Deck: {deck.id}</p>
+								<p className="border-b-2 border-green-700">Last saved: {deck.saved}</p>
+							</div>
 						<Deck cards={cards} setCards={setCards} />
-						<div className="flex flex-row justify-evenly">
-							<p className="border-b-2 border-green-700">Deck: {deck.id}</p>
-							<p className="border-b-2 border-green-700">Last saved: {deck.saved}</p>
-						</div>
 						</div>
 						: null }
 				</div>
-				<div className="flex flex-col app:flex-row items-center justify-center w-full space-y-5 app:space-y-0 app:space-x-5">
+				<div className="flex flex-col app:flex-row items-center justify-center w-full app:mt-5 space-y-5 app:space-y-0 app:space-x-5">
 					<Add playerData={playerData} cards={cards} setCards={setCards} setEmpty={setEmpty} />
-					{ !empty ? <Save cards={cards} deck={deck} /> : null}
 					{ !empty ? <New setDeck={setDeck} /> : null}
+					{ !empty ? <Save cards={cards} deck={deck} setDataDecks={setDataDecks} setEmpty={setEmpty} setReveal={setReveal} /> : null}
 					{ (!empty && (cards.length > 1)) ? <ExpandCards /> : null}
 					<Help />
 				</div>
@@ -49,17 +57,21 @@ export default function Interface({ setHidden, searching, playerData, empty, set
                             <p className="border-b-2 border-green-700">Deck: {dataDeck.id}</p>
                             <p className="border-b-2 border-green-700">Last saved: {dataDeck.saved}</p>
                         </div>
-                        <div className="flex flex-row justify-center my-4 -space-x-[20.5rem] app:-space-x-0 scale-75 app:scale-100">
+                        <div className="flex flex-row justify-center my-4 -space-x-[20.5rem] fhd:-space-x-0 scale-75 app:scale-100">
                             {dataCards.map(function(card, jdx) {
-                                return <div key={jdx}>
-                                        <Card data={card} loc={idx.toString()+jdx.toString()} />
+                                return <div key={jdx}
+											className="z-0 transition-all ease-in duration-300"
+											loc={idx+jdx}
+											id={"front-" + idx + jdx}
+											onClick={() => toFront(idx, jdx)}>
+										<Card data={card} loc={"front" + idx + jdx} />
                                     </div>
                                         })
                                     }
                         </div>
                         <div className="flex flex-row space-x-10">
                             <Edit dataCards={dataCards} setCards={setCards} dataDeck={dataDeck} setDeck={setDeck} setHidden={setHidden} />
-                            <Delete dataDeck={dataDeck} />
+                            <Delete dataDeck={dataDeck} setDataDecks={setDataDecks} setEmpty={setEmpty} setReveal={setReveal} />
                         </div>
                         </div>
                 }) : null

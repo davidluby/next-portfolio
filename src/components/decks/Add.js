@@ -16,7 +16,7 @@ export default function Add({ playerData, cards, setCards, setEmpty }) {
             setText("Add Card to Deck");
             setFull(false);
         } else{
-            setText("Max Five Cards");
+            setText("Five Card Max");
             setFull(true);
         };
     }, [cards])

@@ -12,7 +12,7 @@ export default function Search({ setPlayerData, setSearching, setHidden }) {
     
     const searchName = (event) => {
         if (event.key ===  "Enter") {
-            fetch('api/get_data', {
+            fetch('/api/get_data', {
                 method: "POST",
                 headers: {
                     "Content-Type":"application/json"
