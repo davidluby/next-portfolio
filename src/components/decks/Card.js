@@ -7,7 +7,7 @@ export default function Card({ data, loc }) {
     const overallRTG = ((data.min/40)*0.2 + +offenseRTG*0.6 + defenseRTG*0.2);
 
     function flipCard() {
-        const id = '#flipState-'+loc
+        const id = "#flipState-"+loc
         const flip = document.querySelector(id)
         flip.classList.toggle("[transform:rotateY(180deg)]")
     }
