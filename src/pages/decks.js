@@ -15,7 +15,7 @@ export default function Decks() {
 
 
   return (
-    <div className="flex flex-col items-center mt-10 mb-20">
+    <div className="flex flex-col items-center mb-20">
 		<Search setPlayerData={setPlayerData} setSearching={setSearching} setHidden={setHidden} />
 		<div className="flex justify-center w-full">
 			{ !hidden ? <Interface setHidden={setHidden} searching={searching} playerData={playerData} empty={empty} setEmpty={setEmpty}
@@ -43,7 +43,7 @@ export default function Decks() {
 				<li>players traded this season will appear with a blank background and some incorrect data</li>
 			</ul>
 			<p className="mt-4">
-				Make sure to load/refresh the saved decks whenever a deck is saved, overwritten, or deleted, or the changes will not appear. Finally, <b>this works well in Chromium browsers (Chrome, Edge, FireFox, etc.)</b>, it does not in Safari, and no others were checked.
+				Finally, <b>this works well in Chromium browsers (Chrome, Edge, FireFox, etc.)</b>, it does not in Safari, and no others were checked.
 			</p>
 			<h1 className="mt-4">
 				Disclaimer

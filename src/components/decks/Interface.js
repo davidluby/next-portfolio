@@ -24,7 +24,7 @@ export default function Interface({ setHidden, searching, playerData, empty, set
 
 	return (
 		<div className="flex flex-col items-center w-full">
-			<div className="flex flex-col items-center w-[97%] app:w-5/6 p-5 app:p-12 mt-20 shadow-lg rounded-xl ring-1 ring-black/5">
+			<div className="flex flex-col items-center w-[97%] app:w-5/6 p-5 app:p-12 mt-10 shadow-lg rounded-xl ring-1 ring-black/5 parquet">
 				<div className="flex flex-col app:flex-row app:justify-evenly items-center w-full">
 					{ !searching ? <div className="flex items-center" style={{animation : "inAnimation 500ms ease-in"}}>
 						<Card data={playerData} loc="main" />
@@ -36,7 +36,8 @@ export default function Interface({ setHidden, searching, playerData, empty, set
 							</div>
 						<Deck cards={cards} setCards={setCards} />
 						</div>
-						: null }
+						: null
+					}
 				</div>
 				<div className="flex flex-col app:flex-row items-center justify-center w-full app:mt-5 space-y-5 app:space-y-0 app:space-x-5">
 					<Add playerData={playerData} cards={cards} setCards={setCards} setEmpty={setEmpty} />
@@ -48,33 +49,33 @@ export default function Interface({ setHidden, searching, playerData, empty, set
 				<Show setDataDecks={setDataDecks} setEmpty={setEmpty} setReveal={setReveal} />
 			</div>
 			{ (!empty && !reveal) ? dataDecks.map(function(deck, idx) {
-                    const dataCards = deck.slice(1);
-                    const dataDeck = deck[0];
-
-                    return <div className="flex flex-col items-center w-[97%] app:w-5/6 p-5 app:p-12 mt-10 shadow-lg rounded-xl ring-1 ring-black/5"
-                                key={idx}>
-                        <div className="flex flex-row space-x-10">
-                            <p className="border-b-2 border-green-700">Deck: {dataDeck.id}</p>
-                            <p className="border-b-2 border-green-700">Last saved: {dataDeck.saved}</p>
-                        </div>
-                        <div className="flex flex-row justify-center my-4 -space-x-[20.5rem] fhd:-space-x-0 scale-75 app:scale-100">
-                            {dataCards.map(function(card, jdx) {
-                                return <div key={jdx}
+				const dataCards = deck.slice(1);
+				const dataDeck = deck[0];
+				console.log(dataDeck.id)
+				return <div key={dataDeck.id}
+							className="flex flex-col items-center w-[97%] app:w-5/6 p-5 app:p-12 mt-10 shadow-lg rounded-xl ring-1 ring-black/5 parquet">
+						<div className="flex flex-row space-x-10">
+							<p className="border-b-2 border-green-700">Deck: {dataDeck.id}</p>
+							<p className="border-b-2 border-green-700">Last saved: {dataDeck.saved}</p>
+						</div>
+						<div className="flex flex-row justify-center my-4 -space-x-[20.5rem] fhd:-space-x-0 scale-75 app:scale-100">
+							{dataCards.map(function(card, jdx) {
+								return <div key={jdx}
 											className="z-0 transition-all ease-in duration-300"
 											loc={idx+jdx}
 											id={"front-" + idx + jdx}
 											onClick={() => toFront(idx, jdx)}>
 										<Card data={card} loc={"front" + idx + jdx} />
-                                    </div>
-                                        })
-                                    }
-                        </div>
-                        <div className="flex flex-row space-x-10">
-                            <Edit dataCards={dataCards} setCards={setCards} dataDeck={dataDeck} setDeck={setDeck} setHidden={setHidden} />
-                            <Delete dataDeck={dataDeck} setDataDecks={setDataDecks} setEmpty={setEmpty} setReveal={setReveal} />
-                        </div>
-                        </div>
-                }) : null
+									</div>
+										})
+									}
+						</div>
+						<div className="flex flex-row space-x-10">
+							<Edit dataCards={dataCards} setCards={setCards} dataDeck={dataDeck} setDeck={setDeck} setHidden={setHidden} />
+							<Delete dataDeck={dataDeck} setDataDecks={setDataDecks} setEmpty={setEmpty} setReveal={setReveal} />
+						</div>
+					</div>
+			}) : null
         }
 		</div>
 	)

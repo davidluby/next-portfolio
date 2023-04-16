@@ -88,6 +88,9 @@ h2 {
 
 
 /* Decks */
+.parquet {
+    background-image: url("/parquet.jpg")
+}
 .card-size {
     width: 18rem;
     height: 26rem;
