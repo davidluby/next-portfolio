@@ -25,7 +25,7 @@ export default function Card({ data, loc }) {
                 </div>
             </div>
 
-            <div className="absolute inset-0 [transform:rotateY(180deg)] [backface-visibility:hidden]"
+            <div className="absolute inset-0 [transform:rotateY(180deg)] [backface-visibility:hidden] [-webkit-backface-visibility: hidden;]"
                 id="flipState">
                 <div className="flex flex-col items-center justify-evenly h-full w-full rounded-xl bg-black/60 text-white">
                     <div className="flex flex-row space-x-6">

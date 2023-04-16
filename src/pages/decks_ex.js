@@ -24,7 +24,7 @@ export default function DecksEx() {
         		The <a className="underline text-blue-700 hover:text-blue-400"
                 href="https://main--davidluby.netlify.app/decks"
                 target="_blank"
-                rel="noopener noreferrer">appilcation frontend</a> is built on next.js and deployed on Netlify, communicating with an API via an Apache web server deployed on an AWS EC2 instance backed by a WSGI Flask application. The API retrieves data directly from the internet and from an AWS MSSQL RDS instance, where data is also stored. Two testing endpoints are available <a className="underline text-blue-700 hover:text-blue-400"
+                rel="noopener noreferrer">appilcation's frontend</a> is built on next.js and deployed via Netlify, communicating with an API using an Apache web server deployed on an AWS EC2 instance backed by a Flask WSGI. The API retrieves data directly from the internet and from an AWS MSSQL RDS instance, where data is also stored. Two testing endpoints are available <a className="underline text-blue-700 hover:text-blue-400"
                 href="https://davidluby.com/plain_test"
                 target="_blank"
                 rel="noopener noreferrer">here</a> and <a className="underline text-blue-700 hover:text-blue-400"
@@ -39,7 +39,7 @@ export default function DecksEx() {
                 rel="noopener noreferrer">backend</a> repositories are public on GitHub. Below is a block diagram drawn before any of the application materialized. It is still valid.
 			</p>
 			<p className="mt-4">
-				The backend repository uses Git, GitHub, AWS CodePipeline, and AWS CodeDeploy for CI/CD deployment to the Amazon Linux 2 instance where this is hosted. Similarly, the frontend uses Git and GitHub to deploy directly to Netlify.
+				The backend repository uses Git, GitHub, AWS CodePipeline, and AWS CodeDeploy for CI/CD deployment to an Amazon Linux 2 instance. Similarly, the frontend uses Git and GitHub for direct CI/CD integration with Netlify.
 			</p>
 			<p className="mt-4">
 				I regret that this website&#8212;in particular, this application&#8212;is not very responsive (4/13/2023), but I feel it demonstrates fullstack competency and is enough to post. If you see anything broken or poorly-done, I probably know about it, so challenge me to correct it! <b>And, yes, this is wildly overengineered for my purposes, but it was a great learning experience.</b>
