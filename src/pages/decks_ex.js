@@ -24,7 +24,7 @@ export default function DecksEx() {
         		The <a className="underline text-blue-700 hover:text-blue-400"
                 href="https://main--davidluby.netlify.app/decks"
                 target="_blank"
-                rel="noopener noreferrer">appilcation's frontend</a> is built on next.js and deployed via Netlify, communicating with an API using an Apache web server deployed on an AWS EC2 instance backed by a Flask WSGI. The API retrieves data directly from the internet and from an AWS MSSQL RDS instance, where data is also stored. Two testing endpoints are available <a className="underline text-blue-700 hover:text-blue-400"
+                rel="noopener noreferrer">appilcation&apos;s frontend</a> is built on next.js and deployed via Netlify, communicating with an API using an Apache web server deployed on an AWS EC2 instance backed by a Flask WSGI. The API retrieves data directly from the internet and from an AWS MSSQL RDS instance, where data is also stored. Two testing endpoints are available <a className="underline text-blue-700 hover:text-blue-400"
                 href="https://davidluby.com/plain_test"
                 target="_blank"
                 rel="noopener noreferrer">here</a> and <a className="underline text-blue-700 hover:text-blue-400"
