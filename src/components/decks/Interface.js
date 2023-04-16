@@ -30,7 +30,7 @@ export default function Interface({ setHidden, searching, playerData, empty, set
 						<Card data={playerData} loc="main" />
 						</div> : null}
 					{ !empty ? <div className="flex flex-col items-center w-full app:w-[28rem]" style={{animation : "inAnimation 500ms ease-in"}}>
-							<div className="flex flex-row justify-evenly w-full mb-5 mt-5 app:mt-0">
+							<div className="flex flex-row justify-evenly w-full mt-5 app:mt-0">
 								<p className="border-b-2 border-green-700">Deck: {deck.id}</p>
 								<p className="border-b-2 border-green-700">Last saved: {deck.saved}</p>
 							</div>
@@ -39,7 +39,7 @@ export default function Interface({ setHidden, searching, playerData, empty, set
 						: null
 					}
 				</div>
-				<div className="flex flex-col app:flex-row items-center justify-center w-full app:mt-5 space-y-5 app:space-y-0 app:space-x-5">
+				<div className="flex flex-col app:flex-row items-center justify-center w-full mt-5 space-y-5 app:space-y-0 app:space-x-5">
 					<Add playerData={playerData} cards={cards} setCards={setCards} setEmpty={setEmpty} />
 					{ !empty ? <New setDeck={setDeck} /> : null}
 					{ !empty ? <Save cards={cards} deck={deck} setDataDecks={setDataDecks} setEmpty={setEmpty} setReveal={setReveal} /> : null}
