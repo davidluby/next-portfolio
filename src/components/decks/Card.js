@@ -9,23 +9,23 @@ export default function Card({ data, loc }) {
     function flipCard() {
         const id = "#flipState-"+loc
         const flip = document.querySelector(id)
-        flip.classList.toggle("[-webkit-transform:rotateY(180deg)]")
+        flip.classList.toggle("[transform:rotateY(180deg)]")
     }
   return (
-    <button className="group text-left card-size transition-all ease-in duration-500 [-webkit-perspective:1000px]">
-        <div className="relative h-full w-full transition-all ease-in duration-500 [-webkit-transform-style:preserve-3d]"
+    <button className="group text-left card-size transition-all ease-in duration-500 [perspective:1000px]">
+        <div className="relative h-full w-full transition-all ease-in duration-500 [transform-style:preserve-3d]"
             id={"flipState-"+loc}
             onClick={() => flipCard()}>
             <div className="absolute h-full w-full rounded-xl shadow-sm shadow-black/80 bg-center bg-cover bg-no-repeat"
                 style={{backgroundImage: `url(${"./cities/" + data.team.toLowerCase() + ".jpg"})`}}>
             </div>
-            <div className="absolute overflow-hidden h-full w-full rounded-xl border-4 border-yellow-500 group-hover:border-yellow-300 transition-all duration-500 [-webkit-backface-visibility: hidden]">
+            <div className="absolute overflow-hidden h-full w-full rounded-xl border-4 border-yellow-500 group-hover:border-yellow-300 [backface-visibility:hidden] transition-all duration-500">
                 <div className="absolute w-[32rem] top-52 rotate-90 pl-12 text-xl font-bold italic text-white bg-yellow-500 group-hover:bg-yellow-300 transition-all duration-500">
                     {data.team} - {data.name}
                 </div>
             </div>
 
-            <div className="absolute inset-0 [-webkit-transform:rotateY(180deg)] [-webkit-backface-visibility: hidden]"
+            <div className="absolute inset-0 [transform:rotateY(180deg)] [backface-visibility:hidden]"
                 id="flipState">
                 <div className="flex flex-col items-center justify-evenly h-full w-full rounded-xl bg-black/60 text-white">
                     <div className="flex flex-row space-x-6">
