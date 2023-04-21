@@ -1,4 +1,5 @@
-import Simulator from "@src/components/simulation/Simulator"
+import Projectile from "@components/simulations/Projectile"
+import Fluids from "@src/components/simulations/Fluids"
 
 
 export default function Home() {
@@ -13,7 +14,8 @@ export default function Home() {
                     Welcome to my personal website.
                 </p>
             </div>
-            <Simulator />
+            <Projectile />
+            <Fluids />
         </div>
     )
 }
