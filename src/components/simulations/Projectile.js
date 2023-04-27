@@ -11,9 +11,9 @@ export default function Projectile() {
             this.x = x;
             this.y = y;
         }
-        addTo(vector) {
-            this.x += vector.x;
-            this.y += vector.y;
+        addTo(vector, s) {
+            this.x += vector.x * s;
+            this.y += vector.y *s;
             return this
         }
         subtractFrom(vector) {
@@ -48,38 +48,39 @@ export default function Projectile() {
         height : 300,
         gravity : new vector(0, 10),
         dT : 0.15,
-        n : 15,
+        n : 10,
         balls : []
     }
     
     for (let i = 0; i < scene.n; i++) {
 
-        let radius = randInt(3, 30); // assign random radius
+        let radius = randInt(5, 10); // assign random radius
         let xBoundary = scene.width - radius; // assign ball spawn x boundary
         let yBoundary = scene.height - radius; // assign ball spawn y boundary
         let sign = Math.cos(Math.PI * randInt(0, 1)) // assign random positive or negative
 
         var ball = {
             r : radius,
-            m : radius, // using the random, arbitrary radius as the mass
+            m : Math.PI * radius ** 2, // using the random, arbitrary radius as the mass
             position : new vector(randInt(radius, xBoundary), randInt(radius, yBoundary)),
-            velocity : new vector(sign * randInt(5, 50), sign * randInt(50, 20))
+            velocity : new vector(sign * randInt(5, 15), sign * randInt(5, 15))
         };
         scene.balls.push(ball)
     };
 
     function wallCollisions(ball) {
+        console.log(ball.velocity.x)
         ball.velocity.x += scene.gravity.x * scene.dT;
         ball.velocity.y += scene.gravity.y * scene.dT;
         ball.position.x += ball.velocity.x * scene.dT;
         ball.position.y += ball.velocity.y * scene.dT;
 
         if (ball.position.x <= ball.r) {
-            ball.position.x = ball.position.x;
+            ball.position.x = ball.r;
             ball.velocity.x = -ball.velocity.x;
         }
         if (ball.position.x > scene.width - ball.r) {
-            ball.position.x = ball.position.x;
+            ball.position.x = scene.width - ball.r;
             ball.velocity.x = -ball.velocity.x;
         }
         if (ball.position.y <= ball.r) {
@@ -95,13 +96,37 @@ export default function Projectile() {
 
     function ballCollisions(ballA, ballB, restitution) {
         var deltaR = new vector();
-        if (deltaR.subtract(ballA.position, ballB.position).magnitude() <= ballA.r + ballB.r) {
-            ballA.velocity.x = -(ballA.m*ballA.velocity.x + ballB.m*ballB.velocity.x - ballB.m*(ballA.velocity.x - ballB.velocity.x) ) / (ballA.m + ballB.m)
-            ballA.velocity.y = -(ballA.m*ballA.velocity.y + ballB.m*ballB.velocity.y - ballB.m*(ballA.velocity.y - ballB.velocity.y) ) / (ballA.m + ballB.m)
+        deltaR.subtract(ballA.position, ballB.position)
+        console.log(deltaR)
+        var dR = deltaR.magnitude()
+        if (dR <= (ballA.r + ballB.r + 10)) {
 
-            ballB.velocity.x = -(ballA.m*ballA.velocity.x + ballB.m*ballB.velocity.x - ballA.m*(ballB.velocity.x - ballA.velocity.x) ) / (ballA.m + ballB.m)
-            ballB.velocity.y = -(ballA.m*ballA.velocity.y + ballB.m*ballB.velocity.y - ballA.m*(ballB.velocity.y - ballA.velocity.y) ) / (ballA.m + ballB.m)
-            console.log("collision")
+            var direction = new vector(deltaR.x / dR, deltaR.y / dR);
+
+            var corr = (ballA.r + ballB.r - dR) / 2
+
+            ballA.position.x += direction.x * -corr
+            ballA.position.y += direction.y * -corr
+            ballB.position.x += direction.x * corr
+            ballB.position.y += direction.y * corr
+
+            var vA = ballA.velocity.x * direction.x + ballA.velocity.y * direction.y;
+            var vB = ballB.velocity.x * direction.x + ballB.velocity.y * direction.y;
+
+            var vNA = (ballA.m*vA + ballB.m*vB - ballB.m*(vA - vB) ) / (ballA.m + ballB.m); 
+            var vNB = (ballA.m*vA + ballB.m*vB - ballA.m*(vB - vA) ) / (ballA.m + ballB.m);
+
+            ballA.velocity.x += + direction.x * (vNA - vA)
+            ballA.velocity.y += direction.y * (vNA - vA)
+            ballB.velocity.x += direction.x * (vNB - vB)
+            ballB.velocity.y += direction.y * (vNB - vB)
+
+            //ballA.velocity.x = -(ballA.m*ballA.velocity.x + ballB.m*ballB.velocity.x - ballB.m*(ballA.velocity.x - ballB.velocity.x) ) / (ballA.m + ballB.m);
+            //ballA.velocity.y = -(ballA.m*ballA.velocity.y + ballB.m*ballB.velocity.y - ballB.m*(ballA.velocity.y - ballB.velocity.y) ) / (ballA.m + ballB.m);
+
+            //ballB.velocity.x = -(ballA.m*ballA.velocity.x + ballB.m*ballB.velocity.x - ballA.m*(ballB.velocity.x - ballA.velocity.x) ) / (ballA.m + ballB.m);
+            //ballB.velocity.y = -(ballA.m*ballA.velocity.y + ballB.m*ballB.velocity.y - ballA.m*(ballB.velocity.y - ballA.velocity.y) ) / (ballA.m + ballB.m);
+            //console.log("collision");
 
         }
     }
