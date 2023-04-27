@@ -47,14 +47,14 @@ export default function Projectile() {
         width : 600,
         height : 300,
         gravity : new vector(0, 10),
-        dT : 0.15,
-        n : 10,
+        dT : 0.075,
+        n : 15,
         balls : []
     }
     
     for (let i = 0; i < scene.n; i++) {
 
-        let radius = randInt(5, 10); // assign random radius
+        let radius = randInt(10, 25); // assign random radius
         let xBoundary = scene.width - radius; // assign ball spawn x boundary
         let yBoundary = scene.height - radius; // assign ball spawn y boundary
         let sign = Math.cos(Math.PI * randInt(0, 1)) // assign random positive or negative
@@ -99,16 +99,16 @@ export default function Projectile() {
         deltaR.subtract(ballA.position, ballB.position)
         console.log(deltaR)
         var dR = deltaR.magnitude()
-        if (dR <= (ballA.r + ballB.r + 10)) {
+        if (dR <= (ballA.r + ballB.r)) {
 
             var direction = new vector(deltaR.x / dR, deltaR.y / dR);
 
             var corr = (ballA.r + ballB.r - dR) / 2
 
-            ballA.position.x += direction.x * -corr
-            ballA.position.y += direction.y * -corr
-            ballB.position.x += direction.x * corr
-            ballB.position.y += direction.y * corr
+            ballA.position.x += direction.x * corr
+            ballA.position.y += direction.y * corr
+            ballB.position.x += direction.x * -corr
+            ballB.position.y += direction.y * -corr
 
             var vA = ballA.velocity.x * direction.x + ballA.velocity.y * direction.y;
             var vB = ballB.velocity.x * direction.x + ballB.velocity.y * direction.y;
@@ -116,7 +116,7 @@ export default function Projectile() {
             var vNA = (ballA.m*vA + ballB.m*vB - ballB.m*(vA - vB) ) / (ballA.m + ballB.m); 
             var vNB = (ballA.m*vA + ballB.m*vB - ballA.m*(vB - vA) ) / (ballA.m + ballB.m);
 
-            ballA.velocity.x += + direction.x * (vNA - vA)
+            ballA.velocity.x += direction.x * (vNA - vA)
             ballA.velocity.y += direction.y * (vNA - vA)
             ballB.velocity.x += direction.x * (vNB - vB)
             ballB.velocity.y += direction.y * (vNB - vB)
