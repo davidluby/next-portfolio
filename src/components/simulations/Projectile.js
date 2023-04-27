@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-export default function Projectile() {
+export default function Projectile({ name }) {
     function randInt(min, max) {
         var max = max + 1;
         return Math.floor(Math.random() * (max - min)) + min
@@ -69,7 +69,6 @@ export default function Projectile() {
     };
 
     function wallCollisions(ball) {
-        console.log(ball.velocity.x)
         ball.velocity.x += scene.gravity.x * scene.dT;
         ball.velocity.y += scene.gravity.y * scene.dT;
         ball.position.x += ball.velocity.x * scene.dT;
@@ -97,7 +96,7 @@ export default function Projectile() {
     function ballCollisions(ballA, ballB, restitution) {
         var deltaR = new vector();
         deltaR.subtract(ballA.position, ballB.position)
-        console.log(deltaR)
+
         var dR = deltaR.magnitude()
         if (dR <= (ballA.r + ballB.r)) {
 
@@ -120,14 +119,6 @@ export default function Projectile() {
             ballA.velocity.y += direction.y * (vNA - vA)
             ballB.velocity.x += direction.x * (vNB - vB)
             ballB.velocity.y += direction.y * (vNB - vB)
-
-            //ballA.velocity.x = -(ballA.m*ballA.velocity.x + ballB.m*ballB.velocity.x - ballB.m*(ballA.velocity.x - ballB.velocity.x) ) / (ballA.m + ballB.m);
-            //ballA.velocity.y = -(ballA.m*ballA.velocity.y + ballB.m*ballB.velocity.y - ballB.m*(ballA.velocity.y - ballB.velocity.y) ) / (ballA.m + ballB.m);
-
-            //ballB.velocity.x = -(ballA.m*ballA.velocity.x + ballB.m*ballB.velocity.x - ballA.m*(ballB.velocity.x - ballA.velocity.x) ) / (ballA.m + ballB.m);
-            //ballB.velocity.y = -(ballA.m*ballA.velocity.y + ballB.m*ballB.velocity.y - ballA.m*(ballB.velocity.y - ballA.velocity.y) ) / (ballA.m + ballB.m);
-            //console.log("collision");
-
         }
     }
     
@@ -142,13 +133,13 @@ export default function Projectile() {
 
     function draw() {
 
-        const canvas = document.getElementById("projectileCanvas");
+        const canvas = document.getElementById(name);
         canvas.width = scene.width;
         canvas.height = scene.height;
 
         let ctxt = canvas.getContext("2d");
         ctxt.clearRect(0, 0, scene.width, scene.height);
-        ctxt.fillStyle = "#FF0000";
+        ctxt.fillStyle = "#ff6600";
 
         for (let i = 0; i < scene.n; i++) {
             let ball = scene.balls[i]
@@ -159,6 +150,31 @@ export default function Projectile() {
             )
             ctxt.closePath();
             ctxt.fill();
+
+            ctxt.beginPath();
+            ctxt.moveTo(mycent.x - ball.r, mycent.y)
+            ctxt.lineTo(mycent.x + ball.r, mycent.y)
+            ctxt.stroke();
+            ctxt.closePath();
+
+            ctxt.beginPath();
+            ctxt.moveTo(mycent.x, mycent.y - ball.r)
+            ctxt.lineTo(mycent.x, mycent.y + ball.r)
+            ctxt.stroke();
+            ctxt.closePath();
+
+            ctxt.beginPath();
+            ctxt.arc(mycent.x, mycent.y - ball.r * 1.3, ball.r, 15*Math.PI/64, -79*Math.PI/64, false)
+            ctxt.stroke();
+            ctxt.closePath();
+
+            ctxt.beginPath();
+            ctxt.arc(mycent.x, mycent.y + ball.r * 1.3, ball.r, -15*Math.PI/64, 79*Math.PI/64, true)
+            ctxt.stroke();
+            ctxt.closePath();
+
+
+            ctxt.lineWidth = 1;
         }
     }
 
@@ -174,7 +190,10 @@ export default function Projectile() {
     
     return (
         <div className="w-[97%] res:w-5/6 p-5 res:p-12 mt-20 shadow-lg rounded-xl ring-1 ring-black/5">
-            <canvas id="projectileCanvas" className="w-full border-2"></canvas>
+            <h1>
+                2-D Collision Simulation
+            </h1>
+            <canvas id={name} className="w-full border-4 rounded-xl border-black"></canvas>
         </div>
     )
 }

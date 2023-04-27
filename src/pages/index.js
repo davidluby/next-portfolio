@@ -1,5 +1,6 @@
 import Projectile from "@components/simulations/Projectile"
-import Fluids from "@src/components/simulations/Fluids"
+import ThreeProjectile from "@components/simulations/ThreeProjectile"
+import Fluids from "@components/simulations/Fluids"
 
 
 export default function Home() {
@@ -14,7 +15,8 @@ export default function Home() {
                     Welcome to my personal website.
                 </p>
             </div>
-            <Projectile />
+            <Projectile name="projectile"/>
+            <ThreeProjectile name="3d-projectile"/>
             <Fluids />
         </div>
     )
