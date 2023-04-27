@@ -131,12 +131,7 @@ export default function Projectile({ name }) {
         }
     }
 
-    function draw() {
-
-        const canvas = document.getElementById(name);
-        canvas.width = scene.width;
-        canvas.height = scene.height;
-
+    function draw(canvas) {
         let ctxt = canvas.getContext("2d");
         ctxt.clearRect(0, 0, scene.width, scene.height);
         ctxt.fillStyle = "#ff6600";
@@ -173,27 +168,30 @@ export default function Projectile({ name }) {
             ctxt.stroke();
             ctxt.closePath();
 
-
             ctxt.lineWidth = 1;
         }
     }
 
-    function update() {
-        simulate(scene);
-        draw();
-        requestAnimationFrame(update);
-    }
-
     useEffect(() => {
+        let canvas = document.getElementById(name);
+        canvas.width = 600;
+        canvas.height = 300;
+
+        function update() {
+            simulate();
+            draw(canvas);
+            requestAnimationFrame(update);
+        }
+
         update();
     }, [])
     
     return (
-        <div className="w-[97%] res:w-5/6 p-5 res:p-12 mt-20 shadow-lg rounded-xl ring-1 ring-black/5">
+        <div className="w-[97%] res:w-1/2 p-5 my-5 res:my-0 res:mx-5 res:p-12 shadow-lg rounded-xl ring-1 ring-black/5">
             <h1>
                 2-D Collision Simulation
             </h1>
-            <canvas id={name} className="w-full border-4 rounded-xl border-black"></canvas>
+            <canvas id={name} className="w-full border-4 rounded-xl border-yellow-600"></canvas>
         </div>
     )
 }

@@ -15,8 +15,10 @@ export default function Home() {
                     Welcome to my personal website.
                 </p>
             </div>
-            <Projectile name="projectile"/>
-            <ThreeProjectile name="3d-projectile"/>
+            <div className="flex flex-col items-center res:flex-row justify-center w-[97%] res:w-5/6 mt-20">
+                <Projectile name="projectile"/>
+                <ThreeProjectile name="3d-projectile"/>
+            </div>
             <Fluids />
         </div>
     )

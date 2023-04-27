@@ -45,8 +45,11 @@ export default function Canvas({ name }) {
     }, [])
     
     return (
-        <div className="w-[97%] res:w-5/6 p-5 res:p-12 mt-20 shadow-lg rounded-xl ring-1 ring-black/5">
-            <canvas id={name} className="w-full border-2"></canvas>
+        <div className="w-[97%] res:w-1/2 p-5 my-5 res:my-0 res:mx-5 res:p-12 shadow-lg rounded-xl ring-1 ring-black/5">
+            <h1>
+                3-D Projectile Simulation
+            </h1>
+            <canvas id={name} className="w-full border-4 rounded-xl border-yellow-600"></canvas>
         </div>
     )
 }
