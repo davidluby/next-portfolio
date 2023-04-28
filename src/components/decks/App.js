@@ -15,7 +15,7 @@ export default function App() {
 
 
   return (
-    <div className="flex flex-col items-center mb-20">
+    <div className="flex flex-col items-center mb-20 w-full">
 		<Search setPlayerData={setPlayerData} setSearching={setSearching} setHidden={setHidden} />
 		<div className="flex justify-center w-full">
 			{ !hidden ? <Interface setHidden={setHidden} searching={searching} playerData={playerData} empty={empty} setEmpty={setEmpty}

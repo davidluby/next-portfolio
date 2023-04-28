@@ -4,7 +4,7 @@ import Projectile from "@components/simulations/Projectile"
 import ThreeProjectile from "@components/simulations/ThreeProjectile"
 import Fluids from "@components/simulations/Fluids"
 
-import Decks from "@components/decks/App"
+import App from "@components/decks/App"
 
 export default function Home() {
     
@@ -27,7 +27,7 @@ export default function Home() {
             </div>
             <Fluids />
 
-            <Decks />
+            <App />
 
         </div>
     )
