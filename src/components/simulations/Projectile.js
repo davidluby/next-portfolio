@@ -37,7 +37,7 @@ export default function Projectile({ name }) {
     }
 
     class centerBall {
-        constructor(x, y, r){
+        constructor(x, y){
             this.x = x;
             this.y = y;
         }
@@ -46,8 +46,8 @@ export default function Projectile({ name }) {
     var scene = {
         width : 600,
         height : 300,
-        gravity : new vector(0, 10),
-        dT : 0.075,
+        gravity : new vector(0, 0),
+        dT : 0.15,
         n : 15,
         balls : []
     }
@@ -84,12 +84,12 @@ export default function Projectile({ name }) {
         }
         if (ball.position.y <= ball.r) {
             ball.position.y = ball.r;
-            ball.velocity.y = -ball.velocity.y * 0.5; // need multiplier unless perpetual
+            ball.velocity.y = -ball.velocity.y;// * 0.5; // need multiplier unless perpetual
         }
         if (ball.position.y >= scene.height - ball.r) {
             ball.position.y = scene.height - ball.r;
             ball.velocity.y = -ball.velocity.y;
-            ball.velocity.x = ball.velocity.x * 0.75; // multiplier used to bring balls to stop
+            ball.velocity.x = ball.velocity.x //* 0.75; // multiplier used to bring balls to stop
         }
     }
 
@@ -112,8 +112,8 @@ export default function Projectile({ name }) {
             var vA = ballA.velocity.x * direction.x + ballA.velocity.y * direction.y;
             var vB = ballB.velocity.x * direction.x + ballB.velocity.y * direction.y;
 
-            var vNA = (ballA.m*vA + ballB.m*vB - ballB.m*(vA - vB) ) / (ballA.m + ballB.m); 
-            var vNB = (ballA.m*vA + ballB.m*vB - ballA.m*(vB - vA) ) / (ballA.m + ballB.m);
+            var vNA = (ballA.m*vA + ballB.m*vB - ballB.m*restitution*(vA - vB) ) / (ballA.m + ballB.m); 
+            var vNB = (ballA.m*vA + ballB.m*vB - ballA.m*restitution*(vB - vA) ) / (ballA.m + ballB.m);
 
             ballA.velocity.x += direction.x * (vNA - vA)
             ballA.velocity.y += direction.y * (vNA - vA)
@@ -187,7 +187,7 @@ export default function Projectile({ name }) {
     }, [])
     
     return (
-        <div className="w-[97%] res:w-1/2 p-5 my-5 res:my-0 res:mx-5 res:p-12 shadow-lg rounded-xl ring-1 ring-black/5">
+        <div className="w-full res:w-[49%] p-5 my-5 res:my-0 res:p-12 shadow-lg rounded-xl ring-1 ring-black/5">
             <h1>
                 2-D Collision Simulation
             </h1>

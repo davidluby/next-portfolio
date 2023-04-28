@@ -51,7 +51,6 @@ export default function Interface({ setHidden, searching, playerData, empty, set
 			{ (!empty && !reveal) ? dataDecks.map(function(deck, idx) {
 				const dataCards = deck.slice(1);
 				const dataDeck = deck[0];
-				console.log(dataDeck.id)
 				return <div key={dataDeck.id}
 							className="flex flex-col items-center w-[97%] app:w-5/6 p-5 app:p-12 mt-10 shadow-lg rounded-xl ring-1 ring-black/5 parquet">
 						<div className="flex flex-row space-x-10">

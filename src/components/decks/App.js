@@ -3,7 +3,7 @@ import Search from "@components/decks/Search"
 import Interface from "@components/decks/Interface"
 
 
-export default function Decks() {
+export default function App() {
 
   const [playerData, setPlayerData] = useState("");
   const [searching, setSearching] = useState(true);

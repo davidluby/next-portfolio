@@ -47,7 +47,7 @@ export default function Canvas({ name }) {
     return (
         <div className="w-[97%] res:w-1/2 p-5 my-5 res:my-0 res:mx-5 res:p-12 shadow-lg rounded-xl ring-1 ring-black/5">
             <h1>
-                XXXX
+                Fluid Simulation
             </h1>
             <canvas id={name} className="w-full border-4 rounded-xl border-yellow-600"></canvas>
         </div>

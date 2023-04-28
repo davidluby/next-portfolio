@@ -2,6 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
+.tile {
+    width: 97%;
+    padding: 1.25rem;
+    border-radius: 0.75rem;
+    border-width: 1px;
+    border-color:rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+@media only screen and (min-width: 768px) {
+    .tile {
+        width: 5/6%;
+        padding: 3rem;
+        
+    }
+}
+
 /* Globals */
 h1 {
     font-size: 1.5rem;
@@ -61,7 +78,7 @@ h2 {
     transition: all 300ms;
 }
 .nav-button:hover {
-    border-color: #BA9653;
+    border-color: white;
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.2));
 }
 
