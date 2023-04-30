@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import Head from 'next/head'
 
 export default function Resume(){
 
@@ -35,6 +36,9 @@ export default function Resume(){
 
     return (
         <div className="flex flex-col items-center mb-20">
+            <Head>
+                <title>Resume</title>
+            </Head>
             <div className="flex flex-col res:flex-row res:items-center res:justify-evenly w-[97%] res:w-5/6">
                 <div className="res:relative flex flex-col items-center justify-center res:items-end res:w-[26rem] res:h-[8rem] px-3 py-5 shadow-lg rounded-xl ring-1 ring-black/5 text-center res:text-left bg-slate-900">
                     <img className="res:absolute res:-left-12 w-60 res:w-[12rem] rounded-full shadow-lg" src="headshot.jpg"></img>
