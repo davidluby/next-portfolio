@@ -1,9 +1,13 @@
-
+import Head from 'next/head'
+            
 export default function DecksEx() {
 
 
   return (
     <div className="flex flex-col items-center mb-20">
+		<Head>
+			<title>Fullstack App</title>
+		</Head>
 		<div className="w-[97%] res:w-5/6 tile bg-slate-900">
 			<h1>
 				How the B-Ball Cards application respects Sports Reference guidelines:
