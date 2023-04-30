@@ -187,11 +187,11 @@ export default function Projectile({ name }) {
     }, [])
     
     return (
-        <div className="w-full res:w-[49%] p-5 my-5 res:my-0 res:p-12 shadow-lg rounded-xl ring-1 ring-black/5">
+        <div className="w-full res:w-[49%] my-5 tile bg-slate-900">
             <h1>
                 2-D Collision Simulation
             </h1>
-            <canvas id={name} className="w-full border-4 rounded-xl border-yellow-600"></canvas>
+            <canvas id={name} className="w-full border-4 rounded-xl border-yellow-500"></canvas>
         </div>
     )
 }

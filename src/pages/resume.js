@@ -5,8 +5,8 @@ export default function Resume(){
     const slides = [
         ["Data structures and algorithms", "Fullstack web development", ["c.png", "python.png", "matlab.png", "js.png", "sql.png", "html.png", "css.png", "tw.png", "react.png", "next.png", "flask.png", "git.png"]],
         ["Mechatronic system modeling (DC and stepper motors, IR, Hall Effect, and color sensors)", "Microprocessor programming and component interfacing (datasheets)", ["c.png", "python.png", "matlab.png", "atmel.png", "arduino.png"]],
-        ["Version-controlled product development (SOLIDWORKS PDM)", "Control system, finite element, and statistical analysis", "MATLAB, SIMULINK, SOLIDWORKS, Excel, JMP",["matlab.png", "simulink.png", "sw.png", "pdm.png", "excel.png", "jmp.png"] ],
-        ["AWS, EC2, Apache, WSGI, Flask, CI/CD", "Windows, Linux, Git, GitHub", ["aws.png", "ec2.png", "apache.png", "mssql.png", "bash.png","ps.png","cmd.png","linux.png", "win.png"]],
+        ["Version-controlled product development (SOLIDWORKS PDM)", "Control system, finite element, and statistical analysis", "MATLAB, SIMULINK, SOLIDWORKS, Excel, JMP",["matlab.png", "simulink.png", "sw.png", "pdm.png", "marc.png", "excel.png", "jmp.png"] ],
+        ["AWS, EC2, Apache, WSGI, Flask, CI/CD", "Windows, Linux, Git, GitHub", ["aws.png", "apache.png", "mssql.png", "bash.png","ps.png","cmd.png","linux.png", "win.png"]],
     ];
 
     const names = ['Software', 'Firmware', 'Mechanical', 'DevOps'];
@@ -36,20 +36,20 @@ export default function Resume(){
     return (
         <div className="flex flex-col items-center mb-20">
             <div className="flex flex-col res:flex-row res:items-center res:justify-evenly w-[97%] res:w-5/6">
-                <div className="res:relative flex flex-col items-center justify-center res:items-end res:w-[26rem] res:h-[8rem] px-3 py-5 shadow-lg rounded-xl ring-1 ring-black/5 text-center res:text-left">
+                <div className="res:relative flex flex-col items-center justify-center res:items-end res:w-[26rem] res:h-[8rem] px-3 py-5 shadow-lg rounded-xl ring-1 ring-black/5 text-center res:text-left bg-slate-900">
                     <img className="res:absolute res:-left-12 w-60 res:w-[12rem] rounded-full shadow-lg" src="headshot.jpg"></img>
                     <div>
-                        <ul className="flex flex-row justify-center items-center res:justify-start mt-2 res:mt-0 space-x-2">
+                        <ul className="flex flex-row items-center justify-center res:justify-start mt-2 res:mt-0 space-x-2">
                             <h2>
                                 David Luby
                             </h2>
-                            <p><b>|</b></p>
-                            <li className ="w-7 h-7">
-                                <a href="https://linkedin.com/in/david-luby/" className="logo-linked w-7 h-7 inline-block bg-center bg-no-repeat" target="_blank" rel="noopener noreferrer"></a>
+                            <span className="border-[1px] h-4"></span>
+                            <li className ="flex items-center justify-center w-7 h-7">
+                                <a href="https://linkedin.com/in/david-luby/" className="logo-linked w-6 h-6 inline-block bg-center bg-no-repeat" target="_blank" rel="noopener noreferrer"></a>
                             </li>
-                            <p><b>|</b></p>
-                            <li className="w-7 h-7">
-                                <a href="https://github.com/davidluby" className="logo-github w-7 h-7 inline-block bg-center bg-no-repeat rounded-full" target="_blank" rel="noopener noreferrer"></a>
+                            <span className="border-[1px] h-4"></span>
+                            <li className="flex items-center justify-center w-7 h-7">
+                                <a href="https://github.com/davidluby" className="logo-github w-6 h-6 inline-block bg-center bg-no-repeat rounded-full" target="_blank" rel="noopener noreferrer"></a>
                             </li>
                         </ul>
                         <p>
@@ -60,7 +60,7 @@ export default function Resume(){
                         </p>
                     </div>
                 </div>
-                <div className="flex flex-col res:w-2/5 p-5 res:p-12 mt-20 res:mt-0 shadow-lg rounded-xl ring-1 ring-black/5">
+                <div className="flex flex-col res:w-2/5 p-5 res:p-12 mt-20 res:mt-0 tile bg-slate-900">
                     <h1 className="pb-2 text-center">
                         <b><i>Technical Skills</i></b>
                     </h1>
@@ -96,7 +96,7 @@ export default function Resume(){
                     </ul>
                 </div>
             </div>
-            <div className="w-[97%] res:w-5/6 p-5 res:p-12 mt-20 shadow-lg rounded-xl ring-1 ring-black/5">
+            <div className="w-[97%] res:w-5/6 mt-20 tile bg-slate-900">
                 <h1>
                     <b><i>Work Experience</i></b>
                 </h1>
@@ -154,7 +154,7 @@ export default function Resume(){
                     </li>   
                 </ul>
             </div>
-            <div className="w-[97%] res:w-5/6 p-5 res:p-12 mt-20 shadow-lg rounded-xl ring-1 ring-black/5">
+            <div className="w-[97%] res:w-5/6 mt-20 tile bg-slate-900">
                 <h1>
                     <b><i>Education</i></b>
                 </h1>
@@ -175,7 +175,7 @@ export default function Resume(){
                     </li>   
                 </ul>
             </div>
-            <div className="w-[97%] res:w-5/6 p-5 res:p-12 mt-20 shadow-lg rounded-xl ring-1 ring-black/5">
+            <div className="w-[97%] res:w-5/6 mt-20 tile bg-slate-900">
                 <h1>
                     <b><i>Certifications</i></b>
                 </h1>

@@ -5,7 +5,7 @@ export default function Nav() {
 	const [hide, setHide] = useState(true);
 
   return (
-    <nav className="mb-10 bg-slate-700 shadow-lg">
+    <nav className="mb-10 bg-slate-900 shadow-lg">
         <div className="flex justify-center items-center text-white">
 			<Link href="/" className="nav-logo" />
 			<Link href="/resume" className="nav-button"><b>Resume</b></Link>

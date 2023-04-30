@@ -1,10 +1,18 @@
-import React from 'react';
-import Canvas from "@src/components/simulations/Canvas"
+import React, { useEffect } from 'react';
 
-export default function Simulator() {
+
+export default function Fluids() {
+    useEffect(() => {
+
+        
+    })
+    
     return (
-        <div className="flex justify-center w-full mt-20">
-            <Canvas name={"fluidCanvas"} />
+        <div className="w-[97%] res:w-[49%] mt-5 res:mt-0 tile bg-slate-900">
+            <h1>
+                Fluid Simulation
+            </h1>
+            <div id="container"></div>
         </div>
     )
 }

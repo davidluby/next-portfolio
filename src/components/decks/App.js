@@ -22,7 +22,7 @@ export default function App() {
 							cards={cards} setCards={setCards} deck={deck} setDeck={setDeck} />
 				: <h1 className="w-[97rem] res:w-5/6 p-5 res:p-0 res:mt-20 text-center"><b>Enter an <i>active</i> NBA player&apos;s name above. Try typing in &#34;Al Horford&#34; (remove quotes) if you need a name.</b></h1>}
 		</div>
-		<div id="helpID" className="w-[97%] res:w-5/6 p-5 res:p-12 mt-20 shadow-lg rounded-xl ring-1 ring-black/5">
+		<div id="helpID" className="w-[97%] res:w-5/6 mt-20 tile bg-slate-900">
 			<h1>
 				Quick Start
 			</h1>
