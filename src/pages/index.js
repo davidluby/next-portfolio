@@ -42,7 +42,7 @@ export default function Home() {
                 </div>
                 <h1 className="w-[97%] res:w-5/6 mt-20 mb-5 border-b-4 border-yellow-500">Fullstack Application</h1>
                 <App />
-                <h1 className="w-[97%] res:w-5/6 mt-20 border-b-4 border-yellow-500 text-center res:text-left">Motorized Bike</h1>
+                <h1 className="w-[97%] res:w-5/6 mt-20 border-b-4 border-yellow-500">Motorized Bike</h1>
                 <div className="flex flex-col items-center res:flex-row justify-between w-[97%] res:w-5/6 mt-5">
                     <img src="bike.jpg"></img>
                 </div>
