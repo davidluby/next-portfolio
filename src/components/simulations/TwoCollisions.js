@@ -182,7 +182,8 @@ export default function TwoCollisions({ name }) {
         update();
 
         document.getElementById("rest").oninput = function() {
-        scene.restitution = this.value;  }
+        scene.restitution = this.value; 
+        }
     }, [scene])
     
     return (

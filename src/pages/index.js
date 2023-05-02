@@ -24,7 +24,7 @@ export default function Home() {
             </div>
             <h1 className="w-[97%] res:w-5/6 mt-20 mb-5 border-b-4 border-yellow-500">Simulations</h1>
             <TwoFluid name="twoFluid" />
-            <div className="flex flex-col items-center res:flex-row justify-between w-[97%] res:w-5/6">
+            <div className="flex flex-col items-center res:flex-row res:space-x-5 w-[97%] res:w-5/6">
                 <TwoCollisions name="twoCollisions"/>
                 <ThreeProjectile />
             </div>
