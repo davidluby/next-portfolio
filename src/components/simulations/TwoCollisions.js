@@ -187,7 +187,7 @@ export default function TwoCollisions({ name }) {
     }, [scene])
     
     return (
-        <div className="w-full res:w-[49%] my-5 tile bg-slate-900">
+        <div className="w-full res:w-[49%] my-5 res:mb-0  tile bg-slate-900">
             <h1>
                 2-D Collision Simulation
             </h1>
