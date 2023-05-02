@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Card from "@components/decks/Card"
 import Deck from "@components/decks/Deck"
 import Add from "@components/decks/Add"
@@ -13,6 +13,7 @@ import Delete from "@components/decks/Delete"
 export default function Interface({ setHidden, searching, playerData, empty, setEmpty, cards, setCards, deck, setDeck }) {
 	const [dataDecks, setDataDecks] = useState();
     const [reveal, setReveal] = useState(true);
+	const [status, setStatus] = useState("Load")
 
 	const toFront = (idx, jdx) => {
 		const id = "#front-" + idx + jdx
@@ -22,17 +23,32 @@ export default function Interface({ setHidden, searching, playerData, empty, set
         flip.classList.toggle("z-50")
 	}
 
+	useEffect(() => {
+		fetch('/api/show_deck', {
+			method: "GET",
+		}
+		).then(
+			response => response.json()
+			.then(
+				data => {
+					setDataDecks(JSON.parse(data));
+					setStatus("Refresh")
+				}
+			)
+		)
+	}, [dataDecks])
+
 	return (
 		<div className="flex flex-col items-center w-full">
-			<div className="flex flex-col items-center w-[97%] app:w-5/6 p-5 app:p-12 mt-10 shadow-lg rounded-xl ring-1 ring-black/5 parquet">
+			<div className="flex flex-col items-center w-[97%] res:w-5/6 p-5 app:p-12 mt-10 shadow-lg rounded-xl ring-1 ring-black/5 parquet">
 				<div className="flex flex-col app:flex-row app:justify-evenly items-center w-full">
 					{ !searching ? <div className="flex items-center" style={{animation : "inAnimation 500ms ease-in"}}>
 						<Card data={playerData} loc="main" />
 						</div> : null}
 					{ !empty ? <div className="flex flex-col items-center w-full app:w-[28rem]" style={{animation : "inAnimation 500ms ease-in"}}>
-							<div className="flex flex-row justify-evenly w-full mt-5 app:mt-0 py-2 px-4 rounded-md bg-yellow-500 hover:bg-yellow-300 shadow-lg ring-1 ring-black/5">
-								<p className="border-b-2 border-white">Deck: {deck.id}</p>
-								<p className="border-b-2 border-white">Last saved: {deck.saved}</p>
+							<div className="flex flex-row justify-evenly w-full mt-5 app:mt-0">
+								<p className="py-2 px-4 rounded-md bg-yellow-500 hover:bg-yellow-300 shadow-lg ring-1 ring-black/5">Deck: {deck.id}</p>
+								<p className="py-2 px-4 rounded-md bg-yellow-500 hover:bg-yellow-300 shadow-lg ring-1 ring-black/5">Last saved: {deck.saved}</p>
 							</div>
 						<Deck cards={cards} setCards={setCards} />
 						</div>
@@ -52,10 +68,10 @@ export default function Interface({ setHidden, searching, playerData, empty, set
 				const dataCards = deck.slice(1);
 				const dataDeck = deck[0];
 				return <div key={dataDeck.id}
-							className="flex flex-col items-center w-[97%] app:w-5/6 p-5 app:p-12 mt-10 shadow-lg rounded-xl ring-1 ring-black/5 parquet">
-						<div className="flex flex-row space-x-10 py-2 px-4 rounded-md bg-yellow-500 shadow-lg ring-1 ring-black/5">
-							<p className="border-b-2 border-white">Deck: {dataDeck.id}</p>
-							<p className="border-b-2 border-white">Last saved: {dataDeck.saved}</p>
+							className="flex flex-col items-center w-[97%] res:w-5/6 p-5 app:p-12 mt-10 shadow-lg rounded-xl ring-1 ring-black/5 parquet">
+						<div className="flex flex-row space-x-10">
+							<p className="py-2 px-4 rounded-md bg-yellow-500 hover:bg-yellow-300 shadow-lg ring-1 ring-black/5">Deck: {dataDeck.id}</p>
+							<p className="py-2 px-4 rounded-md bg-yellow-500 hover:bg-yellow-300 shadow-lg ring-1 ring-black/5">Last saved: {dataDeck.saved}</p>
 						</div>
 						<div className="flex flex-row justify-center my-4 -space-x-[20.5rem] fhd:-space-x-0 scale-75 app:scale-100">
 							{dataCards.map(function(card, jdx) {

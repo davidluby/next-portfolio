@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 
-export default function Show({ setDataDecks, setEmpty, setReveal }) {
-    const [status, setStatus] = useState("Load")
+export default function Show({ status, setDataDecks, setEmpty, setReveal }) {
 
     const loadDecks = () => {
         fetch('/api/show_deck', {
@@ -14,7 +13,6 @@ export default function Show({ setDataDecks, setEmpty, setReveal }) {
                     setDataDecks(JSON.parse(data));
                     setEmpty(false);
                     setReveal(false);
-                    setStatus("Refresh")
                 }
             )
         )
