@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 export default function TwoFluid({ name }) {
 
     useEffect(() => {
+        
     }, [])
     
     return (

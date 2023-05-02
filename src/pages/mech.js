@@ -2,7 +2,6 @@ import Head from 'next/head'
 
 export default function fluids() {
 
-
     return (
         <div className="flex flex-col items-center mb-20">
             <Head>
