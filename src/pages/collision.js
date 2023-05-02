@@ -3,7 +3,7 @@ export default function collision() {
 
 
     return (
-    <div className="flex flex-col items-center mb-20">
+    <div className="flex flex-col items-center">
         <Head>
             <title>2D Collisions</title>
         </Head>

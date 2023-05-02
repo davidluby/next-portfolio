@@ -33,7 +33,7 @@ export default function Save({cards, deck, setDataDecks, setEmpty, setReveal }) 
     }
     
   return (
-    <button className="bg-green-700 hover:bg-green-600 transition all duration-500 text-white font-bold py-2 px-4 rounded-full"
+    <button className="py-2 px-4 rounded-full bg-yellow-500 hover:bg-yellow-300 shadow-lg ring-1 ring-black/5 transition all duration-500 text-white font-bold"
         onClick={saveData}>
         Save Deck
     </button>

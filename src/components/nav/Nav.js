@@ -14,11 +14,14 @@ export default function Nav() {
 				{ !hide ? 
 					<div className="absolute flex flex-col w-full mt-2 left-0 rounded-b-md shadow-lg ring-1 ring-black/5 text-white bg-slate-700 z-50">
 						<Link className="p-[.5rem] hover:bg-slate-600 text-base" href="/collision">2-D Collisions</Link>
-						<Link className="p-[.5rem] hover:bg-slate-600 text-base" href="/">3-D Projectile</Link>
+						{/*
+						<Link className="p-[.5rem] hover:bg-slate-600 text-base" href="/projectile">3-D Projectile</Link>
+						<Link className="p-[.5rem] hover:bg-slate-600 text-base" href="/mech">Mechatronics</Link>
+						<Link className="p-[.5rem] hover:bg-slate-600 text-base rounded-b-md" href="/bike">Motorized Bike</Link>
+						*/}
+
 						<Link className="p-[.5rem] hover:bg-slate-600 text-base" href="/fluids">Fluid Simulation</Link>
-						<Link className="p-[.5rem] hover:bg-slate-600 text-base" href="/">Mechatronics</Link>
 						<Link className="p-[.5rem] hover:bg-slate-600 text-base" href="/decks_ex">Fullstack App</Link>
-						<Link className="p-[.5rem] hover:bg-slate-600 text-base rounded-b-md" href="/">Motorized Bike</Link>
 					</div> : null
 				}
 			</div>
