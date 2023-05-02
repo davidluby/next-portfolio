@@ -6,7 +6,7 @@ export default function TwoFluid({ name }) {
     }, [])
     
     return (
-        <div className="w-[97%] res:w-3/4 tile bg-slate-900">
+        <div className="w-[97%] res:w-5/6 tile bg-slate-900">
             <h1>
                 2-D Fluid Simulation
             </h1>

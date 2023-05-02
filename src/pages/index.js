@@ -28,14 +28,14 @@ export default function Home() {
                 <TwoCollisions name="twoCollisions"/>
                 <ThreeProjectile />
             </div>
-            <h1 className="w-[97%] res:w-5/6 mt-20 border-b-4 border-yellow-500">Mechatronic Conveyor</h1>
+            <h1 className="w-[97%] res:w-5/6 mt-20 mb-5 border-b-4 border-yellow-500">Fullstack Application</h1>
+            <App />
+            <h1 className="w-[97%] res:w-5/6 mt-20 border-b-4 border-yellow-500">Mechatronic Color Sorting Conveyor</h1>
             <div className="flex flex-row flex-wrap justify-evenly w-[97%] res:w-5/6 mt-5">
                 <iframe className="w-[300px] h-[500px]" src="https://www.youtube.com/embed/8P3UF1Z6qRs" title="v1" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
                 <iframe className="w-[300px] h-[500px]" src="https://www.youtube.com/embed/--vCE5AsHIY" title="v2" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
                 <iframe className="w-[300px] h-[500px]" src="https://www.youtube.com/embed/XdCFYtW8jBc" title="v3" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
             </div>
-            <h1 className="w-[97%] res:w-5/6 mt-20 mb-5 border-b-4 border-yellow-500">Fullstack Application</h1>
-            <App />
             <h1 className="w-[97%] res:w-5/6 mt-20 border-b-4 border-yellow-500">Motorized Bike</h1>
             <div className="flex flex-col items-center res:flex-row justify-between w-[97%] res:w-5/6 mt-5">
                 <img src="bike.jpg"></img>

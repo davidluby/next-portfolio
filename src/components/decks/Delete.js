@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Delete({ dataDeck, setDataDecks, setEmpty, setReveal }) {
+export default function Delete({ dataDeck, setDataDecks }) {
     const deleteDeck = () => {
     	fetch('/api/delete_deck', {
     		method: "POST",
@@ -12,15 +12,6 @@ export default function Delete({ dataDeck, setDataDecks, setEmpty, setReveal }) 
 		fetch('/api/show_deck', {
 			method: "GET",
 		}
-		).then(
-			response => response.json()
-			.then(
-				data => {
-					setDataDecks(JSON.parse(data));
-					setEmpty(false);
-					setReveal(false);
-				}
-			)
 		)
     }
 	return (

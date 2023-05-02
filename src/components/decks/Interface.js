@@ -17,12 +17,11 @@ export default function Interface({ setHidden, searching, playerData, empty, set
 
 	const toFront = (idx, jdx) => {
 		const id = "#front-" + idx + jdx
-		console.log(id)
         const flip = document.querySelector(id)
 		flip.classList.toggle("z-0")
         flip.classList.toggle("z-50")
 	}
-
+	
 	useEffect(() => {
 		fetch('/api/show_deck', {
 			method: "GET",
@@ -32,10 +31,13 @@ export default function Interface({ setHidden, searching, playerData, empty, set
 			.then(
 				data => {
 					setDataDecks(JSON.parse(data));
-					setStatus("Refresh")
 				}
 			)
 		)
+
+		if (!reveal) {
+			setStatus("Refresh");
+		}
 	}, [dataDecks])
 
 	return (
@@ -46,9 +48,9 @@ export default function Interface({ setHidden, searching, playerData, empty, set
 						<Card data={playerData} loc="main" />
 						</div> : null}
 					{ !empty ? <div className="flex flex-col items-center w-full app:w-[28rem]" style={{animation : "inAnimation 500ms ease-in"}}>
-							<div className="flex flex-row justify-evenly w-full mt-5 app:mt-0">
-								<p className="py-2 px-4 rounded-md bg-yellow-500 hover:bg-yellow-300 shadow-lg ring-1 ring-black/5">Deck: {deck.id}</p>
-								<p className="py-2 px-4 rounded-md bg-yellow-500 hover:bg-yellow-300 shadow-lg ring-1 ring-black/5">Last saved: {deck.saved}</p>
+							<div className="flex flex-row justify-evenly w-full mt-5 app:mt-0 font-bold">
+								<p className="py-2 px-4 rounded-md bg-yellow-500 shadow-lg ring-1 ring-black/5">Deck: {deck.id}</p>
+								<p className="py-2 px-4 rounded-md bg-yellow-500 shadow-lg ring-1 ring-black/5">Last saved: {deck.saved}</p>
 							</div>
 						<Deck cards={cards} setCards={setCards} />
 						</div>
@@ -62,16 +64,16 @@ export default function Interface({ setHidden, searching, playerData, empty, set
 					{ (!empty && (cards.length > 1)) ? <ExpandCards /> : null}
 					<Help />
 				</div>
-				<Show setDataDecks={setDataDecks} setEmpty={setEmpty} setReveal={setReveal} />
+				<Show status={status} setDataDecks={setDataDecks} setEmpty={setEmpty} setReveal={setReveal} />
 			</div>
 			{ (!empty && !reveal) ? dataDecks.map(function(deck, idx) {
 				const dataCards = deck.slice(1);
 				const dataDeck = deck[0];
 				return <div key={dataDeck.id}
 							className="flex flex-col items-center w-[97%] res:w-5/6 p-5 app:p-12 mt-10 shadow-lg rounded-xl ring-1 ring-black/5 parquet">
-						<div className="flex flex-row space-x-10">
-							<p className="py-2 px-4 rounded-md bg-yellow-500 hover:bg-yellow-300 shadow-lg ring-1 ring-black/5">Deck: {dataDeck.id}</p>
-							<p className="py-2 px-4 rounded-md bg-yellow-500 hover:bg-yellow-300 shadow-lg ring-1 ring-black/5">Last saved: {dataDeck.saved}</p>
+						<div className="flex flex-row space-x-10 font-bold">
+							<p className="py-2 px-4 rounded-md bg-yellow-500 shadow-lg ring-1 ring-black/5">Deck: {dataDeck.id}</p>
+							<p className="py-2 px-4 rounded-md bg-yellow-500 shadow-lg ring-1 ring-black/5">Last saved: {dataDeck.saved}</p>
 						</div>
 						<div className="flex flex-row justify-center my-4 -space-x-[20.5rem] fhd:-space-x-0 scale-75 app:scale-100">
 							{dataCards.map(function(card, jdx) {
