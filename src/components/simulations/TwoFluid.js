@@ -1,9 +1,27 @@
 import React, { useEffect } from 'react';
 
 export default function TwoFluid({ name }) {
+    let scene = {
+        width : 600,
+        height : 300,
+        gravity : -9.8,
+        dT : .10,
+        gauss_seidel_iters : 20,
+        overrelaxation : 1.9,
+        divs : 25,
+    };
+
+    function draw(gl) {
+    };
+
 
     useEffect(() => {
+        let canvas = document.getElementById(name);
+        let gl = canvas.getContext("webgl");
+        canvas.width = scene.width;
+        canvas.height = scene.height;
         
+        draw(gl);
     }, [])
     
     return (

@@ -65,13 +65,13 @@ export default function TwoCollisions({ name }) {
 
         var direction = new vector(deltaR.x / lengthDr, deltaR.y / lengthDr); // unit vector
 
-        var corr = (balli.r + ballj.r - lengthDr) / 2;
+        var spacing = (balli.r + ballj.r - lengthDr) / 2;
 
         if (lengthDr <= (balli.r + ballj.r)) {
-            balli.position.x += direction.x * corr;
-            balli.position.y += direction.y * corr;
-            ballj.position.x += direction.x * -corr;
-            ballj.position.y += direction.y * -corr;
+            balli.position.x += direction.x * spacing;
+            balli.position.y += direction.y * spacing;
+            ballj.position.x += direction.x * -spacing;
+            ballj.position.y += direction.y * -spacing;
 
             var vi = balli.velocity.x * direction.x + balli.velocity.y * direction.y;
             var vj = ballj.velocity.x * direction.x + ballj.velocity.y * direction.y;

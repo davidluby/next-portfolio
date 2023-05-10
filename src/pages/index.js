@@ -4,6 +4,8 @@ import TwoCollisions from "@components/simulations/TwoCollisions"
 import ThreeProjectile from "@components/simulations/ThreeProjectile"
 import TwoFluid from "@components/simulations/TwoFluid"
 
+import Gl_triangle from "@components/simulations/GL_triangle"
+
 import App from "@components/decks/App"
 
 export default function Home() {
@@ -28,6 +30,7 @@ export default function Home() {
                 <TwoCollisions name="twoCollisions"/>
                 <ThreeProjectile />
             </div>
+            <Gl_triangle name="GL_triangle" />
             <h1 className="w-[97%] res:w-5/6 mt-20 mb-5 border-b-4 border-yellow-500">Fullstack Application</h1>
             <App />
             <h1 className="w-[97%] res:w-5/6 mt-20 border-b-4 border-yellow-500">Mechatronic Color Sorting Conveyor</h1>
