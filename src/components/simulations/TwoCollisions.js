@@ -63,11 +63,11 @@ export default function TwoCollisions({ name }) {
         deltaR.subtract(balli.position, ballj.position);
         var lengthDr = deltaR.magnitude(); // space between
 
-        var direction = new vector(deltaR.x / lengthDr, deltaR.y / lengthDr); // unit vector
-
-        var spacing = (balli.r + ballj.r - lengthDr) / 2;
-
         if (lengthDr <= (balli.r + ballj.r)) {
+            var direction = new vector(deltaR.x / lengthDr, deltaR.y / lengthDr); // unit vector
+
+            var spacing = (balli.r + ballj.r - lengthDr) / 2;
+
             balli.position.x += direction.x * spacing;
             balli.position.y += direction.y * spacing;
             ballj.position.x += direction.x * -spacing;
@@ -154,7 +154,7 @@ export default function TwoCollisions({ name }) {
 
     for (let i = 0; i < scene.n; i++) {
 
-        let radius = randInt(10, 25); // assign random radius
+        let radius = randInt(10, 50); // assign random radius
         let sign = Math.cos(Math.PI * randInt(0, 1)) // random positive or negative
 
         let ball = {
@@ -187,7 +187,7 @@ export default function TwoCollisions({ name }) {
     }, [scene])
     
     return (
-        <div className="w-full res:w-[49%] my-5 res:mb-0  tile bg-slate-900">
+        <div className="w-full res:w-1/2 my-5 res:mb-0  tile bg-slate-900">
             <h1>
                 2-D Collision Simulation
             </h1>

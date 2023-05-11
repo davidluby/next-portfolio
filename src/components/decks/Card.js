@@ -17,7 +17,7 @@ export default function Card({ data, loc }) {
             id={"flipState-"+loc}
             onClick={() => flipCard()}>
             <div className="absolute h-full w-full rounded-xl shadow-sm shadow-black/80 bg-center bg-cover bg-no-repeat"
-                style={{backgroundImage: `url(${"./cities/" + data.team.toLowerCase() + ".jpg"})`}}>
+                style={{backgroundImage: `url(${"./fullstack/cities/" + data.team.toLowerCase() + ".jpg"})`}}>
             </div>
             <div className="absolute overflow-hidden h-full w-full rounded-xl border-4 border-yellow-500 group-hover:border-yellow-300 [backface-visibility:hidden] transition-all duration-500">
                 <div className="absolute w-[32rem] top-52 rotate-90 pl-12 text-xl font-bold italic text-white bg-yellow-500 group-hover:bg-yellow-300 transition-all duration-500">

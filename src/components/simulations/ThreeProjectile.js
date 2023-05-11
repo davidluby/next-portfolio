@@ -8,7 +8,7 @@ export default function ThreeProjectile() {
     })
     
     return (
-        <div className="w-full res:w-[49%] tile bg-slate-900">
+        <div className="w-full res:w-2/5 tile bg-slate-900">
             <h1>
                 3-D Projectile Simulation
             </h1>

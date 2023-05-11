@@ -1,14 +1,13 @@
 import Head from 'next/head'
 import Slides from '@components/nav/Slides'
 
-export default function fluids() {
+export default function webgl() {
     const names = [
-        'Navier-Stokes', 'Algorithm'
+        'Matrix Algebra'
     ]
 
     const pictures = [
-        ['./fluids/fluid1.jpg', './fluids/fluid2.jpg', './fluids/fluid3.jpg', './fluids/fluid4.jpg'],
-        ['./fluids/fluidAlgo1.jpg', './fluids/fluidAlgo2.jpg', './fluids/fluidAlgo3.jpg', './fluids/fluidAlgo4.jpg', './fluids/fluidAlgo5.jpg']
+        [, './iterative/webgl1.jpg', './iterative/webgl2.jpg']
 
     ]
 

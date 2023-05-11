@@ -76,8 +76,8 @@ h2 {
     transition: all 300ms;
 }
 .nav-button:hover {
-    border-color: white;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.2));
+    border-color: #EAB308;
+    background: linear-gradient(to bottom, #eab2081a, #eab20807);
 }
 
 /* Resume */
@@ -104,7 +104,7 @@ h2 {
 
 /* Decks */
 .parquet {
-    background-image: url("/parquet.jpg")
+    background-image: url("/fullstack/parquet.jpg")
 }
 .card-size {
     width: 18rem;

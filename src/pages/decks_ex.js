@@ -40,7 +40,7 @@ export default function DecksEx() {
                 rel="noopener noreferrer">frontend</a> and <a className="underline text-blue-700 hover:text-blue-400"
                 href="https://github.com/davidluby/flask-portfolio"
                 target="_blank"
-                rel="noopener noreferrer">backend</a> repositories are public on GitHub. Below is a block diagram drawn before any of the application materialized. It is still valid.
+                rel="noopener noreferrer">backend</a> repositories are public on GitHub. Below are a number of diagrams drawn before any of the application materialized. Their description of the app architecture is still mostly valid.
 			</p>
 			<p className="mt-4">
 				The backend repository uses Git, GitHub, AWS CodePipeline, and AWS CodeDeploy for CI/CD deployment to an Amazon Linux 2 instance. Similarly, the frontend uses Git and GitHub for direct CI/CD integration with Netlify.
@@ -48,7 +48,10 @@ export default function DecksEx() {
 			<p className="mt-4">
 				I regret that this website&#8212;in particular, this application&#8212;is not very responsive (4/13/2023), but I feel it demonstrates fullstack competency and is enough to post. If you see anything broken or poorly-done, I probably know about it, so challenge me to correct it! <b>And, yes, this is wildly overengineered for my purposes, but it was a great learning experience.</b>
 			</p>
-			<img className="mt-10" src="/system.png"></img>
+			<img className="mt-10" src="./fullstack/system.png"></img>
+			<img className="mt-10" src="./fullstack/fs1.jpg"></img>
+			<img className="mt-10" src="./fullstack/fs2.jpg"></img>
+			<img className="mt-10" src="./fullstack/fs3.jpg"></img>
 		</div>
     </div>
 	)

@@ -5,6 +5,7 @@ import ThreeProjectile from "@components/simulations/ThreeProjectile"
 import TwoFluid from "@components/simulations/TwoFluid"
 
 import Gl_triangle from "@components/simulations/GL_triangle"
+import GL_box from "@components/simulations/GL_box"
 
 import App from "@components/decks/App"
 
@@ -26,11 +27,14 @@ export default function Home() {
             </div>
             <h1 className="w-[97%] res:w-5/6 mt-20 mb-5 border-b-4 border-yellow-500">Simulations</h1>
             <TwoFluid name="twoFluid" />
-            <div className="flex flex-col items-center res:flex-row res:space-x-5 w-[97%] res:w-5/6">
+            <div className="flex flex-col items-center res:flex-row justify-center res:space-x-5 w-[97%] res:w-5/6">
                 <TwoCollisions name="twoCollisions"/>
                 <ThreeProjectile />
             </div>
-            <Gl_triangle name="GL_triangle" />
+            <div className="flex flex-col items-center res:flex-row justify-center res:space-x-5 w-[97%] res:w-5/6 mt-5">
+                <GL_box name="GL_box" />
+                <Gl_triangle name="GL_triangle" />
+            </div>
             <h1 className="w-[97%] res:w-5/6 mt-20 mb-5 border-b-4 border-yellow-500">Fullstack Application</h1>
             <App />
             <h1 className="w-[97%] res:w-5/6 mt-20 border-b-4 border-yellow-500">Mechatronic Color Sorting Conveyor</h1>

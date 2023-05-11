@@ -1,6 +1,11 @@
 import React, { useEffect } from 'react';
 
 export default function Gl_triangle({ name }) {
+
+    // this component uses homegrown matrix algebra functions.
+    // most other components use the mat4 library because it is better.
+
+
     // initialize vertex data
     // initialize vertex colors
 
@@ -32,11 +37,11 @@ export default function Gl_triangle({ name }) {
             -0.433, -0.25, 0.0,
             0.433, -0.25, 0.0
         ];
-
-        const colorData = [
-            1, 0, 0,    // v1 color
-            0, 1, 0,    // v2 coior
-            0, 0, 1     // v3 color
+        
+        let colorData = [
+            ...randomColor(),
+            ...randomColor(),
+            ...randomColor(),
         ];
 
         const positionBuffer = gl.createBuffer();
@@ -190,9 +195,13 @@ export default function Gl_triangle({ name }) {
         return matrix = matrix_new
 
     }
+
+    function randomColor() {
+        return [Math.random(), Math.random(), Math.random()];
+    }
     
     return (
-        <div className="w-[97%] res:w-1/4 mt-5 tile bg-slate-900">
+        <div className="w-full res:w-1/4 mt-5 res:mt-0 tile bg-slate-900">
             <h1>
                 WebGL Animated Polygon
             </h1>

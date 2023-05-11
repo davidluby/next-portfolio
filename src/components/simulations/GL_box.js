@@ -2,46 +2,86 @@ import React, { useEffect } from 'react';
 
 export default function GL_box({ name }) {
 
-    function draw() {
+    let mat4 = require('gl-mat4');
 
+    useEffect(() => {
         let canvas = document.getElementById(name);
         let gl = canvas.getContext("webgl");
-
-        // initialize vertex data
-        // initialize vertex colors
-
-        // create buffer
-        // load vertices into buffer
-
-        //create buffer
-        // load vertex colors into buffer
-
-        // create vertex shader
-        // create fragment shader
-
-        // create program
-        // attach shaders to program
-        // enable vertex attributes
-
-        // draw
-
-
+        canvas.width = 300;
+        canvas.height = 300;
+        
         if (!gl) {
             throw new Error("Web GL not supported.");
         };
 
+        // polygon vertices used to create box
         const vertices = [
-            0, 1, 0,
-            1, -1, 0,
-            -1, -1, 0
+
+            // Front
+            0.5, 0.5, 0.5,
+            0.5, -.5, 0.5,
+            -.5, 0.5, 0.5,
+
+            -.5, 0.5, 0.5,
+            0.5, -.5, 0.5,
+            -.5, -.5, 0.5,
+        
+            // Left
+            -.5, 0.5, 0.5,
+            -.5, -.5, 0.5,
+            -.5, 0.5, -.5,
+
+            -.5, 0.5, -.5,
+            -.5, -.5, 0.5,
+            -.5, -.5, -.5,
+        
+            // Back
+            -.5, 0.5, -.5,
+            -.5, -.5, -.5,
+            0.5, 0.5, -.5,
+
+            0.5, 0.5, -.5,
+            -.5, -.5, -.5,
+            0.5, -.5, -.5,
+        
+            // Right
+            0.5, 0.5, -.5,
+            0.5, -.5, -.5,
+            0.5, 0.5, 0.5,
+
+            0.5, 0.5, 0.5,
+            0.5, -.5, 0.5,
+            0.5, -.5, -.5,
+        
+            // Top
+            0.5, 0.5, 0.5,
+            0.5, 0.5, -.5,
+            -.5, 0.5, 0.5,
+
+            -.5, 0.5, 0.5,
+            0.5, 0.5, -.5,
+            -.5, 0.5, -.5,
+        
+            // Bottom
+            0.5, -.5, 0.5,
+            0.5, -.5, -.5,
+            -.5, -.5, 0.5,
+
+            -.5, -.5, 0.5,
+            0.5, -.5, -.5,
+            -.5, -.5, -.5,
         ];
 
-        const colorData = [
-            1, 0, 0,    // v1 color
-            0, 1, 0,    // v2 coior
-            0, 0, 1     // v3 color
-        ]
+        // assigning random color to each polygon
+        let colorData = [];
+        for (let tri = 0; tri < 12; tri++) {
+            let triColor = randomColor();
+            for (let vertex = 0; vertex < 3; vertex++) {
+                colorData.push(...triColor);
+            }
+        }
 
+        // almost verbatim GL_triangle code
         const positionBuffer = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer); // bind to current array buffer
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW); // load vertex data into buffer and choose draw mode
@@ -59,9 +99,12 @@ export default function GL_box({ name }) {
         attribute vec3 position;
         attribute vec3 color;
         varying vec3 vColor;
+
+        uniform mat4 matrix;
+
         void main() {
             vColor = color;
-            gl_Position = vec4(position, 1);
+            gl_Position = matrix * vec4(position, 1);
         }
         `);
         gl.compileShader(vertexShader)
@@ -94,22 +137,54 @@ export default function GL_box({ name }) {
         gl.vertexAttribPointer(colorLocation, 3, gl.FLOAT, false, 0, 0);
 
         gl.useProgram(program);
-        gl.drawArrays(gl.TRIANGLES, 0, 3); // triangle, first vertex, draw all three
-    };
+        gl.enable(gl.DEPTH_TEST);
 
+        const uniformLocation = {
+            matrix : gl.getUniformLocation(program, `matrix`)
+        };
 
-    useEffect(() => {
-        draw()
+        // matrix translation code, use mat4.create and mat4.translate in practice
+        let matrix = mat4.create();
+        mat4.translate(matrix, matrix, [0, .1, -1.5]);
+
+        let projectionMatrix = mat4.create();
+        mat4.perspective(projectionMatrix,
+            115 * Math.PI/180,   // vertical fov
+            canvas.height/canvas.width, // aspect ratio
+            1e-4,   // near cull distance
+            1e4 // far cull distance
+        );
+
+        let outMatrix = mat4.create();
+
+        animate();
+
+        function animate() {
+            requestAnimationFrame(animate);
+            mat4.rotateX(matrix, matrix, Math.PI/150);
+            mat4.rotateY(matrix, matrix, Math.PI/150);
+            mat4.rotateZ(matrix, matrix, Math.PI/300);
+
+            mat4.multiply(outMatrix, projectionMatrix, matrix);
+            gl.uniformMatrix4fv(uniformLocation.matrix, false, outMatrix);
+            gl.drawArrays(gl.TRIANGLES, 0, vertices.length / 3); // triangle, first vertex, draw all three
+            // divide length of vertices array by 3 to get the number of vertices. vertices = coordinateComponents/componentsPerCoordinate(x,y,z)
+
+            
+        }
+        
     }, [])
-    
+
+    function randomColor() {
+        return [Math.random(), Math.random(), Math.random()];
+    }
+
     return (
-        <div className="w-[97%] res:w-5/6 tile bg-slate-900">
+        <div className="w-full res:w-1/4 tile bg-slate-900">
             <h1>
-                Web GL Triangle
+                WebGL Animated Cube
             </h1>
-            <div className="flex flex-col">
-                <canvas id={name} className="w-full mb-2 border-2 rounded-xl border-yellow-500"></canvas>
-            </div>
+            <canvas height="300" width="300" id={name} className="w-full border-2 rounded-xl border-yellow-500"></canvas>
         </div>
     )
 }

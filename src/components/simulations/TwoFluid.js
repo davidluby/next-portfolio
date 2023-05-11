@@ -27,7 +27,7 @@ export default function TwoFluid({ name }) {
     return (
         <div className="w-[97%] res:w-5/6 tile bg-slate-900">
             <h1>
-                2-D Fluid Simulation
+                2-D WebGL Fluid Simulation
             </h1>
             <div className="flex flex-col">
                 <canvas id={name} className="w-full mb-2 border-2 rounded-xl border-yellow-500"></canvas>
