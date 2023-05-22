@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import Head from 'next/head'
+import Link from 'next/link'
 
 export default function Resume(){
 
     const slides = [
-        ["Data structures and algorithms", "Fullstack web development", ["c.png", "python.png", "matlab.png", "js.png", "sql.png", "html.png", "css.png", "tw.png", "react.png", "next.png", "flask.png", "git.png"]],
-        ["Mechatronic system modeling (DC and stepper motors, IR, Hall Effect, and color sensors)", "Microprocessor programming and component interfacing (datasheets)", ["c.png", "python.png", "matlab.png", "atmel.png", "arduino.png"]],
+        ["Algorithms for physical simulations and numerical methods", "Time complexity and memory optimization", "CI/CD, fullstack development, OOP/functional programming", ["c.png", "python.png", "matlab.png", "js.png", "sql.png", "html.png", "css.png", "tw.png", "react.png", "next.png", "flask.png", "git.png"]],
+        ["Interfacing: oscilloscope, op-amp, piezoelectric accelerometer, potentiometer, tachometer, LVT/LVDT, DC/stepper motor; IR, Hall Effect, color sensor", "Signal processing and electrical system design", "Low-level time and memory optimization in C", ["c.png", "atmel.png", "python.png", "matlab.png", "arduino.png"]],
         ["Version-controlled product development (SOLIDWORKS PDM)", "Control system, finite element, and statistical analysis", "MATLAB, SIMULINK, SOLIDWORKS, Excel, JMP",["matlab.png", "simulink.png", "sw.png", "pdm.png", "marc.png", "excel.png", "jmp.png"] ],
         ["AWS, EC2, Apache, WSGI, Flask, CI/CD", "Windows, Linux, Git, GitHub", ["aws.png", "apache.png", "mssql.png", "bash.png","ps.png","cmd.png","linux.png", "win.png"]],
     ];
 
-    const names = ['Software', 'Firmware', 'Mechanical', 'DevOps'];
+    const names = ['Software Engineering', 'Firmware Engineering', 'Mechanical Engineering', 'DevOps'];
 
     const [slide, setSlide] = useState(slides[0]);
     const [index, setIndex] = useState(0);
@@ -40,7 +41,7 @@ export default function Resume(){
                 <title>Resume</title>
             </Head>
             <div className="flex flex-col res:flex-row res:items-center res:justify-evenly w-[97%] res:w-5/6">
-                <div className="res:relative flex flex-col items-center justify-center res:items-end res:w-[26rem] res:h-[8rem] px-3 py-5 shadow-lg rounded-xl ring-1 ring-black/5 text-center res:text-left bg-slate-900">
+                <div className="res:relative flex flex-col items-center justify-center res:items-end res:w-[26rem] res:h-[8rem] px-3 py-5 shadow-lg rounded-xl ring-1 ring-black/5 text-center res:text-left bg-slate-700">
                     <img className="res:absolute res:-left-12 w-60 res:w-[12rem] rounded-full shadow-lg" src="headshot.jpg"></img>
                     <div>
                         <ul className="flex flex-row items-center justify-center res:justify-start mt-2 res:mt-0 space-x-2">
@@ -49,11 +50,11 @@ export default function Resume(){
                             </h2>
                             <span className="border-[1px] h-4"></span>
                             <li className ="flex items-center justify-center w-7 h-7">
-                                <a href="https://linkedin.com/in/david-luby/" className="logo-linked w-6 h-6 inline-block bg-center bg-no-repeat" target="_blank" rel="noopener noreferrer"></a>
+                                <Link href="https://linkedin.com/in/david-luby/" className="logo-linked w-6 h-6 inline-block bg-center bg-no-repeat" target="_blank" rel="noopener noreferrer"></Link>
                             </li>
                             <span className="border-[1px] h-4"></span>
                             <li className="flex items-center justify-center w-7 h-7">
-                                <a href="https://github.com/davidluby" className="logo-github w-6 h-6 inline-block bg-center bg-no-repeat rounded-full" target="_blank" rel="noopener noreferrer"></a>
+                                <Link href="https://github.com/davidluby" className="logo-github w-6 h-6 inline-block bg-center bg-no-repeat rounded-full" target="_blank" rel="noopener noreferrer"></Link>
                             </li>
                         </ul>
                         <p>

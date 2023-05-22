@@ -15,7 +15,7 @@ export default function fluids() {
     return (
     <div className="flex flex-col items-center">
         <Head>
-            <title>2D Collisions</title>
+            <title>Fluid Simulation</title>
         </Head>
         <Slides names={names} pictures={pictures} />
     </div>

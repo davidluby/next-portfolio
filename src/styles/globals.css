@@ -8,6 +8,7 @@
     border-width: 1px;
     border-color:rgba(0, 0, 0, 0.1);
     box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    background-color: rgb(51 65 85);
 }
 
 @media screen and (min-width: 950px) {
@@ -46,6 +47,7 @@ h2 {
     background-position: center;
     background-image: url("/logo-trans.png");
     background-size: 90%;
+    filter: brightness(1.75);
     transition: all 500ms;
 }
 .nav-logo:hover {
@@ -67,11 +69,10 @@ h2 {
     background-size: 100%;
 }
 .nav-button {
-    font-size: 1.5rem;
-    padding: .5rem;
+    padding: .75rem;
     border: solid;
     border-width: 0rem;
-    border-top-width: .25rem;
+    border-bottom-width: .25rem;
     border-color: rgba(255, 255, 255, 0);
     transition: all 300ms;
 }

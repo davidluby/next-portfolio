@@ -1,9 +1,13 @@
 import React, { useEffect } from 'react';
+import Link from 'next/link'
 
 export default function Gl_triangle({ name }) {
 
     // this component uses homegrown matrix algebra functions.
     // most other components use the mat4 library because it is better.
+
+    // this is used only for matrix multiplication
+    let mat4 = require('gl-mat4');
 
 
     // initialize vertex data
@@ -112,8 +116,18 @@ export default function Gl_triangle({ name }) {
             0, 0, 0, 1
         ];
 
-        matrix = constructTranslationMatrix(matrix, [0, 0, 0]);
+        matrix = constructTranslationMatrix(matrix, [0, 0, -1.5]);
         matrix = scaleIdentity(matrix, [1, 1, 1]);
+
+        let projectionMatrix = mat4.create();
+        mat4.perspective(projectionMatrix,
+            90 * Math.PI/180,   // vertical fov
+            canvas.height/canvas.width, // aspect ratio
+            1e-4,   // near cull distance
+            1e4 // far cull distance
+        );
+
+        let outMatrix = mat4.create();
 
 
         animate();
@@ -123,7 +137,9 @@ export default function Gl_triangle({ name }) {
             matrix = rotateIdentity(matrix, -Math.PI/100, 'x');
             matrix = rotateIdentity(matrix, -Math.PI/100, 'y');
             matrix = rotateIdentity(matrix, -Math.PI/100, 'z');
-            gl.uniformMatrix4fv(uniformLocation.matrix, false, matrix);
+
+            mat4.multiply(outMatrix, projectionMatrix, matrix);
+            gl.uniformMatrix4fv(uniformLocation.matrix, false, outMatrix);
             gl.drawArrays(gl.TRIANGLES, 0, 3); // triangle, first vertex, draw all three
 
             
@@ -203,7 +219,9 @@ export default function Gl_triangle({ name }) {
     return (
         <div className="w-full res:w-1/4 mt-5 res:mt-0 tile bg-slate-900">
             <h1>
-                WebGL Animated Polygon
+                <Link href="/webgl" className="hover:text-yellow-500 transition-all duration-500">
+                    WebGL Animated Polygon
+                </Link>
             </h1>
             <canvas width="300" height="300" id={name} className="w-full border-2 rounded-xl border-yellow-500"></canvas>
         </div>

@@ -3,7 +3,7 @@ import Slides from '@components/nav/Slides'
 
 export default function iterative() {
     const names = [
-        'Background', 'Jacobi/Gauss-Seidel', 'Successive Overrelaxation', 'Algorithm'
+        'Background', 'Jacobi/Gauss-Seidel', 'Successive Overrelaxation', 'Algorithms'
     ]
 
     const pictures = [
@@ -17,7 +17,7 @@ export default function iterative() {
     return (
     <div className="flex flex-col items-center">
         <Head>
-            <title>2D Collisions</title>
+            <title>Iterative Methods</title>
         </Head>
         <Slides names={names} pictures={pictures} />
     </div>

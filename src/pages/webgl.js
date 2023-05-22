@@ -14,7 +14,7 @@ export default function webgl() {
     return (
     <div className="flex flex-col items-center">
         <Head>
-            <title>2D Collisions</title>
+            <title>WebGL</title>
         </Head>
         <Slides names={names} pictures={pictures} />
     </div>

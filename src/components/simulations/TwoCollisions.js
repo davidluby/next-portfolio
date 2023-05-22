@@ -1,4 +1,6 @@
 import React, { useEffect } from 'react';
+import Link from 'next/link'
+
 
 export default function TwoCollisions({ name }) {
     class vector {
@@ -188,17 +190,19 @@ export default function TwoCollisions({ name }) {
     
     return (
         <div className="w-full res:w-1/2 my-5 res:mb-0  tile bg-slate-900">
-            <h1>
-                2-D Collision Simulation
+            <h1> 
+                <Link href="/collision" className="hover:text-yellow-500 transition-all duration-500">
+                    2-D Collision Simulation
+                </Link>   
             </h1>
             <div className="flex flex-col">
                 <canvas id={name} className="w-full mb-2 border-2 rounded-xl border-yellow-500"></canvas>
                 <div className="flex flex-row items-center justify-center space-x-2">
-                    <button className="rounded-md p-1 bg-slate-800 hover:bg-slate-700 text-xs text-white" onClick={() => restart()}>Restart</button>
-                    <button className="rounded-md p-1 bg-slate-800 hover:bg-slate-700 text-xs text-white" onClick={() => toggleGravity()}>Toggle Gravity</button>
+                    <button className="rounded-md p-1 bg-slate-800 hover:bg-slate-900 text-xs text-white" onClick={() => restart()}>Restart</button>
+                    <button className="rounded-md p-1 bg-slate-800 hover:bg-slate-900 text-xs text-white" onClick={() => toggleGravity()}>Toggle Gravity</button>
                     <div className="flex flex-col items-center">
                         <p className="text-xs">Elasticity</p>
-                        <input id="rest" type="range" min="0.1" max="1" step="0.1" defaultValue="1" className="h-1 bg-gray-700 rounded-lg appearance-none cursor-pointer range-sm"></input>
+                        <input id="rest" type="range" min="0.1" max="1" step="0.1" defaultValue="1" className="h-1 bg-gray-800 rounded-lg appearance-none cursor-pointer range-sm"></input>
                     </div>
                 </div>
             </div>
