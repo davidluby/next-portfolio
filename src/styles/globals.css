@@ -70,6 +70,7 @@ h2 {
 }
 .nav-button {
     padding: .75rem;
+    padding-top:1rem;
     border: solid;
     border-width: 0rem;
     border-bottom-width: .25rem;

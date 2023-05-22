@@ -29,7 +29,7 @@ export default function App() {
 			</h1>
 			<p>
 				The above application is intended to demonstrate fullstack competency. Please visit the&nbsp;
-				<Link className="underline text-blue-700 hover:text-blue-400" href="/decks_ex" target="_blank" rel="noopener noreferrer">explanation</Link>
+				<Link className="underline text-blue-500 hover:text-blue-400" href="/decks_ex" target="_blank" rel="noopener noreferrer">explanation</Link>
 				&nbsp;page for a description of what is going on behind the scenes. Below is really a list of issues I do not have time to fix or make more user-friendly.
 			</p>
 			<p className="mt-4">
@@ -52,11 +52,11 @@ export default function App() {
 			<p>
 				<i>
 					All player pictures, statistics, and data are property of&nbsp;
-					<Link className="underline text-blue-700 hover:text-blue-400" href="https://www.basketball-reference.com" target="_blank" rel="noopener noreferrer">www.basketball-reference.com</Link>
+					<Link className="underline text-blue-500 hover:text-blue-400" href="https://www.basketball-reference.com" target="_blank" rel="noopener noreferrer">www.basketball-reference.com</Link>
 					. This demonstration is intentionally limited to better align with the&nbsp;
-					<Link className="underline text-blue-700 hover:text-blue-400" href="https://www.sports-reference.com/data_use.html" target="_blank" rel="noopener noreferrer">guidelines</Link>
+					<Link className="underline text-blue-500 hover:text-blue-400" href="https://www.sports-reference.com/data_use.html" target="_blank" rel="noopener noreferrer">guidelines</Link>
 					&nbsp;issued by Sports Reference. Measures taken to limit this site&#x27;s footprint on Sports References&#x27; are described on the&nbsp;
-					<Link className="underline text-blue-700 hover:text-blue-400" href="/decks_ex" target="_blank" rel="noopener noreferrer">explanation</Link>
+					<Link className="underline text-blue-500 hover:text-blue-400" href="/decks_ex" target="_blank" rel="noopener noreferrer">explanation</Link>
 					&nbsp;page.<b> Data, images, statistics, etc. from Sports Reference are blurred.</b>
 				</i>
       		</p>

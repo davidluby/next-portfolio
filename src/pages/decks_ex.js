@@ -28,10 +28,10 @@ export default function DecksEx() {
 			
     		<p>
         		The appilcation&apos;s frontend is built on next.js and deployed via Netlify, communicating with an API using an Apache web server deployed on an AWS EC2 instance backed by a Flask WSGI. The API retrieves data directly from the internet and from an AWS MSSQL RDS instance, where data is also stored. Two testing endpoints are available&nbsp;
-				<Link className="underline text-blue-700 hover:text-blue-400" href="https://davidluby.com/plain_test" target="_blank" rel="noopener noreferrer">here</Link> and&nbsp;
-				<Link className="underline text-blue-700 hover:text-blue-400" href="https://davidluby.com/rest_test" target="_blank" rel="noopener noreferrer">here</Link>, and the&nbsp;
-				<Link className="underline text-blue-700 hover:text-blue-400" href="https://github.com/davidluby/next-portfolio" target="_blank" rel="noopener noreferrer">frontend</Link> and&nbsp;
-				<Link className="underline text-blue-700 hover:text-blue-400" href="https://github.com/davidluby/flask-portfolio" target="_blank" rel="noopener noreferrer">backend</Link> repositories are public on GitHub. Below are a number of diagrams drawn before any of the application materialized. Their description of the app architecture is still mostly valid.
+				<Link className="underline text-blue-500 hover:text-blue-400" href="https://davidluby.com/plain_test" target="_blank" rel="noopener noreferrer">here</Link> and&nbsp;
+				<Link className="underline text-blue-500 hover:text-blue-400" href="https://davidluby.com/rest_test" target="_blank" rel="noopener noreferrer">here</Link>, and the&nbsp;
+				<Link className="underline text-blue-500 hover:text-blue-400" href="https://github.com/davidluby/next-portfolio" target="_blank" rel="noopener noreferrer">frontend</Link> and&nbsp;
+				<Link className="underline text-blue-500 hover:text-blue-400" href="https://github.com/davidluby/flask-portfolio" target="_blank" rel="noopener noreferrer">backend</Link> repositories are public on GitHub. Below are a number of diagrams drawn before any of the application materialized. Their description of the app architecture is still mostly valid.
 			</p>
 			<p className="mt-4">
 				The backend repository uses Git, GitHub, AWS CodePipeline, and AWS CodeDeploy for CI/CD deployment to an Amazon Linux 2 instance. Similarly, the frontend uses Git and GitHub for direct CI/CD integration with Netlify.

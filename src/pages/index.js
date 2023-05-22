@@ -25,7 +25,7 @@ export default function Home() {
                 </p>
                 <p className="mt-4">
                     Below is a collection of projects&mdash;the site itself being one of them&mdash;covered in greater depth on pages under the Background tab. All projects&#39; source code are on my&nbsp;
-                    <Link href="https://github.com/davidluby" className="" target="_blank" rel="noopener noreferrer">GitHub</Link>
+                    <Link href="https://github.com/davidluby" className="underline text-blue-500 hover:text-blue-400" target="_blank" rel="noopener noreferrer">GitHub</Link>
                     &#8212;<b>if you see something broken or poorly-done, challenge me to correct it.</b>
                 </p>
             </div>
