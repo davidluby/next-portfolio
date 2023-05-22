@@ -55,7 +55,7 @@ export default function Home() {
             <div className="flex flex-col items-center res:flex-row justify-center space-y-5 res:space-y-0 res:space-x-5 w-[97%] res:w-5/6 mt-5">
                 <img src="bike.jpg" className="tile"></img>
                 <p className="tile w-full res:w-2/5">
-                    Mounting a four-stroke engine to a pedal bike was the easy part of this project&#8212;maintenence was the true challenge. 49 CC's of vibrations really leaves a mark on a $100 Huffy Cranbrook from Walmart. Making sure this was safe to ride required several modifications as its mileage ballooned.
+                    Mounting a four-stroke engine to a pedal bike was the easy part of this project&#8212;maintenence was the true challenge. 49 CC&#39;s of vibrations really leaves a mark on a $100 Huffy Cranbrook from Walmart. Making sure this was safe to ride required several modifications as its mileage ballooned.
                 </p>
             </div>
         </div>
