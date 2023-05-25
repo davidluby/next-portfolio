@@ -2,7 +2,7 @@ import Head from 'next/head'
 import Link from "next/link"
 import App from "@components/decks/App"
             
-export default function DecksEx() {
+export default function Decks() {
 
 
   return (
