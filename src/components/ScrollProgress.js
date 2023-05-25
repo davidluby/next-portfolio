@@ -13,7 +13,7 @@ export default function ScrollProgress() {
 		window.onscroll = scrollBar;
 	}, [])
   	return (
-		<div id="scrollContainer h-2" className="sticky top-0">
+		<div id="scrollContainer" className="sticky top-0 border-0 -mt-28 mb-28">
 			<div id="scrollBar" className="bg-yellow-500 h-1 w-0"></div>
 		</div>
 	)
