@@ -18,7 +18,7 @@ export default function collision() {
         <Head>
             <title>2D Collisions</title>
         </Head>
-        <div className="flex items-center justify-center mb-5 -mt-5">
+        <div className="flex items-center justify-center mb-20 -mt-5">
             <TwoCollisions name="twoCollisions" />
         </div>
         <Slides names={names} pictures={pictures} />
