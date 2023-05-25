@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html *{
+    font-size: 100%;
+    font-family: "Segoe UI Variable", "Trebuchet MS", Arial, Helvetica, sans-serif, "Times New Roman";
+}
 .tile {
     padding: 1.25rem;
     border-radius: 0.75rem;

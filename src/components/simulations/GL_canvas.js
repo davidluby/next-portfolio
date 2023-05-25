@@ -214,7 +214,7 @@ export default function GL_canvas({ name }) {
     return (
         <div className="w-full res:w-1/4 tile bg-slate-900">
             <h1>
-                <Link href="/webgl" className="hover:text-yellow-500 transition-all duration-500">WebGL Grid -- <i>in progress</i></Link>
+                <Link href="/webgl" className="hover:text-yellow-500 transition-all duration-500">WebGL Cubic Mesh -- <i>in progress</i></Link>
             </h1>
             <canvas height="300" width="300" id={name} className="w-full border-2 border-yellow-500"></canvas>
         </div>

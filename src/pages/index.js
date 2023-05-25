@@ -18,7 +18,7 @@ export default function Home() {
             <Head>
                 <title>Homepage</title>
             </Head>
-            <h1 className="w-[97%] res:w-5/6 border-b-4 border-yellow-500">Welcome</h1>
+            <h1 className="w-[97%] res:w-5/6 border-b-4 border-yellow-500 mt-10">Welcome</h1>
             <div className="w-[97%] res:w-5/6 mt-5 tile">
                 <p>
                     Thank you for visiting my website. My name is David Luby, and I am a recent mechanical engineering graduate from the University of New Hampshire. This site is intended to demonstrate interests and abilities across software, firmware, and mechanical engineering.
@@ -45,6 +45,44 @@ export default function Home() {
                 <Link href="/decks_ex" className="hover:text-yellow-500 transition-all duration-500">Fullstack Application</Link>
             </h1>
             <App />
+            <div id="helpID" className="w-[97%] res:w-5/6 mt-10 tile bg-slate-900">
+                <h1>
+                    Quick Start
+                </h1>
+                <p>
+                    The above application is intended to demonstrate fullstack competency. Please visit the&nbsp;
+                    <Link className="underline text-blue-500 hover:text-blue-400" href="/decks_ex" target="_blank" rel="noopener noreferrer">explanation</Link>
+                    &nbsp;page for a description of what is going on behind the scenes.
+                </p>
+                <p className="mt-4">
+                    <b>Click on the search bar and type in an NBA player&#x27;s name.</b> Limitations to the search algorithm have the following consequences:
+                </p>
+                <ul className="list-disc list-inside res:ml-10">
+                    <li>only one search is allowed each minute (fill decks with repeated cards, or edit an existing deck)</li>
+                    <li>the player must still be playing in the NBA</li>
+                    <li>names typed into the search bar should be spelled perfectly</li>
+                    <li>players with prefixes, suffixes, or hyphens&#8212;anything other than a first and last name&#8212;rarely work</li>
+                    <li>players traded this season will appear with a blank background and some incorrect data</li>
+                    <li>player data is blurred</li>
+                </ul>
+                <p className="mt-4">
+                    Finally, <b>this works well in Chromium browsers (Chrome, Edge, FireFox, etc.)</b>, it does not in Safari, and no others were checked. Mobile is also a little broken.
+                </p>
+                <h1 className="mt-4">
+                    Disclaimer
+                </h1>
+                <p>
+                    <i>
+                        All player pictures, statistics, and data are property of&nbsp;
+                        <Link className="underline text-blue-500 hover:text-blue-400" href="https://www.basketball-reference.com" target="_blank" rel="noopener noreferrer">www.basketball-reference.com</Link>
+                        . This demonstration is intentionally limited to better align with the&nbsp;
+                        <Link className="underline text-blue-500 hover:text-blue-400" href="https://www.sports-reference.com/data_use.html" target="_blank" rel="noopener noreferrer">guidelines</Link>
+                        &nbsp;issued by Sports Reference. Measures taken to limit this site&#x27;s footprint on Sports References&#x27; are described on the&nbsp;
+                        <Link className="underline text-blue-500 hover:text-blue-400" href="/decks_ex" target="_blank" rel="noopener noreferrer">explanation</Link>
+                        &nbsp;page.<b> Data, images, statistics, etc. from Sports Reference are blurred.</b>
+                    </i>
+                </p>
+            </div>
             <h1 className="w-[97%] res:w-5/6 mt-20 border-b-4 border-yellow-500">Mechatronic Color Sorting Conveyor</h1>
             <div className="flex flex-row flex-wrap justify-evenly w-[97%] res:w-5/6 mt-5">
                 <iframe className="tile w-[300px] h-[500px]" src="https://www.youtube.com/embed/8P3UF1Z6qRs" title="v1" frameBorder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>

@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import Slides from '@components/nav/Slides'
+import TwoCollisions from '@components/simulations/TwoCollisions'
 
 export default function collision() {
     const names = [
@@ -17,6 +18,9 @@ export default function collision() {
         <Head>
             <title>2D Collisions</title>
         </Head>
+        <div className="flex items-center justify-center mb-5 -mt-5">
+            <TwoCollisions name="twoCollisions" />
+        </div>
         <Slides names={names} pictures={pictures} />
     </div>
       )
