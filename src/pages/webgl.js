@@ -18,7 +18,7 @@ export default function webgl() {
         <Head>
             <title>WebGL</title>
         </Head>
-        <div className="flex flex-row w-[97%] res:w-5/6 justify-evenly mb-20">
+        <div className="flex flex-col res:flex-row items-center justify-evenly w-[97%] res:w-5/6 mb-20">
             <GL_box name="GL_box"/>
             <GL_triangle name="GL_triangle" />
         </div>

@@ -29,7 +29,7 @@ export default function TwoFluid({ name }) {
         <div className="w-[97%] res:w-5/6 tile bg-slate-900">
             <h1>
                 <Link href="/fluids" className="hover:text-yellow-500 transition-all duration-300 ease-in">
-                    2-D WebGL Fluid Simulation -- <i>coming soon</i>
+                    WebGL Fluid Simulation -- <i>coming soon</i>
                 </Link>
             </h1>
             <div className="flex flex-col">
