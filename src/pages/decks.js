@@ -54,7 +54,7 @@ export default function Decks() {
 			</h1>
 			<p>
 				The above application is intended to demonstrate fullstack competency. Please visit the&nbsp;
-				<Link className="underline text-blue-500 hover:text-blue-400" href="/decks_ex" target="_blank" rel="noopener noreferrer">explanation</Link>
+				<Link className="underline text-blue-500 hover:text-blue-400" href="/decks" target="_blank" rel="noopener noreferrer">explanation</Link>
 				&nbsp;page for a description of what is going on behind the scenes.
 			</p>
 			<p className="mt-4">
