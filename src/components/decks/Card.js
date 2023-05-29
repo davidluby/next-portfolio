@@ -29,8 +29,8 @@ export default function Card({ data, loc }) {
                 id="flipState">
                 <div className="flex flex-col items-center justify-evenly h-full w-full rounded-xl bg-black/60 text-white z-50">
                     <div className="flex flex-row space-x-6">
-                        <img src={data.pic} className="rounded-full blur-[3px]"/>
-                        <div className="flex flex-row space-x-3">
+                        <img src={data.pic} className="rounded-full blur-[3px] z-50"/>
+                        <div className="flex flex-row space-x-3 z-50">
                             <div className="flex flex-col justify-evenly">
                                 <p> Pos: </p>
                                 <p> Team: </p>
@@ -44,7 +44,7 @@ export default function Card({ data, loc }) {
                         </div>
                     </div>
                     <div className="flex flex-col">
-                        <h1 className="text-lg text-center">
+                        <h1 className="text-lg text-center z-50">
                             2022-2023 Season Stats
                         </h1>
                         <div className="container grid grid-cols-9 gap-1 text-xs brk:text-xs">
