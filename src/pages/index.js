@@ -21,7 +21,7 @@ export default function Home() {
             <h1 className="w-[97%] res:w-5/6 border-b-4 border-yellow-500">Welcome</h1>
             <div className="w-[97%] res:w-5/6 mt-5 tile">
                 <p>
-                    Thank you for visiting my website. My name is David Luby, and I am a recent mechanical engineering graduate from the University of New Hampshire. This site is intended to demonstrate interests and abilities across software, firmware, and mechanical engineering.
+                    Thank you for visiting my website. My name is David Luby, and I am a recent mechanical engineering graduate from the University of New Hampshire. This site is intended to demonstrate interests and abilities in software, firmware, and mechanical engineering.
                 </p>
                 <p className="mt-4">
                     Below is a collection of projects&mdash;the site itself being one of them&mdash;covered in greater depth on pages under the Background tab. All projects&#39; source code are on my&nbsp;
@@ -67,9 +67,6 @@ export default function Home() {
                     <li>players traded this season will appear with a blank background and some incorrect data</li>
                     <li>player data is blurred</li>
                 </ul>
-                <p className="mt-4">
-                    Finally, <b>this works well in Chromium browsers (Chrome, Edge, FireFox, etc.)</b>, it does not in Safari, and no others were checked. Mobile is also a little broken.
-                </p>
                 <h1 className="mt-4">
                     Disclaimer
                 </h1>

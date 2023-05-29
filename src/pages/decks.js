@@ -53,11 +53,6 @@ export default function Decks() {
 				Quick Start
 			</h1>
 			<p>
-				The above application is intended to demonstrate fullstack competency. Please visit the&nbsp;
-				<Link className="underline text-blue-500 hover:text-blue-400" href="/decks" target="_blank" rel="noopener noreferrer">explanation</Link>
-				&nbsp;page for a description of what is going on behind the scenes.
-			</p>
-			<p className="mt-4">
 				<b>Click on the search bar and type in an NBA player&#x27;s name.</b> Limitations to the search algorithm have the following consequences:
 			</p>
 			<ul className="list-disc list-inside res:ml-10">
@@ -68,9 +63,6 @@ export default function Decks() {
 				<li>players traded this season will appear with a blank background and some incorrect data</li>
 				<li>player data is blurred</li>
 			</ul>
-			<p className="mt-4">
-				Finally, <b>this works well in Chromium browsers (Chrome, Edge, FireFox, etc.)</b>, it does not in Safari, and no others were checked. Mobile is also a little broken.
-			</p>
 			<h1 className="mt-4">
 				Disclaimer
 			</h1>
