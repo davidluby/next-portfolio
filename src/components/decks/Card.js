@@ -16,7 +16,7 @@ export default function Card({ data, loc }) {
         <div className="relative h-full w-full transition-all ease-in duration-500 [transform-style:preserve-3d]"
             id={"flipState-"+loc}
             onClick={() => flipCard()}>
-            <div className="absolute h-full w-full rounded-xl shadow-sm shadow-black/80 bg-center bg-cover bg-no-repeat [backface-visibility:hidden]"
+            <div className="absolute h-full w-full rounded-xl shadow-sm shadow-black/80 bg-center bg-cover bg-no-repeat z-0"
                 style={{backgroundImage: `url(${"./fullstack/cities/" + data.team.toLowerCase() + ".jpg"})`}}>
             </div>
             <div className="absolute overflow-hidden h-full w-full rounded-xl border-4 border-yellow-500 group-hover:border-yellow-300 [backface-visibility:hidden] transition-all duration-500">
@@ -27,7 +27,7 @@ export default function Card({ data, loc }) {
 
             <div className="absolute inset-0 [transform:rotateY(180deg)] [backface-visibility:hidden]"
                 id="flipState">
-                <div className="flex flex-col items-center justify-evenly h-full w-full rounded-xl bg-black/60 text-white">
+                <div className="flex flex-col items-center justify-evenly h-full w-full rounded-xl bg-black/60 text-white z-50">
                     <div className="flex flex-row space-x-6">
                         <img src={data.pic} className="rounded-full blur-[3px]"/>
                         <div className="flex flex-row space-x-3">
