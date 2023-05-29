@@ -22,9 +22,6 @@ export default function Nav() {
 						<Link className="p-[.5rem] nav-button text-base" href="/mech">Mechatronics</Link>
 						<Link className="p-[.5rem] nav-button text-base" href="/webgl">WebGL</Link>
 						<Link className="p-[.5rem] nav-button text-base rounded-b-md" href="/iterative">Iterative Methods</Link>
-						{/*
-						<Link className="p-[.5rem] hover:bg-slate-600 text-base rounded-b-md" href="/bike">Motorized Bike</Link>
-						*/}
 					</div> : null
 				}
 			</div>

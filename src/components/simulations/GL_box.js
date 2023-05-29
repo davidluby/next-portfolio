@@ -146,7 +146,7 @@ export default function GL_box({ name }) {
 
         // matrix translation code, use mat4.create and mat4.translate in practice
         let matrix = mat4.create();
-        mat4.translate(matrix, matrix, [0, .1, -1.5]);
+        mat4.translate(matrix, matrix, [0, 0, -1.5]);
 
         let projectionMatrix = mat4.create();
         mat4.perspective(projectionMatrix,
@@ -181,9 +181,9 @@ export default function GL_box({ name }) {
     }
 
     return (
-        <div className="w-full res:w-1/4 tile bg-slate-900">
+        <div className="w-full tile bg-slate-900">
             <h1>
-                <Link href="/webgl" className="hover:text-yellow-500 transition-all duration-500">WebGL Animated Mesh</Link>
+                <Link href="/webgl" className="hover:text-yellow-500 transition-all duration-500">WebGL Animated Cube</Link>
             </h1>
             <canvas height="300" width="300" id={name} className="w-full border-2 rounded-xl border-yellow-500"></canvas>
         </div>

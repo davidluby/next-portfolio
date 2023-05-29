@@ -217,7 +217,7 @@ export default function Gl_triangle({ name }) {
     }
     
     return (
-        <div className="w-full res:w-1/4 mt-5 res:mt-0 tile bg-slate-900">
+        <div className="w-full tile bg-slate-900">
             <h1>
                 <Link href="/webgl" className="hover:text-yellow-500 transition-all duration-500">
                     WebGL Animated Polygon

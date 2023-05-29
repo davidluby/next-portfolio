@@ -19,11 +19,8 @@ export default function fluids() {
         <Head>
             <title>Fluid Simulation</title>
         </Head>
-        <div className="flex flex-col res:flex-row items-center justify-evenly mb-20">
-            <div className="flex items-center justify-center w-full res:w-1/2 mb-5 res:mb-0">
-                <TwoFluid name="twoFluid" />
-            </div>
-            <GL_canvas name="glCanvas" />
+        <div className="w-[97%] res:w-1/2 mb-5 res:mb-10">
+            <TwoFluid name="twoFluid" />
         </div>
         <Slides names={names} pictures={pictures} />
     </div>

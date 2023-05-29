@@ -5,10 +5,10 @@ import Link from 'next/link'
 export default function Resume(){
 
     const slides = [
-        ["Algorithms for physical simulations and numerical methods", "Time complexity and memory optimization", "CI/CD, fullstack development, OOP/functional programming", ["c.png", "python.png", "matlab.png", "js.png", "sql.png", "html.png", "css.png", "tw.png", "react.png", "next.png", "flask.png", "git.png"]],
-        ["Interfacing: oscilloscope, op-amp, piezoelectric accelerometer, potentiometer, tachometer, LVT/LVDT, DC/stepper motor; IR, Hall Effect, color sensor", "Signal processing and electrical system design", "Low-level time and memory optimization in C", ["c.png", "atmel.png", "python.png", "matlab.png", "arduino.png"]],
-        ["Version-controlled product development (SOLIDWORKS PDM)", "Control system, finite element, and statistical analysis", "MATLAB, SIMULINK, SOLIDWORKS, Excel, JMP",["matlab.png", "simulink.png", "sw.png", "pdm.png", "marc.png", "excel.png", "jmp.png"] ],
-        ["AWS, EC2, Apache, WSGI, Flask, CI/CD", "Windows, Linux, Git, GitHub", ["aws.png", "apache.png", "mssql.png", "bash.png","ps.png","cmd.png","linux.png", "win.png"]],
+        ["Object-oriented, functional, and low-level programming", "CI/CD fullstack and mechatronic software development", "Algorithms for physical simulations using numerical methods", ["c.png", "python.png", "matlab.png", "js.png", "webgl.png", "sql.png", "html.png", "css.png", "tw.png", "react.png", "next.png", "flask.png", "git.png"]],
+        ["Breadboard prototyping and contol system analysis", "Signal processing and low-level programming", "Tools: oscilloscope, op-amp, piezoelectric accelerometer, potentiometer, tachometer, LVT/LVDT, DC/stepper motor; IR, Hall Effect, color sensor", ["c.png", "python.png", "matlab.png", "sql.png", "apache.png", "atmel.png", "vs.png", "git.png"]],
+        ["Version-controlled product development (SOLIDWORKS PDM)", "Control system and finite element analysis", "Requirement definition, and new product development, sustaining engineering",["matlab.png", "simulink.png", "python.png", "C.png", "sw.png", "pdm.png", "marc.png", "excel.png", "jmp.png"] ],
+        ["CI/CD version control pipeline construction", "Amazon Web Services cloud suite", "RESTful CRUD API", ["aws.png", "apache.png", "mssql.png", "bash.png","ps.png","cmd.png","linux.png", "win.png"]],
     ];
 
     const names = ['Software Engineering', 'Firmware Engineering', 'Mechanical Engineering', 'DevOps'];
@@ -112,16 +112,13 @@ export default function Resume(){
                 <p><i>Mechanical Engineering Intern</i></p>
                 <ul className="list-disc list-inside">
                     <li>
-                        Analyzed ST-500 cryostat tolerance stack up (TSU) and initiated an engineering change order for an approximate
-                        67% reduction (~1 mm) in the worst-case TSU without threat to product budget.
+                        Reduced worst case tolerance stack up in ST-500 cryostat by approximately 1 mm (~67%) without additional cost and initiated an engineering change order to reflect the changes via SOLIDWORKS PDM.
                     </li>
                     <li>
-                        Engaged in research and development of a collet-style adjustable sample holder with cooling capacity effective to 
-                        approximately 4 Kelvin to linearize manufacturing through a more versatile product.
+                        Linearized manufacturing process in research and development of an adjustable collet sample holder with effective cooling to approximately 4 Kelvin.
                     </li>
                     <li>
-                        Applied complete cyclic engineering method in new product development and sustaining engineering, interfacing 
-                        with SOLIDWORKS PDM for company coordination.
+                        Applied complete engineering method for new product development and sustaining engineering, coordinating with team members for dozens of parts and products.
                     </li>   
                 </ul>
                 <div className="flex flex-col res:flex-row res:justify-between mt-10">
@@ -131,18 +128,11 @@ export default function Resume(){
                 <p><i>Systems Engineering Intern</i></p>
                 <ul className="list-disc list-inside">
                     <li>
-                        Established an Inherent Availability requirement at the three 9&#39;s threshold (99.9% availability) for Non-Federal 
-                        Remote Airport Traffic Control Towers (ATCT) to ensure adherence to safety and performance standards within 
-                        the National Airspace System (NAS).
+                        Established 99.9% inherent availability requirement for non-federal remote airport traffic control towers (ATCT) to ensure adherence to safety and performance standards within the National Airspace System (NAS).
                     </li>
                     <li>
-                        Substantiated Federal authority to enforce an availability requirement for Non-Federal Remote Tower (RT) 
-                        systems using existing domestic and foreign documents detailing Non-Federal RT system association to the NAS.
-                    </li>
-                    <li>
-                        Amended RT Systems Minimum Functional and Performance Requirements for Non-Federal Applications
-                        document to reflect updated Non-Federal Remote ATCT system RMA requirements.
-                    </li>   
+                        Substantiated Federal authority to enforce an availability requirement for non-federal remote tower systems (RT) using existing domestic and foreign documents detailing non-federal RT system protocol
+                    </li>  
                 </ul>
                 <div className="flex flex-col res:flex-row res:justify-between mt-10">
                     <h2>University of New Hampshire - Durham, NH</h2>

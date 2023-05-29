@@ -18,7 +18,7 @@ export default function GL_canvas({ name }) {
 
 
         // grid spacing
-        const N = 3;
+        const N = 10;
         const h = 1.5/N;
 
         // vertices used to create box
@@ -73,25 +73,33 @@ export default function GL_canvas({ name }) {
             -h, -h, -h
         ];
 
-        var vertices = [];
-        for (let i = 0; i < box.length/N; i++) {
-            let vertex = [box[i], box[i+1], box[i+2]];
-            let transformation = [];
-            vec3.transformMat4(transformation, vertex, [h, 0, 0]);
-            vertices.push(...transformation);
+        for (let i = 0; i < box.length; i++) {
+            box[i] = box[i] - h*(N-1);
+        };
+
+        let vertices = [];
+        // loop for each box
+        for (let z = 0; z < N; z++) {
+            for (let y = 0; y < N; y++) {
+                for (let x = 0; x < N; x++) {
+                    for ( let i = 0; i < box.length/3; i++){
+                        let idx = i*3;
+                        let translatedVertex = [box[idx] + 2*x*h,
+                                                box[idx+1] + 2*y*h,
+                                                box[idx+2] + 2*z*h];
+                        vertices.push(...translatedVertex);
+                    }
+                }
             }
-
-        console.log(vertices);
-        vertices = box;
-
+        }
 
 
         // assigning color to each cube
         let colorData = [];
         // divide by N and then by faces
-        for (let cube = 0; cube < 12*N; cube++) {
+        for (let cube = 0; cube < N**3; cube++) {
             let faceColor = randomColor();
-            for (let face = 0; face < 12; face++) {
+            for (let face = 0; face < 36; face++) {
                 colorData.push(...faceColor);
             }
         }
@@ -169,7 +177,7 @@ export default function GL_canvas({ name }) {
 
 
         let matrix = mat4.create();
-        mat4.translate(matrix, matrix, [0, 0, -2]);
+        mat4.translate(matrix, matrix, [0, 0, -5]);
         //mat4.rotateX(matrix, matrix, Math.PI/4);
 
         let projectionMatrix = mat4.create();
@@ -182,14 +190,15 @@ export default function GL_canvas({ name }) {
 
         let outMatrix = mat4.create();
 
-
         // animate
         animate();
 
         function animate() {
             requestAnimationFrame(animate);
 
+            mat4.rotateX(matrix, matrix, Math.PI/200);
             mat4.rotateY(matrix, matrix, Math.PI/200);
+            mat4.rotateZ(matrix, matrix, Math.PI/200);
 
             mat4.multiply(outMatrix, projectionMatrix, matrix);
             gl.uniformMatrix4fv(uniformLocation.matrix, false, outMatrix);
@@ -203,20 +212,12 @@ export default function GL_canvas({ name }) {
         return [Math.random(), Math.random(), Math.random()];
     }
 
-    function cube(vertices) {
-        let points = [];
-        for (let i = 0; i < vertices; i++) {
-            //const point = point(random);
-            //points.push(...point);
-        }
-    };
-
     return (
-        <div className="w-full res:w-1/4 tile bg-slate-900">
+        <div className="w-full tile bg-slate-900">
             <h1>
-                <Link href="/webgl" className="hover:text-yellow-500 transition-all duration-500">WebGL Cubic Mesh -- <i>in progress</i></Link>
+                <Link href="/webgl" className="hover:text-yellow-500 transition-all duration-500">WebGL 3-D Grid Mesh</Link>
             </h1>
-            <canvas height="300" width="300" id={name} className="w-full border-2 border-yellow-500"></canvas>
+            <canvas height="300" width="300" id={name} className="w-full rounded-xl border-2 border-yellow-500"></canvas>
         </div>
     )
 }

@@ -43,7 +43,7 @@ export default function Interface({ setHidden, searching, playerData, empty, set
 	return (
 		<div className="flex flex-col items-center w-full">
 			<div className="flex flex-col items-center w-[97%] res:w-5/6 p-5 app:p-12 mt-10 shadow-lg rounded-xl ring-1 ring-black/5 parquet">
-			<h1>Click or tap to flip cards.</h1>
+			<h2 className="py-2 px-4 mb-5 rounded-md bg-yellow-500 shadow-lg ring-1 ring-black/5">Click or tap to flip cards.</h2>
 				<div className="flex flex-col app:flex-row app:justify-evenly items-center w-full">
 					{ !searching ? <div className="flex flex-col items-center" style={{animation : "inAnimation 500ms ease-in"}}>
 						<Card data={playerData} loc="main" />
