@@ -1,114 +1,85 @@
 import React, { useEffect } from 'react';
 import Link from 'next/link'
 
-export default function GL_canvas({ name }) {
-
+export default function TwoFluid({ name }) {
     let mat4 = require('gl-mat4');
-    let vec3 = require('gl-vec3');
+
+    // grid spacing
+    let N = 3;
+    const length = 1;
+    const h = length / N;
+    const extra = 0; // used for extending a dimension for rectangular shape
+
+
+    // vertices used to create box
+    const box = [
+
+        // Front
+        h, h, h,
+        h, -h, h,
+        -h, h, h,
+        -h, h, h,
+        h, -h, h,
+        -h, -h, h,
+
+        // Back
+        -h, h, -h,
+        -h, -h, -h,
+        h, h, -h,
+        h, h, -h,
+        -h, -h, -h,
+        h, -h, -h,
+
+        // Left
+        -h, h, h,
+        -h, -h, h,
+        -h, h, -h,
+        -h, h, -h,
+        -h, -h, h,
+        -h, -h, -h,
+    
+        // Right
+        h, h, -h,
+        h, -h, -h,
+        h, h, h,
+        h, h, h,
+        h, -h, h,
+        h, -h, -h,
+    
+        // Top
+        h, h, h,
+        h, h, -h,
+        -h, h, h,
+        -h, h, h,
+        h, h, -h,
+        -h, h, -h,
+    
+        // Bottom
+        h, -h, h,
+        h, -h, -h,
+        -h, -h, h,
+        -h, -h, h,
+        h, -h, -h,
+        -h, -h, -h
+    ];
+
+    let meshVertices = [];
+    meshVertices = offsetVertices(box, N, h, extra);
+    meshVertices = cubicMesh(box, N, extra);
+    let colorData = colorMesh(N, extra);
 
     useEffect(() => {
         let canvas = document.getElementById(name);
         let gl = canvas.getContext("webgl");
-        canvas.width = 300;
-        canvas.height = 300;
         
         if (!gl) {
             throw new Error("Web GL not supported.");
         };
 
-
-        // grid spacing
-        const N = 10;
-        const h = 1.5/N;
-
-        // vertices used to create box
-        const box = [
-
-            // Front
-            h, h, h,
-            h, -h, h,
-            -h, h, h,
-            -h, h, h,
-            h, -h, h,
-            -h, -h, h,
-
-            // Back
-            -h, h, -h,
-            -h, -h, -h,
-            h, h, -h,
-            h, h, -h,
-            -h, -h, -h,
-            h, -h, -h,
-
-            // Left
-            -h, h, h,
-            -h, -h, h,
-            -h, h, -h,
-            -h, h, -h,
-            -h, -h, h,
-            -h, -h, -h,
-        
-            // Right
-            h, h, -h,
-            h, -h, -h,
-            h, h, h,
-            h, h, h,
-            h, -h, h,
-            h, -h, -h,
-        
-            // Top
-            h, h, h,
-            h, h, -h,
-            -h, h, h,
-            -h, h, h,
-            h, h, -h,
-            -h, h, -h,
-        
-            // Bottom
-            h, -h, h,
-            h, -h, -h,
-            -h, -h, h,
-            -h, -h, h,
-            h, -h, -h,
-            -h, -h, -h
-        ];
-
-        for (let i = 0; i < box.length; i++) {
-            box[i] = box[i] - h*(N-1);
-        };
-
-        let vertices = [];
-        // loop for each box
-        for (let z = 0; z < N; z++) {
-            for (let y = 0; y < N; y++) {
-                for (let x = 0; x < N; x++) {
-                    for ( let i = 0; i < box.length/3; i++){
-                        let idx = i*3;
-                        let translatedVertex = [box[idx] + 2*x*h,
-                                                box[idx+1] + 2*y*h,
-                                                box[idx+2] + 2*z*h];
-                        vertices.push(...translatedVertex);
-                    }
-                }
-            }
-        }
-
-
-        // assigning color to each cube
-        let colorData = [];
-        // divide by N and then by faces
-        for (let cube = 0; cube < N**3; cube++) {
-            let faceColor = randomColor();
-            for (let face = 0; face < 36; face++) {
-                colorData.push(...faceColor);
-            }
-        }
-
-
         // load buffers
         const positionBuffer = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer); // bind to current array buffer
-        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW); // load vertex data into buffer and choose draw mode
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(meshVertices), gl.STATIC_DRAW); // load vertex data into buffer and choose draw mode
 
         const colorBuffer = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer); // bind to current array buffer
@@ -177,22 +148,19 @@ export default function GL_canvas({ name }) {
 
 
         let matrix = mat4.create();
-        mat4.translate(matrix, matrix, [0, 0, -5]);
-        //mat4.rotateX(matrix, matrix, Math.PI/4);
+        mat4.translate(matrix, matrix, [0, 0, -3]);
 
         let projectionMatrix = mat4.create();
         mat4.perspective(projectionMatrix,
-            90 * Math.PI/180,   // vertical fov
-            canvas.height/canvas.width, // aspect ratio
+            90 * Math.PI / 180,   // vertical fov
+            canvas.width / canvas.height, // aspect ratio
             1e-4,   // near cull distance
             1e4 // far cull distance
         );
 
         let outMatrix = mat4.create();
 
-        // animate
-        animate();
-
+        
         function animate() {
             requestAnimationFrame(animate);
 
@@ -202,22 +170,76 @@ export default function GL_canvas({ name }) {
 
             mat4.multiply(outMatrix, projectionMatrix, matrix);
             gl.uniformMatrix4fv(uniformLocation.matrix, false, outMatrix);
-            gl.drawArrays(gl.TRIANGLES, 0, vertices.length / 3); // triangle, first vertex, draw all three
+            gl.drawArrays(gl.TRIANGLES, 0, meshVertices.length / 3); // triangle, first vertex, draw all three
             // divide length of vertices array by 3 to get the number of vertices. vertices = coordinateComponents/componentsPerCoordinate(x,y,z)
         }
         
+        animate();
+
     }, [])
 
+
+    
     function randomColor() {
         return [Math.random(), Math.random(), Math.random()];
+    };
+
+    function offsetVertices(vertices, N, h, extra) {
+        // offset box vertices to center the mesh
+        for (let i = 0; i < vertices.length; i++) {
+            vertices[i] = vertices[i] - h * (N - 1 + extra);
+        };
+        return vertices;
+    };
+
+    function cubicMesh(box, N, extra) {
+        let vertices = [];
+
+        // z direction third
+        for (let z = 0; z < N; z++) {
+            // y direction second
+            for (let y = 0; y < N; y++) {
+                // x direction first
+                for (let x = 0; x < N + extra; x++) {
+                    // for each vertex
+                    for ( let i = 0; i < box.length / 3; i++){
+                        let idx = i * 3;
+                        let translatedVertex = [
+                                                box[idx]     + 2 * x * h,
+                                                box[idx + 1] + 2 * y * h,
+                                                box[idx + 2] + 2 * z * h
+                                                ];
+                                                
+                        vertices.push(...translatedVertex);
+                    }
+                }
+            }
+        }
+        return vertices;
     }
 
+    function colorMesh(N, extra) {
+        let colorData = [];
+        // divide by N and then by faces
+        for (let box = 0; box < N ** 3 + extra * N**2; box++) { // + N^2 for each 1 added to dimension
+            let color = randomColor();
+            for (let vertex = 0; vertex < 36; vertex++) {
+                colorData.push(...color);
+            }
+        }
+        return colorData;
+    };
+    
     return (
         <div className="w-full tile bg-slate-900">
             <h1>
-                <Link href="/webgl" className="hover:text-yellow-500 transition-all duration-500">WebGL 3-D Grid Mesh</Link>
+                <Link href="/webgl" className="hover:text-yellow-500 transition-all duration-300 ease-in">
+                    WebGL 3-D Grid Mesh
+                </Link>
             </h1>
-            <canvas height="300" width="300" id={name} className="w-full rounded-xl border-2 border-yellow-500"></canvas>
+            <div className="flex flex-col">
+                <canvas id={name} height="200" width="200" className="w-full border-2 rounded-xl border-yellow-500"></canvas>
+            </div>
         </div>
     )
 }

@@ -5,12 +5,13 @@ import Slides from '@components/nav/Slides'
 
 export default function fluids() {
     const names = [
-        'Navier-Stokes', 'Algorithm'
+        'Navier-Stokes', 'Algorithm', 'Mesh Generation Algorithm'
     ]
 
     const pictures = [
         ['./fluids/fluid1.jpg', './fluids/fluid2.jpg', './fluids/fluid3.jpg', './fluids/fluid4.jpg'],
-        ['./fluids/fluidAlgo1.jpg', './fluids/fluidAlgo2.jpg', './fluids/fluidAlgo3.jpg', './fluids/fluidAlgo4.jpg', './fluids/fluidAlgo5.jpg']
+        ['./fluids/fluidAlgo1.jpg', './fluids/fluidAlgo2.jpg', './fluids/fluidAlgo3.jpg', './fluids/fluidAlgo4.jpg', './fluids/fluidAlgo5.jpg'],
+        ['./webgl/mesh1.jpg', './webgl/mesh2.jpg']
 
     ]
 

@@ -6,11 +6,12 @@ import GL_canvas from '@components/simulations/GL_canvas'
 
 export default function webgl() {
     const names = [
-        'Matrix Algebra'
+        'Matrix Algebra', 'Mesh Generation Algorithm'
     ]
 
     const pictures = [
-        [, './iterative/webgl1.jpg', './iterative/webgl2.jpg']
+        ['./webgl/webgl1.jpg', './webgl/webgl2.jpg'],
+        ['./webgl/mesh1.jpg', './webgl/mesh2.jpg']
 
     ]
 

@@ -1,120 +1,96 @@
 import React, { useEffect } from 'react';
 import Link from 'next/link'
 
+
 export default function TwoFluid({ name }) {
     let mat4 = require('gl-mat4');
+
+    // grid spacing
+    let N = 10;
+    const length = 1;
+    const h = length / N;
+    const extra = 10; // used for extending a dimension for rectangular shape
+
+
+    // vertices used to create box
+    const box = [
+
+        // Front
+        h, h, h,
+        h, -h, h,
+        -h, h, h,
+        -h, h, h,
+        h, -h, h,
+        -h, -h, h,
+
+        // Back
+        -h, h, -h,
+        -h, -h, -h,
+        h, h, -h,
+        h, h, -h,
+        -h, -h, -h,
+        h, -h, -h,
+
+        // Left
+        -h, h, h,
+        -h, -h, h,
+        -h, h, -h,
+        -h, h, -h,
+        -h, -h, h,
+        -h, -h, -h,
+    
+        // Right
+        h, h, -h,
+        h, -h, -h,
+        h, h, h,
+        h, h, h,
+        h, -h, h,
+        h, -h, -h,
+    
+        // Top
+        h, h, h,
+        h, h, -h,
+        -h, h, h,
+        -h, h, h,
+        h, h, -h,
+        -h, h, -h,
+    
+        // Bottom
+        h, -h, h,
+        h, -h, -h,
+        -h, -h, h,
+        -h, -h, h,
+        h, -h, -h,
+        -h, -h, -h
+    ];
+
+    let meshVertices = [];
+    meshVertices = offsetVertices(box, N, h, extra);
+    meshVertices = cubicMesh(box, N, extra);
+
+    //let colorData = colorMesh(N, extra); // to randomly color entire mesh
+
+
+    // to color specific mesh indices
+    let colorData = new Array(N**3 * 108 + extra * N**2).fill(0);
+    for (let i = 0; i < N*N*N + extra * N**2; i++){
+        colorData = dyeIdx(i, colorData);
+    }
+    
 
     useEffect(() => {
         let canvas = document.getElementById(name);
         let gl = canvas.getContext("webgl");
-        gl.width = 600;
-        gl.height = 300;
         
         if (!gl) {
             throw new Error("Web GL not supported.");
         };
 
-
-        // grid spacing
-        const N = 10;
-        const h = 1.5/N;
-
-        // vertices used to create box
-        const box = [
-
-            // Front
-            h, h, h,
-            h, -h, h,
-            -h, h, h,
-            -h, h, h,
-            h, -h, h,
-            -h, -h, h,
-
-            // Back
-            -h, h, -h,
-            -h, -h, -h,
-            h, h, -h,
-            h, h, -h,
-            -h, -h, -h,
-            h, -h, -h,
-
-            // Left
-            -h, h, h,
-            -h, -h, h,
-            -h, h, -h,
-            -h, h, -h,
-            -h, -h, h,
-            -h, -h, -h,
-        
-            // Right
-            h, h, -h,
-            h, -h, -h,
-            h, h, h,
-            h, h, h,
-            h, -h, h,
-            h, -h, -h,
-        
-            // Top
-            h, h, h,
-            h, h, -h,
-            -h, h, h,
-            -h, h, h,
-            h, h, -h,
-            -h, h, -h,
-        
-            // Bottom
-            h, -h, h,
-            h, -h, -h,
-            -h, -h, h,
-            -h, -h, h,
-            h, -h, -h,
-            -h, -h, -h
-        ];
-
-        for (let i = 0; i < box.length; i++) {
-            box[i] = box[i] - h*(N-1);
-        };
-
-        let vertices = [];
-        // loop for each box
-        for (let z = 0; z < N; z++) {
-            for (let y = 0; y < N; y++) {
-                for (let x = 0; x < N; x++) {
-                    for ( let i = 0; i < box.length/3; i++){
-                        let idx = i*3;
-                        let translatedVertex = [box[idx] + 2*x*h,
-                                                box[idx+1] + 2*y*h,
-                                                box[idx+2] + 2*z*h];
-                        vertices.push(...translatedVertex);
-                    }
-                }
-            }
-        }
-
-
-        // assigning color to each cube
-        let colorData = [];
-        // divide by N and then by faces
-        for (let cube = 0; cube < N**3; cube++) {
-            let faceColor = randomColor();
-            for (let face = 0; face < 36; face++) {
-                colorData.push(...faceColor);
-            }
-        }
-
-
-        // load buffers
+        // routine to output xyz coordinates from buffer into vertex shader
         const positionBuffer = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer); // bind to current array buffer
-        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW); // load vertex data into buffer and choose draw mode
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(meshVertices), gl.STATIC_DRAW); // load vertex data into buffer and choose draw mode
 
-        const colorBuffer = gl.createBuffer();
-        gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer); // bind to current array buffer
-        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colorData), gl.STATIC_DRAW); // load vertex data into buffer and choose draw mode
-
-
-
-        // routine to output xyz coordinates from buffer into vertex shader
         const vertexShader = gl.createShader(gl.VERTEX_SHADER);
         gl.shaderSource(vertexShader, `
         precision mediump float;
@@ -133,13 +109,17 @@ export default function TwoFluid({ name }) {
         gl.compileShader(vertexShader)
 
 
-
         //routine to assign color shader
+        const colorBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer); // bind to current array buffer
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colorData), gl.STATIC_DRAW); // load color data into buffer and choose draw mode
+
         const fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
         gl.shaderSource(fragmentShader, `
         precision mediump float;
 
         varying vec3 vColor;
+
         void main() {
             gl_FragColor = vec4(vColor, 1);
         }
@@ -175,40 +155,91 @@ export default function TwoFluid({ name }) {
 
 
         let matrix = mat4.create();
-        mat4.translate(matrix, matrix, [0, 0, -10]);
-        //mat4.rotateX(matrix, matrix, Math.PI/4);
+        mat4.translate(matrix, matrix, [0, 0, -1.5]);
 
         let projectionMatrix = mat4.create();
         mat4.perspective(projectionMatrix,
-            90 * Math.PI/180,   // vertical fov
-            canvas.height/canvas.width, // aspect ratio
+            90 * Math.PI / 180,   // vertical fov
+            canvas.width / canvas.height, // aspect ratio
             1e-4,   // near cull distance
             1e4 // far cull distance
         );
 
         let outMatrix = mat4.create();
-
         mat4.rotateX(matrix, matrix, Math.PI/6);
-        mat4.rotateY(matrix, matrix, Math.PI/3);
 
-        // animate
-        animate();
-
+        
         function animate() {
             requestAnimationFrame(animate);
 
+            //mat4.rotateX(matrix, matrix, Math.PI/200);
+            //mat4.rotateY(matrix, matrix, Math.PI/200);
+            //mat4.rotateZ(matrix, matrix, Math.PI/200);
+
             mat4.multiply(outMatrix, projectionMatrix, matrix);
             gl.uniformMatrix4fv(uniformLocation.matrix, false, outMatrix);
-            gl.drawArrays(gl.TRIANGLES, 0, vertices.length / 3); // triangle, first vertex, draw all three
+            gl.drawArrays(gl.TRIANGLES, 0, meshVertices.length / 3); // triangle, first vertex, draw all three
             // divide length of vertices array by 3 to get the number of vertices. vertices = coordinateComponents/componentsPerCoordinate(x,y,z)
         }
         
+        animate();
+
     }, [])
 
+
+    
     function randomColor() {
         return [Math.random(), Math.random(), Math.random()];
+    };
+
+    function offsetVertices(vertices, N, h, extra) {
+        // offset box vertices to center the mesh
+        for (let i = 0; i < vertices.length; i++) {
+            vertices[i] = vertices[i] - h * (N - 1 + extra);
+        };
+        return vertices;
+    };
+
+    function cubicMesh(box, N, extra) {
+        let vertices = [];
+
+        // z direction third
+        for (let z = 0; z < N; z++) {
+            // y direction second
+            for (let y = 0; y < N; y++) {
+                // x direction first
+                for (let x = 0; x < N + extra; x++) {
+                    // for each vertex
+                    for ( let i = 0; i < box.length / 3; i++){
+                        let idx = i * 3;
+                        let translatedVertex = [
+                                                box[idx]     + 2 * x * h,
+                                                box[idx + 1] + 2 * y * h,
+                                                box[idx + 2] + 2 * z * h
+                                                ];
+                                                
+                        vertices.push(...translatedVertex);
+                    }
+                }
+            }
+        }
+        return vertices;
     }
     
+    function dyeIdx(idx, dta) {
+        let color = []
+        color = randomColor();
+
+        let cubeIdx = idx*108;
+        for (let i = 0; i < 36; i++) {
+            let vertexIdx = i*3;
+            dta[cubeIdx + vertexIdx] = color[0];
+            dta[cubeIdx + vertexIdx + 1] = color[1];
+            dta[cubeIdx + vertexIdx + 2] = color[2];
+        }
+        return dta
+    };
+
     return (
         <div className="w-full tile bg-slate-900">
             <h1>
@@ -217,7 +248,7 @@ export default function TwoFluid({ name }) {
                 </Link>
             </h1>
             <div className="flex flex-col">
-                <canvas id={name} className="w-full mb-2 border-2 rounded-xl border-yellow-500"></canvas>
+                <canvas id={name} height="450" width="900" className="w-full mb-2 border-2 rounded-xl border-yellow-500"></canvas>
                 <div className="flex flex-row items-center justify-center space-x-2">
                     <button className="rounded-md p-1 bg-slate-800 hover:bg-slate-900 text-xs text-white">Button</button>
                     <button className="rounded-md p-1 bg-slate-800 hover:bg-slate-900 text-xs text-white">Button</button>

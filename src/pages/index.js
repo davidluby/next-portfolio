@@ -44,7 +44,7 @@ export default function Home() {
                 </div>
             </div>
             <h1 className="w-[97%] res:w-5/6 mt-20 mb-5 border-b-4 border-yellow-500">
-                <Link href="/decks_ex" className="hover:text-yellow-500 transition-all duration-500">Fullstack Application</Link>
+                <Link href="/decks_ex" className="hover:text-yellow-500 transition-all duration-500">Fullstack Basketball Card Deck App</Link>
             </h1>
             <App />
             <div id="helpID" className="w-[97%] res:w-5/6 mt-10 tile bg-slate-900">
@@ -82,13 +82,13 @@ export default function Home() {
                     </i>
                 </p>
             </div>
-            <h1 className="w-[97%] res:w-5/6 mt-20 mb-5 border-b-4 border-yellow-500">
+            <h1 className="w-[97%] res:w-5/6 mt-20 border-b-4 border-yellow-500">
                 <Link href="/mech" className="hover:text-yellow-500 transition-all duration-500">Mechatronic Color Sorting Conveyor</Link>
             </h1>
-            <div className="flex flex-row flex-wrap justify-evenly w-[97%] res:w-5/6 mt-5">
-                <iframe className="tile w-[300px] h-[500px]" src="https://www.youtube.com/embed/8P3UF1Z6qRs" title="v1" frameBorder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
-                <iframe className="tile w-[300px] h-[500px]" src="https://www.youtube.com/embed/--vCE5AsHIY" title="v2" frameBorder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
-                <iframe className="tile w-[300px] h-[500px]" src="https://www.youtube.com/embed/XdCFYtW8jBc" title="v3" frameBorder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
+            <div className="flex flex-wrap justify-evenly w-[97%] res:w-5/6">
+                <iframe className="tile w-[300px] h-[500px] mt-5" src="https://www.youtube.com/embed/8P3UF1Z6qRs" title="v1" frameBorder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
+                <iframe className="tile w-[300px] h-[500px] mt-5" src="https://www.youtube.com/embed/--vCE5AsHIY" title="v2" frameBorder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
+                <iframe className="tile w-[300px] h-[500px] mt-5" src="https://www.youtube.com/embed/XdCFYtW8jBc" title="v3" frameBorder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
             </div>
             <h1 className="w-[97%] res:w-5/6 mt-20 border-b-4 border-yellow-500">Motorized Bike</h1>
             <div className="flex flex-col items-center res:flex-row justify-center space-y-5 res:space-y-0 res:space-x-5 w-[97%] res:w-5/6 mt-5">
