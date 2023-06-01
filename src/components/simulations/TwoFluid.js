@@ -168,12 +168,13 @@ export default function TwoFluid({ name }) {
         let outMatrix = mat4.create();
         mat4.rotateX(matrix, matrix, Math.PI/6);
 
-        
+            
+
         function animate() {
             requestAnimationFrame(animate);
 
             //mat4.rotateX(matrix, matrix, Math.PI/200);
-            //mat4.rotateY(matrix, matrix, Math.PI/200);
+            //mat4.rotateY(matrix, matrix, Math.PI/500);
             //mat4.rotateZ(matrix, matrix, Math.PI/200);
 
             mat4.multiply(outMatrix, projectionMatrix, matrix);
@@ -244,7 +245,7 @@ export default function TwoFluid({ name }) {
         <div className="w-full tile bg-slate-900">
             <h1>
                 <Link href="/fluids" className="hover:text-yellow-500 transition-all duration-300 ease-in">
-                    WebGL Fluid Simulation <i>-- in progress</i>
+                    WebGL Fluid Simulation <i>-- work in progress</i>
                 </Link>
             </h1>
             <div className="flex flex-col">

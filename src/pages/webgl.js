@@ -11,7 +11,7 @@ export default function webgl() {
 
     const pictures = [
         ['./webgl/webgl1.jpg', './webgl/webgl2.jpg'],
-        ['./webgl/mesh1.jpg', './webgl/mesh2.jpg']
+        ['./webgl/mesh1.jpg', './webgl/mesh2.jpg', './webgl/mesh3.jpg']
 
     ]
 
