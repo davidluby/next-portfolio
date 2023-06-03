@@ -6,7 +6,7 @@ export default function TwoFluid({ name }) {
     let mat4 = require('gl-mat4');
 
     // grid spacing
-    let N = 5;
+    let N = 10;
     const length = 1;
     const h = length / N;
     const extra = 10; // used for extending a dimension for rectangular shape
@@ -230,14 +230,14 @@ export default function TwoFluid({ name }) {
     
     function dyeIdx(idx, dta) {
         let color = []
-        color = randomColor();
+        color = Math.random(); //randomColor();
 
         let cubeIdx = idx*108;
         for (let i = 0; i < 36; i++) {
             let vertexIdx = i*3;
-            dta[cubeIdx + vertexIdx] = color[0];
-            dta[cubeIdx + vertexIdx + 1] = color[1];
-            dta[cubeIdx + vertexIdx + 2] = color[2];
+            dta[cubeIdx + vertexIdx] = color; //color[0];
+            dta[cubeIdx + vertexIdx + 1] = color; //color[1];
+            dta[cubeIdx + vertexIdx + 2] = color; //color[2];
         }
         return dta
     };
