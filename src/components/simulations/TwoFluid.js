@@ -6,11 +6,12 @@ export default function TwoFluid({ name }) {
     let mat4 = require('gl-mat4');
 
     // grid spacing
-    let N = 10;
+    let N = 5;
     const length = 1;
     const h = length / N;
     const extra = 10; // used for extending a dimension for rectangular shape
 
+    useEffect(() => {
 
     // vertices used to create box
     const box = [
@@ -70,15 +71,15 @@ export default function TwoFluid({ name }) {
 
     //let colorData = colorMesh(N, extra); // to randomly color entire mesh
 
-
-    // to color specific mesh indices
+    function animate() {
+    // to color specific mesh indices THIS IS WHAT NEEDED TO BE IN THE ANIMATE FUNCTION
     let colorData = new Array(N**3 * 108 + extra * N**2).fill(0);
     for (let i = 0; i < N*N*N + extra * N**2; i++){
         colorData = dyeIdx(i, colorData);
     }
     
-
-    useEffect(() => {
+    
+    
         let canvas = document.getElementById(name);
         let gl = canvas.getContext("webgl");
         
@@ -170,7 +171,7 @@ export default function TwoFluid({ name }) {
 
             
 
-        function animate() {
+        
             requestAnimationFrame(animate);
 
             //mat4.rotateX(matrix, matrix, Math.PI/200);
