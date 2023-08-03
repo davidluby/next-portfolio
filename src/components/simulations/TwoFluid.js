@@ -3,16 +3,19 @@ import Link from 'next/link'
 
 
 export default function TwoFluid({ name }) {
-    let mat4 = require('gl-mat4');
 
+
+    
+    let mat4 = require('gl-mat4');
+    
     // grid spacing
     let N = 10;
     const length = 1;
     const h = length / N;
-    const extra = 10; // used for extending a dimension for rectangular shape
+    const extra = 5; // used for extending a dimension for rectangular shape
 
-    useEffect(() => {
-
+    let viscosity = 1;
+    
     // vertices used to create box
     const box = [
 
@@ -65,134 +68,298 @@ export default function TwoFluid({ name }) {
         -h, -h, -h
     ];
 
-    let meshVertices = [];
-    meshVertices = offsetVertices(box, N, h, extra);
-    meshVertices = cubicMesh(box, N, extra);
 
-    //let colorData = colorMesh(N, extra); // to randomly color entire mesh
+    class fluid {
+        constructor(N, extra, h, dt) {
+            this.n = N;
+            this.extra = extra; // extra elements added to extended dimension
+            this.h = h; // grid spacing
+            this.cells = this.n**3 + this.extra * this.n**2;    // number of cells
+            this.dt = dt
 
-    function animate() {
-    // to color specific mesh indices THIS IS WHAT NEEDED TO BE IN THE ANIMATE FUNCTION
-    let colorData = new Array(N**3 * 108 + extra * N**2).fill(0);
-    for (let i = 0; i < N*N*N + extra * N**2; i++){
-        colorData = dyeIdx(i, colorData);
-    }
-    
-    
-    
-        let canvas = document.getElementById(name);
-        let gl = canvas.getContext("webgl");
-        
-        if (!gl) {
-            throw new Error("Web GL not supported.");
-        };
 
-        // routine to output xyz coordinates from buffer into vertex shader
-        const positionBuffer = gl.createBuffer();
-        gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer); // bind to current array buffer
-        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(meshVertices), gl.STATIC_DRAW); // load vertex data into buffer and choose draw mode
+            this.density = new Array(this.cells);
+            this.density_old = new Array(this.cells);
 
-        const vertexShader = gl.createShader(gl.VERTEX_SHADER);
-        gl.shaderSource(vertexShader, `
-        precision mediump float;
 
-        attribute vec3 position;
-        attribute vec3 color;
-        varying vec3 vColor;
+            // velocity
+            this.u = new Float32Array(this.cells);
+            this.v = new Float32Array(this.cells);
+            this.w = new Float32Array(this.cells);
+            this.uNew = new Float32Array(this.cells);
+            this.vNew = new Float32Array(this.cells);
+            this.wNew = new Float32Array(this.cells);
 
-        uniform mat4 matrix;
-
-        void main() {
-            vColor = color;
-            gl_Position = matrix * vec4(position, 1);
+            this.m = new Float32Array(this.cells);
+            this.mNew = new Float32Array(this.cells);
+            this.p = new Float32Array(this.cells);  // pressure
+            this.s = new Float32Array(this.cells);  // dye
         }
-        `);
-        gl.compileShader(vertexShader)
 
 
-        //routine to assign color shader
-        const colorBuffer = gl.createBuffer();
-        gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer); // bind to current array buffer
-        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colorData), gl.STATIC_DRAW); // load color data into buffer and choose draw mode
 
-        const fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
-        gl.shaderSource(fragmentShader, `
-        precision mediump float;
-
-        varying vec3 vColor;
-
-        void main() {
-            gl_FragColor = vec4(vColor, 1);
+        sources(N, value, value_old, dt) {
+            for (let i = 0; i < N**3 + extra * N**2; i++) {
+                value[i] += value_old * dt;
+            } 
         }
-        `);
-        gl.compileShader(fragmentShader);
-
-
-        
-        // "link" vertex and color shaders
-        const program = gl.createProgram();
-        gl.attachShader(program, vertexShader);
-        gl.attachShader(program, fragmentShader);
-        gl.linkProgram(program);
-
-        // assign position, color, and uniform locations
-        const positionLocation = gl.getAttribLocation(program, `position`); // attribute index
-        gl.enableVertexAttribArray(positionLocation);
-        gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-        gl.vertexAttribPointer(positionLocation, 3, gl.FLOAT, false, 0, 0);
-
-        const colorLocation = gl.getAttribLocation(program, `color`); // attribute index
-        gl.enableVertexAttribArray(colorLocation);
-        gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
-        gl.vertexAttribPointer(colorLocation, 3, gl.FLOAT, false, 0, 0);
-
-        const uniformLocation = {
-            matrix : gl.getUniformLocation(program, `matrix`)
-        };
-
-        gl.useProgram(program);
-        gl.enable(gl.DEPTH_TEST);
 
 
 
-        let matrix = mat4.create();
-        mat4.translate(matrix, matrix, [0, 0, -1.5]);
+        boundary(N, value, flag) {
+            for (let i = 0; i < N; i++) {
+                for (let j = 0; j < N; j++) {
 
-        let projectionMatrix = mat4.create();
-        mat4.perspective(projectionMatrix,
-            90 * Math.PI / 180,   // vertical fov
-            canvas.width / canvas.height, // aspect ratio
-            1e-4,   // near cull distance
-            1e4 // far cull distance
-        );
+                    if (flag == 'x') {
+                        value[0,i,j] = -value[1,i,j];
+                        value[N+1,i,j] = -value[N,i,j];
+                    } else {
+                        value[0,i,j] = value[1,i,j];
+                        value[N+1,i,j] = value[N,i,j];
+                    }
 
-        let outMatrix = mat4.create();
-        mat4.rotateX(matrix, matrix, Math.PI/6);
 
+                    if (flag == 'y') {
+                        value[i,0,j] = -value[i,1,j];
+                        value[i,N+1,j] = -value[i,N,j];
+                    } else {
+                        value[i,0,j] = value[i,1,j];
+                        value[i,N+1,j] = value[i,N,j];
+                    }
+
+
+                    if (flag == 'z') {
+                        value[i,j,0] = -value[i,j,1];
+                        value[i,j,N+1] = -value[i,j,N];
+                    } else {
+                        value[i,j,0] = value[i,j,1];
+                        value[i,j,N+1] = value[i,j,N];
+                    }
+                }
+            }
+
+            value[idx(0, 0, 0)] = (1.0 / 3.0 * (value[idx(1, 0, 0)] + value[idx(0, 1, 0)] + value[idx(0, 0, 1)]));
+            value[idx(0, N + 1, 0)] = (1.0 / 3.0 * (value[idx(1, N + 1, 0)] + value[idx(0, N, 0)] + value[idx(0, N + 1, 1)]));
             
-
-        
-            requestAnimationFrame(animate);
-
-            //mat4.rotateX(matrix, matrix, Math.PI/200);
-            //mat4.rotateY(matrix, matrix, Math.PI/500);
-            //mat4.rotateZ(matrix, matrix, Math.PI/200);
-
-            mat4.multiply(outMatrix, projectionMatrix, matrix);
-            gl.uniformMatrix4fv(uniformLocation.matrix, false, outMatrix);
-            gl.drawArrays(gl.TRIANGLES, 0, meshVertices.length / 3); // triangle, first vertex, draw all three
-            // divide length of vertices array by 3 to get the number of vertices. vertices = coordinateComponents/componentsPerCoordinate(x,y,z)
+            value[idx(N + 1, 0, 0)] = (1.0 / 3.0 * (value[idx(N, 0, 0)] + value[idx(N + 1, 1, 0)] + value[idx(N + 1, 0, 1)]));
+            value[idx(N + 1, N + 1, 0)]=(1.0 / 3.0*(value[idx(N, N + 1, 0)] + value[idx(N + 1, N, 0)]+value[idx(N + 1, N + 1, 1)]));
+            
+            value[idx(0, 0, N + 1)]=(1.0 / 3.0 * (value[idx(1, 0, N + 1)] + value[idx(0, 1, N + 1)] + value[idx(0, 0, N)]));
+            value[idx(0, N + 1, N + 1)] = (1.0 / 3.0 * (value[idx(1, N + 1, N + 1)] + value[idx(0, N, N + 1)] + value[idx(0, N + 1, N)]));
+            
+            value[idx(N + 1, 0, N + 1)] = (1.0 / 3.0 * (value[idx(N, 0, N + 1)] + value[idx(N + 1, 1, N + 1)] + value[idx(N + 1, 0,N)]));
+            value[idx(N + 1, N + 1, N + 1)]=(1.0 / 3.0 * (value[idx(N, N + 1, N + 1)] + value[idx(N + 1, N, N + 1)] + value[idx(N + 1, N + 1, N)]));
         }
-        
-        animate();
-
-    }, [])
 
 
+
+        linear_solve(N, flag, value, value_old, rate, c) {
+            for (let k = 0; k < 10; k++) {
+                for (let x = 0; x < N; x++) {
+                    for (let y = 0; y < N; y++) {
+                        for (let z = 0; z < N; z++) {
+                            let sum =   value[idx(x - 1, y, z)] + value[idx(x + 1, y, z)] +
+                                        value[idx(x, y - 1, z)] + value[idx(x, y + 1, z)] +
+                                        value[idx(x, y, z - 1)] + value[idx(x, y, z + 1)];
+
+                            value[idx(x, y, z)] = (value_old[idx(x, y, z)] + rate * sum) / c;
+                        }
+                    }
+                }
+            }
+            this.boundary(N, value, flag);
+        }
+
+
+
+        diffuse(N, flag, value, value_old, viscosity, dt) {
+            let rate = dt * viscosity * N**3;
+
+            let c = 1 + 6 * rate;
+
+            this.linear_solve(N, flag, value, value_old, rate, c)
+        }
+
+
+
+        advect(N, density, density_old, u, v, w, dt) {
+            let dh = dt * N;
+
+            for (let i = 0; i < N; i++) {
+                for (let j = 0; j < N; j++) {
+                    for (let k = 0; k < N; k++) {
+
+                        let x = i - dh * u[idx(i, j, k)];
+                        let y = j - dh * v[idx(i, j, k)];
+                        let z = k - dh * w[idx(i, j, k)];
+
+
+                        if (x < 1/2) {
+                            x = 1/2;
+                        }
+                        if (y < 1/2) {
+                            y = 1/2;
+                        }
+                        if (z < 1/2) {
+                            z = 1/2;
+                        }
+
+
+                        if (x > N + 1/2) {
+                            x = N + 1/2;
+                        }
+                        if (y > N + 1/2) {
+                            y = N + 1/2;
+                        }
+                        if (z > N + 1/2) {
+                            z = N + 1/2;
+                        }
+
+                        let i0 = Math.floor(x);
+                        let j0 = Math.floor(y);
+                        let k0 = Math.floor(z);
+
+                        let i1 = i0 + 1;
+                        let j1 = j0 + 1;
+                        let k1 = k0 + 1;
+
+                        let s1 = x - i0;
+                        let t1 = y - j0;
+                        let u1 = z - k0;
+
+                        let s0 = 1 - s1;
+                        let t0 = 1 - t1;
+                        let u0 = 1 - u1;
+                        console.log(this.density)
+                        density[idx(i, j, k)] =     s0 * (
+                                                        t0 * u0 * density_old[idx(i0,j0,k0)] +
+                                                        t1 * u0 * density_old[idx(i0,j1,k0)] +
+                                                        t0 * u1 * density_old[idx(i0,j0,k1)] +
+                                                        t1 * u1 * density_old[idx(i0,j1,k1)]
+                                                    ) +
+
+                                                s1 * (
+                                                        t0 * u0 * density_old[idx(i1,j0,k0)] +
+                                                        t1 * u0 * density_old[idx(i1,j1,k0)] +
+                                                        t0 * u1 * density_old[idx(i1,j0,k1)] +
+                                                        t1 * u1 * density_old[idx(i1,j1,k1)]
+                                                    );
+                    }
+                }
+            }
+        }
+
+
+
+        project(N, u, v, w, p, div) {
+            for (let x = 0; x < N; x++) {
+                for (let y = 0; y < N; y++) {
+                    for (let z = 0; z < N; z++) {
+                        div[idx(count_x, count_y, count_z)] = (
+                                                                -1.0 / 3.0 * (
+                                                                                (u[idx(count_x + 1, count_y, count_z)] - u[idx(count_x - 1, count_y, count_z)]) / N +
+                                                                                (v[idx(count_x, count_y + 1, count_z)] - v[idx(count_x, count_y - 1, count_z)]) / N +
+                                                                                (w[idx(count_x, count_y, count_z + 1)] - w[idx(count_x, count_y, count_z - 1)]) / N
+                                                                            )
+                                                            );
+                        p[idx(count_x, count_y, count_z)] = 0;
+                    }
+                }
+            }
+            boundary(N, div, flag);
+            boundary(N, p, flag);
+
+            linear_solve(N, 0, p, div, 1, 6);
+
+            for (let x = 0; x < N; x++) {
+                for (let y = 0; y < N; y++) {
+                    for (let z = 0; z < N; z++) {
+                        u[idx(count_x, count_y, count_z)] -= 0.5 * N * (p[idx(count_x + 1, count_y, count_z)]-p[idx(count_x - 1, count_y, count_z)]);
+                        v[idx(count_x, count_y, count_z)] -= 0.5 * N * (p[idx(count_x, count_y + 1, count_z)]-p[idx(count_x, count_y - 1, count_z)]);
+                        w[idx(count_x, count_y, count_z)] -= 0.5 * N * (p[idx(count_x, count_y, count_z + 1)]-p[idx(count_x, count_y, count_z - 1)]);
+                    }
+                }
+            }
+
+            boundary(N, u, 1);
+            boundary(N, v, 2);
+            boundary(N, w, 3);
+
+        }
+
+
+
+        get_density(N, density, density_old, u, v, w, diff, dt) {
+            this.sources(N, density, density_old, dt);
+            
+            //SWAP(density_prev, density);\
+            this.density = density_old;
+            this.diffuse(N, 0, density, density_old, diff, dt);
+            
+            //SWAP(density_prev, density);
+            this.density = density_old;
+            this.advect(N, 0, density, density_old, u, v, w, dt);
+        }
+
+
+
+        get_velocity(N, u, v, w, u_old, v_old, w_old, viscosity, dt) {
+            this.sources(N, u, u_old, dt);
+            this.sources(N, v, v_old, dt);
+            this.sources(N, w, w_old, dt);
+            
+            // SWAP(u_old, u);
+            this.u = u_old;
+            // SWAP(v_old, v);
+            this.v = v_old;
+            // SWAP(w_old, w);
+            this.w = w_old;
+            
+            this.diffuse(N, 1, u, u_old, viscosity, dt);
+            this.diffuse(N, 2, v, v_old, viscosity, dt);
+            this.diffuse(N, 3, w, w_old, viscosity, dt);
+            
+            this.project(N, u, v, w, u_old, v_old);
+            
+            // SWAP(u_old, u);
+            this.u = u_old;
+            // SWAP(v_old, v);
+            this.v = v_old;
+            // SWAP(w_old, w);
+            this.w = w_old;
+            
+            this.advect(N, 1, u, u_old, u_old, v_old, w_old, dt);
+            this.advect(N, 2, v, v_old, u_old, v_old, w_old, dt);
+            this.advect(N, 3, w, w_old, u_old, v_old, w_old, dt);
+            
+            this.project(N, u, v, w, u_old, v_old);
+        }
+
+        dyeIdx(idx, dta) {
+            let cubeIdx = idx*108;
+
+
+            let color = randomColor();
+
+            for (let i = 0; i < 36; i++) {
+                let vertexIdx = i*3;
+                dta[cubeIdx + vertexIdx] = color[0];
+                dta[cubeIdx + vertexIdx + 1] = color[1];
+                dta[cubeIdx + vertexIdx + 2] = color[2];
+            }
     
+            return dta
+        };
+
+    }
+
+
+
     function randomColor() {
         return [Math.random(), Math.random(), Math.random()];
     };
+
+
 
     function offsetVertices(vertices, N, h, extra) {
         // offset box vertices to center the mesh
@@ -201,6 +368,8 @@ export default function TwoFluid({ name }) {
         };
         return vertices;
     };
+
+
 
     function cubicMesh(box, N, extra) {
         let vertices = [];
@@ -227,21 +396,156 @@ export default function TwoFluid({ name }) {
         }
         return vertices;
     }
-    
-    function dyeIdx(idx, dta) {
-        let color = []
-        color = Math.random(); //randomColor();
 
-        let cubeIdx = idx*108;
-        for (let i = 0; i < 36; i++) {
-            let vertexIdx = i*3;
-            dta[cubeIdx + vertexIdx] = color; //color[0];
-            dta[cubeIdx + vertexIdx + 1] = color; //color[1];
-            dta[cubeIdx + vertexIdx + 2] = color; //color[2];
+    // This method is used to return the one-dimensional index of a fluid element based on three-dimensions
+    function idx(i ,j ,k) {
+        return i + j * (N + extra) + k * (N * (N + extra));
+    }
+
+    useEffect(() => {
+
+        let canvas = document.getElementById(name);
+        let gl = canvas.getContext("webgl");
+        
+        if (!gl) {
+            throw new Error("Web GL not supported.");
+        };
+
+        let meshVertices = [];
+        meshVertices = offsetVertices(box, N, h, extra);
+        meshVertices = cubicMesh(box, N, extra);
+
+
+        let flu = new fluid(N, extra, h, .1);
+
+        let diff = .2
+        let dt = .2
+
+        animate();
+
+
+        function animate() {
+            //simulate()
+            draw()
+            requestAnimationFrame(animate);
         }
-        return dta
-    };
 
+
+        function simulate() {
+            flu.get_density(N, flu.density, flu.density_old, flu.u, flu.v, flu.w, diff, dt)
+
+            flu.get_velocity(N, flu.u, flu.v, flu.w, flu.u_old, flu.v_old, flu.w_old, viscosity, dt);
+        }
+
+        function draw() {
+
+            // to color specific mesh indices THIS IS WHAT NEEDED TO BE IN THE ANIMATE FUNCTION
+            //let colorData = flu.dyeIdx(idx(), flu.density)
+            let colorData = [];
+
+            // max is (N + extra) * N**2 -1
+            for (let i = 0; i < (N + extra) * N**2; i++){
+                colorData = flu.dyeIdx(i, colorData);
+            }
+
+            // routine to output xyz coordinates from buffer into vertex shader
+            const positionBuffer = gl.createBuffer();
+            gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer); // bind to current array buffer
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(meshVertices), gl.STATIC_DRAW); // load vertex data into buffer and choose draw mode
+
+            const vertexShader = gl.createShader(gl.VERTEX_SHADER);
+            gl.shaderSource(vertexShader, `
+            precision mediump float;
+
+            attribute vec3 position;
+            attribute vec3 color;
+            varying vec3 vColor;
+
+            uniform mat4 matrix;
+
+            void main() {
+                vColor = color;
+                gl_Position = matrix * vec4(position, 1);
+            }
+            `);
+            gl.compileShader(vertexShader)
+
+
+            //routine to assign color shader
+            const colorBuffer = gl.createBuffer();
+            gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer); // bind to current array buffer
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colorData), gl.STATIC_DRAW); // load color data into buffer and choose draw mode
+
+            const fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
+            gl.shaderSource(fragmentShader, `
+            precision mediump float;
+
+            varying vec3 vColor;
+
+            void main() {
+                gl_FragColor = vec4(vColor, 1);
+            }
+            `);
+            gl.compileShader(fragmentShader);
+
+
+            
+            // "link" vertex and color shaders
+            const program = gl.createProgram();
+            gl.attachShader(program, vertexShader);
+            gl.attachShader(program, fragmentShader);
+            gl.linkProgram(program);
+
+            // assign position, color, and uniform locations
+            const positionLocation = gl.getAttribLocation(program, `position`); // attribute index
+            gl.enableVertexAttribArray(positionLocation);
+            gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+            gl.vertexAttribPointer(positionLocation, 3, gl.FLOAT, false, 0, 0);
+
+            const colorLocation = gl.getAttribLocation(program, `color`); // attribute index
+            gl.enableVertexAttribArray(colorLocation);
+            gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
+            gl.vertexAttribPointer(colorLocation, 3, gl.FLOAT, false, 0, 0);
+
+            const uniformLocation = {
+                matrix : gl.getUniformLocation(program, `matrix`)
+            };
+
+            gl.useProgram(program);
+            gl.enable(gl.DEPTH_TEST);
+
+
+
+            let matrix = mat4.create();
+            mat4.translate(matrix, matrix, [0, 0, -2.5]);
+
+            let projectionMatrix = mat4.create();
+            mat4.perspective(projectionMatrix,
+                80 * Math.PI / 180,   // vertical fov
+                canvas.width / canvas.height, // aspect ratio
+                1e-4,   // near cull distance
+                1e4 // far cull distance
+            );
+
+            let outMatrix = mat4.create();
+            mat4.rotateX(matrix, matrix, Math.PI/5);
+
+                
+
+            
+
+            //mat4.rotateX(matrix, matrix, Math.PI/200);
+            //mat4.rotateY(matrix, matrix, Math.PI/500);
+            //mat4.rotateZ(matrix, matrix, Math.PI/200);
+
+            mat4.multiply(outMatrix, projectionMatrix, matrix);
+            gl.uniformMatrix4fv(uniformLocation.matrix, false, outMatrix);
+            gl.drawArrays(gl.TRIANGLES, 0, meshVertices.length / 3); // triangle, first vertex, draw all three
+            // divide length of vertices array by 3 to get the number of vertices. vertices = coordinateComponents/componentsPerCoordinate(x,y,z)
+
+        }
+
+    }, [])
     return (
         <div className="w-full tile bg-slate-900">
             <h1>
