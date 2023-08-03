@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-function tinker() {
+export default function Tinker() {
     const [entries, setEntries] = useState([]);
 
     function handleSubmit(e) {
@@ -23,5 +23,3 @@ function tinker() {
     </div>
   )
 }
-
-export default tinker
