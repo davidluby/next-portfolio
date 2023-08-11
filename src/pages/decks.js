@@ -11,7 +11,7 @@ export default function Decks() {
 			<title>Fullstack App</title>
 		</Head>
 		<App />
-		<div className="w-[97%] res:w-5/6 tile bg-slate-900">
+		<div className="w-[97%] res:w-5/6 tile">
 			<h1>
 				How the B-Ball Cards application respects Sports Reference guidelines:
 			</h1>
@@ -23,7 +23,7 @@ export default function Decks() {
 				<li>the database that stores deck data is cleared after the 20<sup>th</sup> deck submission such that the data is not used in a manner that competes with Sports Reference&#x27;s services</li>
 			</ul>
 		</div>
-		<div className="w-[97%] res:w-5/6 mt-20 tile bg-slate-900">
+		<div className="w-[97%] res:w-5/6 mt-20 tile">
 			<h1>
 				How the B-Ball Cards application application works:
 			</h1>
@@ -42,13 +42,13 @@ export default function Decks() {
 				I regret that this website&#8212;in particular, this application&#8212;is not very responsive (4/13/2023), but I feel it demonstrates fullstack competency and is enough to post. If you see anything broken or poorly-done, I probably know about it, so challenge me to correct it! <b>And, yes, this is wildly overengineered for my purposes, but it was a great learning experience.</b>
 			</p>
 		</div>
-		<div className="w-[97%] res:w-1/2 mt-20 tile bg-slate-900">
+		<div className="w-[97%] res:w-1/2 mt-20 tile">
 			<img className="mt-10" src="./fullstack/system.png"></img>
 			<img className="mt-10" src="./fullstack/fs1.jpg"></img>
 			<img className="mt-10" src="./fullstack/fs2.jpg"></img>
 			<img className="mt-10" src="./fullstack/fs3.jpg"></img>
 		</div>
-		<div id="helpID" className="w-[97%] res:w-5/6 mt-20 tile bg-slate-900">
+		<div id="helpID" className="w-[97%] res:w-5/6 mt-20 tile">
 			<h1>
 				Quick Start
 			</h1>

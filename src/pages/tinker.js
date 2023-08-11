@@ -5,7 +5,7 @@ export default function Tinker() {
 
     function handleSubmit(e) {
         if (e.key === "Enter") {
-            setEntries(...entries, setEntries);
+            setEntries([...entries, e.target.value]);
             console.log(entries);
         }
     }

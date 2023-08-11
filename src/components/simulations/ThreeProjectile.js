@@ -10,7 +10,7 @@ export default function ThreeProjectile() {
     })
     
     return (
-        <div className="w-full res:w-2/5 tile bg-slate-900">
+        <div className="w-full res:w-2/5 tile">
             <h1>
                 <Link href="/projectile" className="hover:text-yellow-500 transition-all duration-500">
                     3-D Projectile Simulation -- <i>coming soon</i>

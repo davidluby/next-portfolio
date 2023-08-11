@@ -47,7 +47,7 @@ export default function Home() {
                 <Link href="/decks_ex" className="hover:text-yellow-500 transition-all duration-500">Fullstack Basketball Card Deck App</Link>
             </h1>
             <App />
-            <div id="helpID" className="w-[97%] res:w-5/6 mt-10 tile bg-slate-900">
+            <div id="helpID" className="w-[97%] res:w-5/6 mt-10 tile">
                 <h1>
                     Quick Start
                 </h1>

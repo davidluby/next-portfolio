@@ -12,7 +12,6 @@ html *{
     border-width: 1px;
     border-color:rgba(0, 0, 0, 0.1);
     box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-    background-color: rgb(51 65 85);
 }
 
 @media screen and (min-width: 950px) {
@@ -45,8 +44,8 @@ h2 {
     border-radius: 50%;
     margin-left: .5rem;
     margin-right: .5rem;
-    width: 3rem;
-    height: 3rem;
+    width: 2.5rem;
+    height: 2.5rem;
     background-repeat: no-repeat;
     background-position: center;
     background-image: url("/logo-trans.png");
@@ -73,17 +72,16 @@ h2 {
     background-size: 100%;
 }
 .nav-button {
-    padding: .75rem;
-    padding-top:1rem;
-    border: solid;
+    padding: .5rem;
     border-width: 0rem;
-    border-bottom-width: .25rem;
-    border-color: rgba(255, 255, 255, 0);
-    transition: all 300ms;
+    border-bottom-width: .125rem;
+    border-top-width:.125rem;
+    border-bottom-color: rgba(255, 255, 255, 0);
+    border-top-color: rgba(255, 255, 255, 0);
+    transition: all 150ms;
 }
 .nav-button:hover {
-    border-color: #EAB308;
-    background: linear-gradient(to bottom, #eab2081a, #eab20807);
+    border-bottom-color: #fbc02d;
 }
 
 /* Resume */
@@ -91,6 +89,7 @@ h2 {
     background-image: url("/logo-linked.png");
     background-size: 85%;
     transition: all 500ms;
+    filter: drop-shadow(0 0 .9rem #0072b1);
 }
 .logo-linked:hover {
     background-image: url("/logo-linked-fill.png");
@@ -100,6 +99,7 @@ h2 {
     background-image: url("/logo-github.png");
     background-size: 85%;
     transition: all 500ms;
+    filter: drop-shadow(0 0 0.65rem #0072b1);
 }
 .logo-github:hover {
     background-image: url("/logo-github-fill.png");
