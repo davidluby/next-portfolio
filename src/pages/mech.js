@@ -9,9 +9,15 @@ export default function fluids() {
                 <title>Mechatronics</title>
             </Head>
             <div className="flex flex-wrap justify-evenly w-[97%] res:w-5/6 -mt-5">
-                <iframe className="tile w-[300px] h-[500px] mt-5" src="https://www.youtube.com/embed/8P3UF1Z6qRs" title="v1" frameBorder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
-                <iframe className="tile w-[300px] h-[500px] mt-5" src="https://www.youtube.com/embed/--vCE5AsHIY" title="v2" frameBorder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
-                <iframe className="tile w-[300px] h-[500px] mt-5" src="https://www.youtube.com/embed/XdCFYtW8jBc" title="v3" frameBorder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
+                <div className="tile w-[300px] h-[500px] mt-5">
+                    <iframe className="rounded-md w-full h-full shadow-xl" src="https://www.youtube.com/embed/8P3UF1Z6qRs" title="v1" frameBorder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
+                </div>
+                <div className="tile w-[300px] h-[500px] mt-5">
+                    <iframe className="rounded-md w-full h-full shadow-xl" src="https://www.youtube.com/embed/--vCE5AsHIY" title="v2" frameBorder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
+                </div>
+                <div className="tile w-[300px] h-[500px] mt-5">
+                    <iframe className="rounded-md w-full h-full shadow-xl" src="https://www.youtube.com/embed/XdCFYtW8jBc" title="v3" frameBorder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
+                </div>
             </div>
             <div className="tile flex flex-col items-center res:flex-row justify-center w-[97%] res:w-5/6 mt-20 space-x-0 res:space-x-10">
                 <div className="flex flex-col">
@@ -26,7 +32,7 @@ export default function fluids() {
                     </p>
                     
                 </div>
-                <img src="mech/full-picture.jpg" className="w-full res:w-1/3"></img>
+                <img src="mech/full-picture.jpg" className="w-full res:w-1/3 rounded-md shadow-xl"></img>
             </div>
             <div className="tile flex flex-col items-center res:flex-row justify-center w-[97%] res:w-5/6 my-20 space-x-0 res:space-x-10">
                 <div className="flex flex-col">
@@ -47,7 +53,7 @@ export default function fluids() {
                         These instruction files (scripts) are compiled, or translated, into files an MCU can understand, called hex (hexadecimal) files, and uploaded to the MCU from a computer. Instructions given to an MCU often map a system of inputs to program logic which maps a system of outputs back through the PCB for some function, like controlling an LED.
                     </p>
                 </div>
-                <img src="mech/arduino.jpg" className="w-full res:w-1/3"></img>
+                <img src="mech/arduino.jpg" className="w-full res:w-1/3 rounded-md shadow-xl"></img>
             </div>
             <div className="tile flex flex-col w-[97%] res:w-5/6">
                     <h1>
@@ -88,7 +94,7 @@ export default function fluids() {
                     </p>
                     <img src="mech/diagram.png"></img>
                 </div>
-                <img src="mech/block.jpg" className="mt-5 res:mt-0 w-full res:w-1/2"></img>
+                <img src="mech/block.jpg" className="mt-5 res:mt-0 w-full res:w-1/2 rounded-md shadow-xl"></img>
             </div>
         </div>
       )

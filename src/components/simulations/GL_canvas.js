@@ -233,7 +233,7 @@ export default function TwoFluid({ name }) {
     return (
         <div className="w-full tile">
             <h1>
-                <Link href="/webgl" className="hover:text-yellow-500 transition-all duration-300 ease-in">
+                <Link href="/webgl" className="hover:text-yellow-500 transition-all duration-300 ease-in animate-pulse">
                     WebGL 3-D Grid Mesh
                 </Link>
             </h1>

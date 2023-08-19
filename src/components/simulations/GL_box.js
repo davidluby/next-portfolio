@@ -183,7 +183,7 @@ export default function GL_box({ name }) {
     return (
         <div className="w-full tile">
             <h1>
-                <Link href="/webgl" className="hover:text-yellow-500 transition-all duration-500">WebGL Animated Cube</Link>
+                <Link href="/webgl" className="hover:text-yellow-500 transition-all duration-500 animate-pulse">WebGL Animated Cube</Link>
             </h1>
             <canvas height="300" width="300" id={name} className="w-full border-2 rounded-xl border-yellow-500"></canvas>
         </div>
