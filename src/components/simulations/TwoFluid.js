@@ -331,10 +331,10 @@ export default function TwoFluid({ name }) {
     let mat4 = require('gl-mat4');
     
     // grid spacing
-    let N = 10;
+    let N = 20;
     const length = 1;
     const h = length / N;
-    const extra = 5; // used for extending a dimension for rectangular shape
+    const extra = 10; // used for extending a dimension for rectangular shape
     
     // vertices used to create box
     const box = [
@@ -403,15 +403,15 @@ export default function TwoFluid({ name }) {
         meshVertices = cubicMesh(box, N, extra);
 
 
-        let flu = new fluid(N, extra, h, .1);
+        let flu = new fluid(N, extra, h, 1);
 
-        let diff = .001;
-        let dt = .05;
+        let diff = .00001;
+        let dt = .0005;
 
-        flu.s[idx(1, 1, 1)] = 100;
+        flu.s[idx(1, 1, 1)] = 1000;
         flu.s[idx(1, 1, 1)] = 100;
         flu.s[idx(2, 1, 1)] = 100;
-        flu.s[idx(N, N-2, 1)] = 100;
+        flu.s[idx(N, N-2, 1)] = 10000;
         console.log(idx(1,1,1))
 
         let count = 0;
