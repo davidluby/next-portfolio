@@ -6,8 +6,15 @@ export default function Tinker() {
     function handleSubmit(e) {
         if (e.key === "Enter") {
             setEntries([...entries, e.target.value]);
-            console.log(entries);
         }
+    }
+
+    let data = new Float32Array(15);
+    data.fill(10);
+
+    function handleClick(e) {
+        data[0] = 17;
+        console.log(data)
     }
 
   return (
@@ -17,8 +24,11 @@ export default function Tinker() {
             onKeyPress={handleSubmit}
             >
         </input>
-        <div>
-            
+        <div className="my-10">
+            <button className="rounded-full h-20 w-20 bg-red-500 shadow-xl animate-pulse"
+                onClick={handleClick}>
+                Click
+            </button>
         </div>
     </div>
   )

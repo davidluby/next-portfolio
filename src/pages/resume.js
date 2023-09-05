@@ -5,9 +5,9 @@ import Link from 'next/link'
 export default function Resume(){
 
     const slides = [
-        ["Object-oriented, functional, and low-level programming", "CI/CD fullstack and mechatronic software development", "Algorithms for physical simulations using numerical methods", ["c.png", "python.png", "matlab.png", "js.png", "webgl.png", "sql.png", "html.png", "css.png", "tw.png", "react.png", "next.png", "flask.png", "git.png"]],
-        ["Breadboard prototyping and contol system analysis", "Signal processing and low-level programming", "Tools: oscilloscope, op-amp, piezoelectric accelerometer, potentiometer, tachometer, LVT/LVDT, DC/stepper motor; IR, Hall Effect, color sensor", ["c.png", "python.png", "matlab.png", "sql.png", "apache.png", "atmel.png", "vs.png", "git.png"]],
-        ["Version-controlled product development (SOLIDWORKS PDM)", "Control system and finite element analysis", "Requirement definition, and new product development, sustaining engineering",["matlab.png", "simulink.png", "python.png", "C.png", "sw.png", "pdm.png", "marc.png", "excel.png", "jmp.png"] ],
+        ["Object-oriented, functional, and low-level programming", "CI/CD fullstack and mechatronic software development", "Algorithms for physical simulations using numerical methods", ["c.png", "python.png", "js.png", "sql.png", "html.png", "css.png", "react.png", "next.png", "flask.png", "webgl.png", "tw.png", "git.png"]],
+        ["Breadboard prototyping and contol system analysis", "Signal processing and low-level programming", "Tools: oscilloscope, op-amp, piezoelectric accelerometer, potentiometer, tachometer, LVT/LVDT, DC/stepper motor; IR, Hall Effect, color sensor", ["c.png", "atmel.png", "vs.png", "git.png"]],
+        ["Version-controlled product development (SOLIDWORKS PDM)", "Control system and finite element analysis", "Requirement definition, and new product development, sustaining engineering",["matlab.png", "simulink.png", "python.png", "sw.png", "pdm.png", "marc.png", "excel.png"] ],
         ["CI/CD version control pipeline construction", "Amazon Web Services cloud suite", "RESTful CRUD API", ["aws.png", "apache.png", "mssql.png", "bash.png","ps.png","cmd.png","linux.png", "win.png"]],
     ];
 

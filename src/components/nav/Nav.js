@@ -12,7 +12,7 @@ export default function Nav() {
 			<div href="/decks" className="nav-button relative cursor-default" onMouseOver={() => setHide(false)} onMouseLeave={() => setHide(true)}>
 					Background
 				{ !hide ? 
-					<div className="absolute flex flex-col w-full mt-[.6rem] left-0 rounded-b-md shadow-lg ring-1 ring-black/5 bg-gray-300 z-50">
+					<div className="absolute flex flex-col w-full mt-[.6rem] left-0 rounded-b-md shadow-lg ring-1 ring-black/5 bg-gray-200 z-50">
 						<Link className="nav-button text-xs" href="/fluids">Fluid Simulation</Link>
 						<Link className="nav-button text-xs" href="/collision">2-D Collisions</Link>
 						{/*
