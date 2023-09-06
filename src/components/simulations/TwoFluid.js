@@ -1,3 +1,7 @@
+// Thank you to Jos Stam and Matthias Muller:
+// http://graphics.cs.cmu.edu/nsp/course/15-464/Fall09/papers/StamFluidforGames.pdf
+// https://github.com/matthias-research/pages/blob/master/tenMinutePhysics/17-fluidSim.html
+
 import React, { useEffect } from 'react';
 import Link from 'next/link'
 
@@ -20,12 +24,16 @@ export default function TwoFluid({ name }) {
 
 
             // velocity
+            // positive goes left
             this.u = new Float32Array(this.cells);
             this.u.fill(0);
+            // positive goes up
             this.v = new Float32Array(this.cells);
             this.v.fill(0);
+            // postive goes in
             this.w = new Float32Array(this.cells);
             this.w.fill(0);
+
             this.uNew = new Float32Array(this.cells);
             this.uNew.fill(0);
             this.vNew = new Float32Array(this.cells);
@@ -47,12 +55,13 @@ export default function TwoFluid({ name }) {
         }
 
 
-
         boundary(N, value, flag) {
             // need N + extra
             for (let i = 0; i < N; i++) {
                 for (let j = 0; j < N; j++) {
 
+
+                    // x
                     if (flag == 1) {
                         value[idx(0, i, j)] = -value[idx(1, i, j)];
                         value[idx(N + 1, i, j)] = -value[idx(N, i, j)];
@@ -61,7 +70,7 @@ export default function TwoFluid({ name }) {
                         value[idx(N + 1, i, j)] = value[idx(N, i, j)];
                     }
 
-
+                    // y
                     if (flag == 2) {
                         value[idx(i, 0, j)] = -value[idx(i, 1, j)];
                         value[idx(i, N + 1, j)] = -value[idx(i, N, j)];
@@ -70,7 +79,7 @@ export default function TwoFluid({ name }) {
                         value[idx(i, N + 1, j)] = value[idx(i, N, j)];
                     }
 
-
+                    // y
                     if (flag == 3) {
                         value[idx(i, j, 0)] = -value[idx(i, j, 1)];
                         value[idx(i, j, N + 1)] = -value[idx(i, j, N)];
@@ -96,6 +105,14 @@ export default function TwoFluid({ name }) {
         }
 
 
+        integrate() {
+            for (let i = 0; i < this.density.length; i++) {
+                if (this.density[i] != 0) {
+                    this.v[i] += -.001 * this.dt
+                }
+            }
+        }
+
 
         linear_solve(N, flag, value, value_old, rate, c) {
             for (let k = 0; k < 10; k++) {
@@ -111,12 +128,11 @@ export default function TwoFluid({ name }) {
                     }
                 }
             }
-            //return value
+
             //console.log(this.density)
             //this.boundary(N, value, flag);
 
         }
-
 
 
         diffuse(N, flag, value, value_old, viscosity, dt) {
@@ -131,43 +147,42 @@ export default function TwoFluid({ name }) {
         }
 
 
+        advect(N, value, value_old, dt) {
+            let dtO = dt * N;
 
-        advect(N, dt) {
-            let dh = dt * N;
+            for (let i = 1; i < N + extra - 1; i++) {
+                for (let j = 1; j < N - 1; j++) {
+                    for (let k = 1; k < N - 1; k++) {
 
-            for (let i = 0; i < N; i++) {
-                for (let j = 0; j < N; j++) {
-                    for (let k = 0; k < N; k++) {
-
-                        let x = i - dh * this.u[idx(i, j, k)];
-                        let y = j - dh * this.v[idx(i, j, k)];
-                        let z = k - dh * this.w[idx(i, j, k)];
+                        let x = i - dtO * this.u[idx(i, j, k)];
+                        let y = j - dtO * this.v[idx(i, j, k)];
+                        let z = k - dtO * this.w[idx(i, j, k)];
 
 
-                        if (x < 1/2) {
-                            x = 1/2;
+                        if (x < 0.5) {
+                            x = 0.5;
                         }
-                        if (y < 1/2) {
-                            y = 1/2;
+                        if (y < 0.5) {
+                            y = 0.5;
                         }
-                        if (z < 1/2) {
-                            z = 1/2;
-                        }
-
-
-                        if (x > N + 1/2) {
-                            x = N + 1/2;
-                        }
-                        if (y > N + 1/2) {
-                            y = N + 1/2;
-                        }
-                        if (z > N + 1/2) {
-                            z = N + 1/2;
+                        if (z < 0.5) {
+                            z = 0.5;
                         }
 
-                        let i0 = Math.floor(x);
-                        let j0 = Math.floor(y);
-                        let k0 = Math.floor(z);
+
+                        if (x > N + extra + 0.5) {
+                            x = N + extra + 0.5;
+                        }
+                        if (y > N + 0.5) {
+                            y = N + 0.5;
+                        }
+                        if (z > N + 0.5) {
+                            z = N + 0.5;
+                        }
+
+                        let i0 = Math.min(Math.floor(x));
+                        let j0 = Math.min(Math.floor(y));
+                        let k0 = Math.min(Math.floor(z));
 
                         let i1 = i0 + 1;
                         let j1 = j0 + 1;
@@ -181,18 +196,18 @@ export default function TwoFluid({ name }) {
                         let t0 = 1 - t1;
                         let u0 = 1 - u1;
 
-                        this.density[idx(i, j, k)] =     s0 * (
-                                                        t0 * u0 * this.density_old[idx(i0, j0, k0)] +
-                                                        t1 * u0 * this.density_old[idx(i0, j1, k0)] +
-                                                        t0 * u1 * this.density_old[idx(i0, j0, k1)] +
-                                                        t1 * u1 * this.density_old[idx(i0, j1, k1)]
+                        value[idx(i, j, k)] =     s0 * (
+                                                        t0 * u0 * value_old[idx(i0, j0, k0)] +
+                                                        t1 * u0 * value_old[idx(i0, j1, k0)] +
+                                                        t0 * u1 * value_old[idx(i0, j0, k1)] +
+                                                        t1 * u1 * value_old[idx(i0, j1, k1)]
                                                     ) +
 
                                                 s1 * (
-                                                        t0 * u0 * this.density_old[idx(i1, j0, k0)] +
-                                                        t1 * u0 * this.density_old[idx(i1, j1, k0)] +
-                                                        t0 * u1 * this.density_old[idx(i1, j0, k1)] +
-                                                        t1 * u1 * this.density_old[idx(i1, j1, k1)]
+                                                        t0 * u0 * value_old[idx(i1, j0, k0)] +
+                                                        t1 * u0 * value_old[idx(i1, j1, k0)] +
+                                                        t0 * u1 * value_old[idx(i1, j0, k1)] +
+                                                        t1 * u1 * value_old[idx(i1, j1, k1)]
                                                     );
                     }
                 }
@@ -202,9 +217,9 @@ export default function TwoFluid({ name }) {
 
 
         project(N, u, v, w, p, div) {
-            for (let x = 1; x < N-1; x++) {
-                for (let y = 1; y < N-1; y++) {
-                    for (let z = 1; z < N-1; z++) {
+            for (let x = 1; x < N + extra - 1; x++) {
+                for (let y = 1; y < N - 1; y++) {
+                    for (let z = 1; z < N - 1; z++) {
                         div[idx(x, y, z)] = -1.0 / 3.0 * (
                                                             (u[idx(x + 1, y, z)] - u[idx(x - 1, y, z)]) / N +
                                                             (v[idx(x, y + 1, z)] - v[idx(x, y - 1, z)]) / N +
@@ -237,16 +252,15 @@ export default function TwoFluid({ name }) {
         }
 
 
-
         get_density(N, diff, dt) {
             //console.log(this.density_old)
             this.sources(this.density_old, this.s, .001);
+
             //console.log(this.density)
             //console.log(this.density_old)
             
             //SWAP(density_prev, density);
-            //this.density = this.density_old;
-
+            this.density = this.density_old;
             
             //console.log(this.density)
             //console.log(this.density_old)
@@ -254,18 +268,19 @@ export default function TwoFluid({ name }) {
             //console.log(this.density)
             
             //SWAP(density_prev, density);
-            //this.density = this.density_old;
+            this.density = this.density_old;
             //console.log(this.density)
-            //this.advect(N, dt);
-        }
 
+            this.integrate();
+            this.advect(N, this.density, this.density_old, dt);
+        }
 
 
         get_velocity(N, viscosity, dt) {
             //console.log(this.density)
-            this.sources(N, this.u, this.uNew, dt);
-            this.sources(N, this.v, this.vNew, dt);
-            this.sources(N, this.w, this.wNew, dt);
+            this.sources(this.u, this.uNew, dt);
+            this.sources(this.v, this.vNew, dt);
+            this.sources(this.w, this.wNew, dt);
             
             // SWAP(u_old, u);
             this.u = this.uNew;
@@ -287,9 +302,9 @@ export default function TwoFluid({ name }) {
             // SWAP(w_old, w);
             this.w = this.wNew;
             
-            this.advect(N, dt);
-            this.advect(N, dt);
-            this.advect(N, dt);
+            this.advect(N, this.density, this.density_old, dt);
+            this.advect(N, this.density, this.density_old, dt);
+            this.advect(N, this.density, this.density_old, dt);
             
             this.project(N, this.u, this.v, this.w, this.uNew, this.vNew);
             //console.log(this.density)
@@ -302,7 +317,7 @@ export default function TwoFluid({ name }) {
         dyeIdx(idx, dta, opaque_indicies, transparent_indicies) {
             let cubeIdx = idx * 144;
 
-            if (this.density[idx] != 0) { //(idx == this.idx(0, 0, 0))
+            if (this.density[idx] > .001) { //(idx == this.idx(0, 0, 0))
                 for (let i = 0; i < 36; i++) {
                     let vertexIdx = i*4;
                     dta[cubeIdx + vertexIdx] = this.density[idx];
@@ -405,14 +420,17 @@ export default function TwoFluid({ name }) {
 
         let flu = new fluid(N, extra, h, 1);
 
-        let diff = .00001;
-        let dt = .0005;
+        let diff = .0000001;
+        let dt = .1;
+        let viscosity = 1;
 
-        flu.s[idx(1, 1, 1)] = 1000;
-        flu.s[idx(1, 1, 1)] = 100;
-        flu.s[idx(2, 1, 1)] = 100;
-        flu.s[idx(N, N-2, 1)] = 10000;
-        console.log(idx(1,1,1))
+        flu.s[idx(1, 2, 1)] = 100;
+        flu.s[idx(1, 2, 1)] = 100;
+        flu.s[idx(2, N-2, 1)] = 100;
+        flu.s[idx(N , N-2, 1)] = 100;
+        //console.log(flu.s)
+        flu.w[idx(N, N-1, 1)] = 0;
+        //console.log(flu.w)
 
         let count = 0;
 
@@ -421,11 +439,11 @@ export default function TwoFluid({ name }) {
         animate();
 
         function animate() {
-            count += 1;
-            if (count == 1 || count == 1000) {
-                //console.log(flu.density_old);
-                console.log(flu.density_old[idx(1, 1, 1)]);
-            }
+            // count += 1;
+            // if (count == 1 || count == 1000) {
+            //     //console.log(flu.density_old);
+            //     console.log(flu.density_old[idx(1, 1, 1)]);
+            // }
             //console.log(flu.density_old)
             simulate();
             draw();
@@ -439,7 +457,7 @@ export default function TwoFluid({ name }) {
             flu.get_density(N, diff, dt)
             //console.log(flu.density)
             //flu.get_velocity(N, viscosity, dt);
-            //console.log(flu.density)
+            //console.log(flu.v)
         }
 
         function draw() {

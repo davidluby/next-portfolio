@@ -33,11 +33,11 @@ export default function Home() {
                     <TwoCollisions name="twoCollisions"/>
                     {/*<ThreeProjectile />*/}
                 </div>
-                <div className="flex flex-col items-center res:flex-row justify-center space-y-5 res:space-y-0 res:space-x-5 w-[97%] res:w-5/6">
+                {/* <div className="flex flex-col items-center res:flex-row justify-center space-y-5 res:space-y-0 res:space-x-5 w-[97%] res:w-5/6">
                     <GL_canvas name="GL_canvas" />
                     <GL_box name="GL_box" />
                     <Gl_triangle name="GL_triangle" />
-                </div>
+                </div> */}
             </div>
             <h1 className="w-[97%] res:w-5/6 mt-20 border-b-4 border-yellow-500">
                 <Link href="/mech" className="hover:text-yellow-500 transition-all duration-500 animate-pulse">Mechatronic Color Sorting Conveyor</Link>
