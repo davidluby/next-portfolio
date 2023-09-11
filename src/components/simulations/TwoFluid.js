@@ -22,7 +22,7 @@ export default function TwoFluid({ name }) {
             // velocity
             // positive goes left
             this.u = new Float32Array(this.cells);
-            this.u.fill(.5);
+            //this.u.fill(.5);
             // positive goes up
             this.v = new Float32Array(this.cells);
             //this.v.fill(0);
@@ -226,7 +226,7 @@ export default function TwoFluid({ name }) {
                     }
                 }
             }
-            //value = this.boundary(value, flag);
+            value = this.boundary(value, flag);
             return value;
         }
         
@@ -290,7 +290,9 @@ export default function TwoFluid({ name }) {
             //this.density = this.density_old;
             //console.log(this.density)
 
+            //this.u = this.integrate(this.u_old, dt);
             this.v = this.integrate(this.v_old, dt);
+            //this.w = this.integrate(this.w_old, dt);
             //console.log(this.v)
 
             this.density = this.advect(0, this.density, this.density_old, dt);
@@ -348,7 +350,7 @@ export default function TwoFluid({ name }) {
         dyeIdx(idx, dta, opaque_indicies, transparent_indicies) {
             let cubeIdx = idx * 144;
 
-            if (this.density[idx] > .000001) { //(idx == this.idx(0, 0, 0))
+            if (this.density[idx] != 0) {
                 for (let i = 0; i < 36; i++) {
                     let vertexIdx = i*4;
                     dta[cubeIdx + vertexIdx] = this.density[idx];
@@ -363,7 +365,7 @@ export default function TwoFluid({ name }) {
                     dta[cubeIdx + vertexIdx] = 0;
                     dta[cubeIdx + vertexIdx + 1] = 0;
                     dta[cubeIdx + vertexIdx + 2] = 0;
-                    dta[cubeIdx + vertexIdx + 3] = 0;
+                    dta[cubeIdx + vertexIdx + 3] = .05;
                 }
                 transparent_indicies.push(idx);
             }
@@ -372,13 +374,13 @@ export default function TwoFluid({ name }) {
         };
 
         test(value) {
-            value[idx(0, 0, 0)] = .5*value[idx(0, 0, 0)];
+            value[idx(0, 0, 0)] = 0.5 * value[idx(0, 0, 0)];
             this.test2(value);
         }
 
         test2(value) {
             for (let i = 0; i < this.cells; i++) {
-                value[i] += .5;
+                value[i] += 0.5;
             }
         }
 
@@ -463,7 +465,7 @@ export default function TwoFluid({ name }) {
         let flu = new fluid(N, extra);
 
         let dt = .05;
-        let viscosity = .000001;
+        let viscosity = 0;
 
         // flu.density_old[idx(2, 3, 2)] = 1;
         // flu.density_old[idx(2, 3, 2)] = 1;
@@ -471,9 +473,9 @@ export default function TwoFluid({ name }) {
         // flu.density_old[idx(N, 10, 10)] = 1;
 
 
-        for (let i = 3; i < N - 3; i++) {
-            for (let j = 3; j < N - 3; j++) {
-                flu.density_old[idx(0, i, j)] = 1;
+        for (let i = 5; i < N - 5; i++) {
+            for (let j = 5; j < N - 5; j++) {
+                flu.density_old[idx(9, i, j)] = .5;
             }
         }
 
@@ -507,7 +509,7 @@ export default function TwoFluid({ name }) {
 
         function simulate() {
 
-            //console.log(flu.density_old)
+            //console.log(flu.density)
             flu.get_density(viscosity, dt)
             //console.log(flu.density)
             flu.get_velocity(viscosity, dt);
