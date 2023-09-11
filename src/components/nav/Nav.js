@@ -7,7 +7,7 @@ export default function Nav() {
   return (
     <nav className="mb-10 bg-[#333336]/[.125] shadow-lg">
         <div className="flex justify-center items-center">
-			<Link href="/" className="nav-logo" />
+			<Link href="/" className="nav-logo animate-spin" />
 			<Link href="/resume" className="nav-button">Resume</Link>
 			<div href="/decks" className="nav-button relative cursor-default" onMouseOver={() => setHide(false)} onMouseLeave={() => setHide(true)}>
 					Background
