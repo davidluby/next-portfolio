@@ -105,7 +105,7 @@ export default function TwoFluid({ name }) {
         integrate(value, dt) {
             for (let i = 0; i < this.cells; i++) {
                 if (this.density[i] != 0) {
-                    value[i] += -10 * dt;
+                    value[i] += -5 * dt;
                 }
             }
             return value;
@@ -157,14 +157,14 @@ export default function TwoFluid({ name }) {
                         let y = j - dtO * this.v[idx(i, j, k)];
                         let z = k - dtO * this.w[idx(i, j, k)];
 
-                        if (x < 0.5) {
-                            x = 0.5;
+                        if (x < 1.5) {
+                            x = 1.5;
                         }
-                        if (y < 0.5) {
-                            y = 0.5;
+                        if (y < 1.5) {
+                            y = 1.5;
                         }
-                        if (z < 0.5) {
-                            z = 0.5;
+                        if (z < 1.5) {
+                            z = 1.5;
                         }
 
 
@@ -290,8 +290,8 @@ export default function TwoFluid({ name }) {
             //this.density = this.density_old;
             //console.log(this.density)
 
-            //this.u = this.integrate(this.u_old, dt);
             this.v = this.integrate(this.v_old, dt);
+            //this.v = this.integrate(this.v_old, dt);
             //this.w = this.integrate(this.w_old, dt);
             //console.log(this.v)
 
@@ -365,7 +365,7 @@ export default function TwoFluid({ name }) {
                     dta[cubeIdx + vertexIdx] = 0;
                     dta[cubeIdx + vertexIdx + 1] = 0;
                     dta[cubeIdx + vertexIdx + 2] = 0;
-                    dta[cubeIdx + vertexIdx + 3] = .05;
+                    dta[cubeIdx + vertexIdx + 3] = 0;
                 }
                 transparent_indicies.push(idx);
             }
@@ -473,9 +473,9 @@ export default function TwoFluid({ name }) {
         // flu.density_old[idx(N, 10, 10)] = 1;
 
 
-        for (let i = 5; i < N - 5; i++) {
-            for (let j = 5; j < N - 5; j++) {
-                flu.density_old[idx(9, i, j)] = .5;
+        for (let i = 0; i < 2; i++) {
+            for (let j = 0; j < 2; j++) {
+                flu.density_old[idx(N + extra - 3, i + 9, j + 9)] = 1;
             }
         }
 
