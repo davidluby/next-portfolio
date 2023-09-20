@@ -40,7 +40,7 @@ export default function Home() {
                         </p>
                     </div>
                 </div>
-                <p className="tile w-1/4 mt-5">
+                <p className="tile w-full res:w-1/3 mt-5">
                     Below is a collection of projects&mdash;the site itself being one of them&mdash;covered in greater depth on pages below the Background dropdown. You may navigate to those same pages by clicking on pulsing yellow text. All projects&#39; source code are on my&nbsp;
                     <Link href="https://github.com/davidluby" className="underline text-blue-500 hover:text-blue-400" target="_blank" rel="noopener noreferrer">GitHub</Link>.
                 </p>
