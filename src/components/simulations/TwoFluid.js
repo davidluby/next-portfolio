@@ -699,7 +699,7 @@ export default function TwoFluid({ name }) {
     return (
         <div className="w-full tile">
             <h1>
-                <Link href="/fluids" className="hover:text-yellow-500 transition-all duration-300 ease-in animate-pulse">
+                <Link href="/fluids" className="text-yellow-500 transition-all duration-300 ease-in animate-pulse">
                     WebGL Fluid Simulation <i>-- work in progress</i>
                 </Link>
             </h1>

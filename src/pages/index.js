@@ -3,11 +3,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 
 import TwoCollisions from "@components/simulations/TwoCollisions"
-//import ThreeProjectile from "@components/simulations/ThreeProjectile"
 import TwoFluid from "@components/simulations/TwoFluid"
-import Gl_triangle from "@components/simulations/GL_triangle"
-import GL_box from "@components/simulations/GL_box"
-import GL_canvas from "@components/simulations/GL_canvas"
 
 import App from "@components/decks/App"
 
@@ -45,26 +41,19 @@ export default function Home() {
                     </div>
                 </div>
                 <p className="tile w-1/4 mt-5">
-                    Below is a collection of projects&mdash;the site itself being one of them&mdash;covered in greater depth on pages below the Background dropdown. You may navigate to those same pages by clicking on pulsing text. All projects&#39; source code are on my&nbsp;
+                    Below is a collection of projects&mdash;the site itself being one of them&mdash;covered in greater depth on pages below the Background dropdown. You may navigate to those same pages by clicking on pulsing yellow text. All projects&#39; source code are on my&nbsp;
                     <Link href="https://github.com/davidluby" className="underline text-blue-500 hover:text-blue-400" target="_blank" rel="noopener noreferrer">GitHub</Link>.
                 </p>
             </div>
             <h1 className="w-[97%] res:w-5/6 mt-20 mb-5 border-b-4 border-yellow-500">Simulations</h1>
-            {/*<TwoFluid name="twoFluid" />*/}
             <div className="flex flex-col w-full items-center space-y-5">
                 <div className="flex flex-col items-center res:flex-row justify-center space-y-5 res:space-y-0 res:space-x-5 w-[97%] res:w-5/6">
                     <TwoFluid name="twoFluid" />
                     <TwoCollisions name="twoCollisions"/>
-                    {/*<ThreeProjectile />*/}
                 </div>
-                {/* <div className="flex flex-col items-center res:flex-row justify-center space-y-5 res:space-y-0 res:space-x-5 w-[97%] res:w-5/6">
-                    <GL_canvas name="GL_canvas" />
-                    <GL_box name="GL_box" />
-                    <Gl_triangle name="GL_triangle" />
-                </div> */}
             </div>
             <h1 className="w-[97%] res:w-5/6 mt-20 border-b-4 border-yellow-500">
-                <Link href="/mech" className="hover:text-yellow-500 transition-all duration-500 animate-pulse">Mechatronic Color Sorting Conveyor</Link>
+                <Link href="/mech" className="text-yellow-500 transition-all duration-500 animate-pulse">Mechatronic Color Sorting Conveyor</Link>
             </h1>
             <div className="flex flex-wrap justify-evenly w-[97%] res:w-5/6">
                 <div className="tile w-[300px] h-[500px] mt-5">
@@ -79,7 +68,7 @@ export default function Home() {
                 </div>
             </div>
             <h1 className="w-[97%] res:w-5/6 mt-20 mb-5 border-b-4 border-yellow-500">
-                <Link href="/decks" className="hover:text-yellow-500 transition-all duration-500 animate-pulse">Fullstack Basketball Card Deck App</Link>
+                <Link href="/decks" className="text-yellow-500 transition-all duration-500 animate-pulse">Fullstack Basketball Card Deck App</Link>
             </h1>
             <App />
             <div id="helpID" className="w-[97%] res:w-5/6 mt-10 tile">

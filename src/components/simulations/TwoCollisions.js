@@ -191,7 +191,7 @@ export default function TwoCollisions({ name }) {
     return (
         <div className="w-full tile">
             <h1> 
-                <Link href="/collision" className="hover:text-yellow-500 transition-all duration-500 animate-pulse">
+                <Link href="/collision" className="text-yellow-500 transition-all duration-500 animate-pulse">
                     2-D Collision Simulation
                 </Link>   
             </h1>
