@@ -18,9 +18,33 @@ export default function Home() {
             <Head>
                 <title>Homepage</title>
             </Head>
-            <h1 className="w-[97%] res:w-5/6 border-b-4 border-yellow-500">Welcome</h1>
-            <div className="w-[97%] res:w-5/6 mt-5 tile">
-                <p>
+            <h1 className="w-[97%] res:w-5/6 mb-5 border-b-4 border-yellow-500">Welcome</h1>
+            <div className="flex flex-col items-center res:flex-row res:items-center res:justify-evenly w-[97%] res:w-5/6">
+                <div className="res:relative flex flex-col items-center justify-center res:items-end res:w-[26rem] res:h-[8rem] px-3 py-5 shadow-lg rounded-xl ring-1 ring-black/5 text-center res:text-left">
+                    <img className="res:absolute res:-left-12 w-60 res:w-[12rem] rounded-full shadow-lg" src="headshot.jpg"></img>
+                    <div>
+                        <ul className="flex flex-row items-center justify-center res:justify-start mt-2 res:mt-0 space-x-2">
+                            <h2>
+                                David Luby
+                            </h2>
+                            <span className="border-[1px] border-black h-4"></span>
+                            <li className ="flex items-center justify-center w-7 h-7">
+                                <Link href="https://linkedin.com/in/david-luby/" className="logo-linked w-6 h-6 inline-block bg-center bg-no-repeat" target="_blank" rel="noopener noreferrer"></Link>
+                            </li>
+                            <span className="border-[1px] border-black h-4"></span>
+                            <li className="flex items-center justify-center w-7 h-7">
+                                <Link href="https://github.com/davidluby" className="logo-github w-6 h-6 inline-block bg-center bg-no-repeat rounded-full" target="_blank" rel="noopener noreferrer"></Link>
+                            </li>
+                        </ul>
+                        <p>
+                            <i>BS, Mechanical Engineering</i>
+                        </p>
+                        <p>
+                            University of New Hampshire 2022
+                        </p>
+                    </div>
+                </div>
+                <p className="tile w-1/4 mt-5">
                     Below is a collection of projects&mdash;the site itself being one of them&mdash;covered in greater depth on pages below the Background dropdown. You may navigate to those same pages by clicking on pulsing text. All projects&#39; source code are on my&nbsp;
                     <Link href="https://github.com/davidluby" className="underline text-blue-500 hover:text-blue-400" target="_blank" rel="noopener noreferrer">GitHub</Link>.
                 </p>
