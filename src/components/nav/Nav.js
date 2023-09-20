@@ -21,7 +21,8 @@ export default function Nav() {
 						<Link className="nav-button text-xs" href="/decks">Fullstack App</Link>
 						<Link className="nav-button text-xs" href="/mech">Mechatronics</Link>
 						<Link className="nav-button text-xs" href="/webgl">WebGL</Link>
-						<Link className="nav-button text-xs rounded-b-md" href="/iterative">Iterative Methods</Link>
+						<Link className="nav-button text-xs" href="/iterative">Iterative Methods</Link>
+						<Link className="nav-button text-xs rounded-b-md" href="/papers">Papers</Link>
 					</div> : null
 				}
 			</div>

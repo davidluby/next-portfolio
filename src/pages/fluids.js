@@ -1,6 +1,5 @@
 import Head from 'next/head'
 import TwoFluid from '@components/simulations/TwoFluid'
-import GL_canvas from '@components/simulations/GL_canvas'
 import Slides from '@components/nav/Slides'
 
 export default function fluids() {
