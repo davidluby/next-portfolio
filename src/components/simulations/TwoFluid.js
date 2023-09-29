@@ -9,51 +9,51 @@ import Link from 'next/link'
 export default function TwoFluid({ name }) {
 
     class fluid {
-        constructor(N, extra) {
-            this.cells = (N + extra) * N**2;    // number of cells
-
+        constructor(viscosity, dt) {
+            this.viscosity = viscosity;
+            this.dt = dt;
+            this.h = 1 / N;
+            this.cells = (N + extra) * N**2;
 
             this.density = new Float32Array(this.cells);
-            //this.density.fill(0);
             this.density_old = new Float32Array(this.cells);
+            //this.density.fill(0);
             //this.density_old.fill(0);
 
-
-            // velocity
-            // positive goes left
-            this.u = new Float32Array(this.cells);
-            //this.u.fill(.5);
-            // positive goes up
-            this.v = new Float32Array(this.cells);
-            //this.v.fill(0);
-            // postive goes in
-            this.w = new Float32Array(this.cells);
-            //this.w.fill(0);
+            this.u = new Float32Array(this.cells); // positive goes left
+            this.v = new Float32Array(this.cells); // positive goes up
+            this.w = new Float32Array(this.cells); // postive goes in
 
             this.u_old = new Float32Array(this.cells);
-            //this.u_old.fill(0);
             this.v_old = new Float32Array(this.cells);
-            //this.v_old.fill(0);
             this.w_old = new Float32Array(this.cells);
+            this.u_old.fill(-1);
+            //this.v_old.fill(-.5);
             //this.w_old.fill(0);
 
+            this.s = new Float32Array(this.cells);  // sources
             this.p = new Float32Array(this.cells);  // pressure
             this.div = new Float32Array(this.cells); // divergence
-            this.s = new Float32Array(this.cells);  // sources
         }
 
-        sources(value, sources, dt) {
-            //console.log(value)
+        sources(value, sources) {
             for (let i = 0; i < this.cells; i++) {
-                value[i] += sources[i] * dt;
+                value[i] += sources[i] * this.dt;
+            }
+        }
+
+        integrate(value) {
+            for (let i = 0; i < this.cells; i++) {
+                if (this.density_old[i] != 0) {
+                    value[i] += -5 * this.dt;
+                }
             }
             return value;
         }
 
         boundary(value, flag) {
-
-            for (let i = 0; i < N; i++) {
-                for (let j = 0; j < N; j++) {
+            for (let i = 0; i < N - 0; i++) {
+                for (let j = 0; j < N - 0; j++) {
                     // yz parallel horizontal plane
                     if (flag == 1) {
                         value[idx(0, i, j)] = -value[idx(1, i, j)];
@@ -65,8 +65,8 @@ export default function TwoFluid({ name }) {
                 }
             }
 
-            for (let i = 0; i < N + extra; i++) {
-                for (let j = 0; j < N; j++) {
+            for (let i = 0; i < N + extra - 0; i++) {
+                for (let j = 0; j < N - 0; j++) {
                     // xz parallel vertical plane
                     if (flag == 2) {
                         value[idx(i, 0, j)] = -value[idx(i, 1, j)];
@@ -87,32 +87,24 @@ export default function TwoFluid({ name }) {
                 }
             }
 
-            value[idx(0, 0, 0)] = .33 * (value[idx(1, 0, 0)] + value[idx(0, 1, 0)] + value[idx(0, 0, 1)]);
-            value[idx(0, N - 1, 0)] = .33 * (value[idx(1, N - 1, 0)] + value[idx(0, N - 2, 0)] + value[idx(0, N - 1, 1)]);
 
-            value[idx(N + extra - 1, 0, 0)] = .33 * (value[idx(N + extra - 2, 0, 0)] + value[idx(N + extra - 1, 1, 0)] + value[idx(N + extra - 1, 0, 1)]);
-            value[idx(N + extra - 1, N - 1, 0)] = .33 * (value[idx(N + extra - 2, N - 1, 0)] + value[idx(N + extra - 1, N - 2, 0)] + value[idx(N + extra - 1, N - 1, 1)]);
+            value[idx(0, 0, 0)] = .33 * (value[idx(1, 0, 0)] + value[idx(0, 1, 0)] + value[idx(0, 0, 1)]);  // right bottom close
+            value[idx(0, N - 1, 0)] = .33 * (value[idx(1, N - 1, 0)] + value[idx(0, N - 2, 0)] + value[idx(0, N - 1, 1)]);  // right top close
+
+            value[idx(N + extra - 1, 0, 0)] = .33 * (value[idx(N + extra - 2, 0, 0)] + value[idx(N + extra - 1, 1, 0)] + value[idx(N + extra - 1, 0, 1)]);  // left bottom close 
+            value[idx(N + extra - 1, N - 1, 0)] = .33 * (value[idx(N + extra - 2, N - 1, 0)] + value[idx(N + extra - 1, N - 2, 0)] + value[idx(N + extra - 1, N - 1, 1)]);  // left top close
             
-            value[idx(0, 0, N - 1)] = .33 * (value[idx(1, 0, N - 1)] + value[idx(0, 1, N - 1)] + value[idx(0, 0, N - 2)]);
-            value[idx(0, N - 1, N - 1)] = .33 * (value[idx(1, N - 1, N - 1)] + value[idx(0, N - 2, N - 1)] + value[idx(0, N - 1, N - 2)]);
+            value[idx(0, 0, N - 1)] = .33 * (value[idx(1, 0, N - 1)] + value[idx(0, 1, N - 1)] + value[idx(0, 0, N - 2)]);  // right bottom far
+            value[idx(0, N - 1, N - 1)] = .33 * (value[idx(1, N - 1, N - 1)] + value[idx(0, N - 2, N - 1)] + value[idx(0, N - 1, N - 2)]);  // right top far
             
-            value[idx(N + extra - 1, 0, N - 1)] = .33 * (value[idx(N + extra - 2, 0, N - 1)] + value[idx(N + extra - 1, 1, N - 1)] + value[idx(N + extra - 1, 0, N - 2)]);
-            value[idx(N + extra - 1, N - 1, N - 1)] = .33 * (value[idx(N + extra - 2, N - 1, N - 1)] + value[idx(N + extra - 1, N - 2, N - 1)] + value[idx(N + extra - 1, N - 1, N - 2)]);
+            value[idx(N + extra - 1, 0, N - 1)] = .33 * (value[idx(N + extra - 2, 0, N - 1)] + value[idx(N + extra - 1, 1, N - 1)] + value[idx(N + extra - 1, 0, N - 2)]);  // left bottom far
+            value[idx(N + extra - 1, N - 1, N - 1)] = .33 * (value[idx(N + extra - 2, N - 1, N - 1)] + value[idx(N + extra - 1, N - 2, N - 1)] + value[idx(N + extra - 1, N - 1, N - 2)]);  // left top far
 
-            return value;
-        }
-
-        integrate(value, dt) {
-            for (let i = 0; i < this.cells; i++) {
-                if (this.density[i] != 0) {
-                    value[i] += -5 * dt;
-                }
-            }
             return value;
         }
 
         linear_solve(flag, value, value_old, rate, c) {
-            for (let k = 0; k < 10; k++) {
+            for (let k = 0; k < 20; k++) {
                 for (let x = 1; x < N + extra - 1; x++) {
                     for (let y = 1; y < N - 1; y++) {
                         for (let z = 1; z < N - 1; z++) {
@@ -124,49 +116,44 @@ export default function TwoFluid({ name }) {
                         }
                     }
                 }
+                value = this.boundary(value, flag);
             }
 
-            //console.log(this.density);
-            value = this.boundary(value, flag);
             return value;
-
         }
 
-        diffuse(flag, value, value_old, viscosity, dt) {
-            let rate = dt * viscosity * (N + extra) * N**2;
+        diffuse(flag, value, value_old) {
+            let rate = this.dt * this.viscosity * (N + extra) * N**2;
 
             let c = 1 + 6 * rate;
 
-            //console.log('old', value)
-            value = this.linear_solve(flag, value, value_old, rate, c)
-            //console.log('new', value)
-            return value;
+            value = this.linear_solve(flag, value, value_old, rate, c);
 
+            return value;
         }
 
-        advect(flag, value, value_old, dt) {
+        advect(flag, value, value_old) {
             // concerned about this
-            let dtOX = dt * (N + extra);
-            let dtO = dt * N;
+            let dtOX = this.dt * (N + extra);
+            let dtO = this.dt * N;
 
-            for (let i = 1; i < N + extra - 1; i++) {
-                for (let j = 1; j < N - 1; j++) {
-                    for (let k = 1; k < N - 1; k++) {
+            for (let i = 1; i <= N + extra - 1; i++) {
+                for (let j = 1; j <= N - 1; j++) {
+                    for (let k = 1; k <= N - 1; k++) {
 
                         let x = i - dtOX * this.u[idx(i, j, k)];
                         let y = j - dtO * this.v[idx(i, j, k)];
                         let z = k - dtO * this.w[idx(i, j, k)];
 
-                        if (x < 1.5) {
-                            x = 1.5;
+                        if (x < 0.5) {
+                            x = 0.5;
                         }
-                        if (y < 1.5) {
-                            y = 1.5;
+                        if (y < 0.5) {
+                            y = 0.5;
                         }
-                        if (z < 1.5) {
-                            z = 1.5;
+                        if (z < 0.5) {
+                            z = 0.5;
                         }
-
 
                         if (x > N + extra - 1.5) {
                             x = N + extra - 1.5;
@@ -178,9 +165,9 @@ export default function TwoFluid({ name }) {
                             z = N - 1.5;
                         }
 
-                        let i0 = Math.floor(x);
-                        let j0 = Math.floor(y);
-                        let k0 = Math.floor(z);
+                        let i0 = Math.round(x);
+                        let j0 = Math.round(y);
+                        let k0 = Math.round(z);
 
                         let i1 = i0 + 1;
                         let j1 = j0 + 1;
@@ -229,20 +216,16 @@ export default function TwoFluid({ name }) {
             value = this.boundary(value, flag);
             return value;
         }
-        
-        lerp(a, b, amount)
-        {
-            return a + (b-a) * Math.min( Math.max(amount, 0), 1)
-        }
 
         project(u, v, w) {
+
             for (let x = 1; x < N + extra - 1; x++) {
                 for (let y = 1; y < N - 1; y++) {
                     for (let z = 1; z < N - 1; z++) {
-                        this.div[idx(x, y, z)] = -0.33 * (
-                                                            ((N + extra) * u[idx(x + 1, y, z)] - (N + extra) * u[idx(x - 1, y, z)]) +
-                                                            (N * v[idx(x, y + 1, z)] - N * v[idx(x, y - 1, z)]) +
-                                                            (N * w[idx(x, y, z + 1)] - N * w[idx(x, y, z - 1)])
+                        this.div[idx(x, y, z)] = -0.33 * h * (
+                                                            (u[idx(x + 1, y, z)] - u[idx(x - 1, y, z)]) +
+                                                            (v[idx(x, y + 1, z)] - v[idx(x, y - 1, z)]) +
+                                                            (w[idx(x, y, z + 1)] - w[idx(x, y, z - 1)])
                                                         );
                         this.p[idx(x, y, z)] = 0;
                     }
@@ -257,9 +240,9 @@ export default function TwoFluid({ name }) {
             for (let x = 1; x < N + extra - 1; x++) {
                 for (let y = 1; y < N - 1; y++) {
                     for (let z = 1; z < N - 1; z++) {
-                        u[idx(x, y, z)] -= 0.5 * (this.p[idx(x + 1, y, z)] - this.p[idx(x - 1, y, z)]) / (N + extra);
-                        v[idx(x, y, z)] -= 0.5 * (this.p[idx(x, y + 1, z)] - this.p[idx(x, y - 1, z)]) / N;
-                        w[idx(x, y, z)] -= 0.5 * (this.p[idx(x, y, z + 1)] - this.p[idx(x, y, z - 1)]) / N;
+                        u[idx(x, y, z)] -= 0.5 * (this.p[idx(x + 1, y, z)] - this.p[idx(x - 1, y, z)]) / h;
+                        v[idx(x, y, z)] -= 0.5 * (this.p[idx(x, y + 1, z)] - this.p[idx(x, y - 1, z)]) / h;
+                        w[idx(x, y, z)] -= 0.5 * (this.p[idx(x, y, z + 1)] - this.p[idx(x, y, z - 1)]) / h;
                     }
                 }
             }
@@ -271,80 +254,92 @@ export default function TwoFluid({ name }) {
 
         }
 
-        get_density(viscosity, dt) {
-            //console.log(this.density_old)
-            this.density = this.sources(this.density_old, this.s, dt);
+        get_density() {
+            let out = [];
 
-            //console.log(this.density)
-            //console.log(this.density_old)
-            
-            //SWAP(density_prev, density);
-            //this.density = this.density_old;
-            
-            //console.log(this.density)
-            //console.log(this.density_old)
-            this.density = this.diffuse(0, this.density, this.density_old, viscosity, dt);
-            //console.log(this.density)
-            
-            //SWAP(density_prev, density);
-            //this.density = this.density_old;
-            //console.log(this.density)
+            this.sources(this.density, this.density_old);
 
-            this.v = this.integrate(this.v_old, dt);
-            //this.v = this.integrate(this.v_old, dt);
-            //this.w = this.integrate(this.w_old, dt);
-            //console.log(this.v)
+            //console.log("before", this.density_old)
+            // out = this.swap(this.density_old, this.density);
+            // this.density_old = out[0];
+            // this.density = out[1];
 
-            this.density = this.advect(0, this.density, this.density_old, dt);
-            //this.density = this.density_old;
+            this.density = this.diffuse(0, this.density, this.density_old);
+            
+            // out = this.swap(this.density_old, this.density);
+            // this.density_old = out[0];
+            // this.density = out[1];
+
+            this.density = this.advect(0, this.density, this.density_old);
         }
 
-        get_velocity(viscosity, dt) {
-            //console.log(this.density)
-            this.u = this.sources(this.u, this.u_old, dt);
-            this.v = this.sources(this.v, this.v_old, dt);
-            this.w = this.sources(this.w, this.w_old, dt);
-            
-            // SWAP(u_old, u);
-            // this.u = this.u_old;
-            // // SWAP(v_old, v);
-            // this.v = this.v_old;
-            // // SWAP(w_old, w);
-            // this.w = this.w_old;
-            
-            this.u = this.diffuse(1, this.u, this.u_old, viscosity, dt);
-            this.v = this.diffuse(2, this.v, this.v_old, viscosity, dt);
-            this.w = this.diffuse(3, this.w, this.w_old, viscosity, dt);
-            
+        get_velocity() {
             let out = [];
+
+            this.sources(this.u, this.u_old);
+            this.sources(this.v, this.v_old);
+            this.sources(this.w, this.w_old);
+            
+            // out = this.swap(this.u_old, this.u);
+            // this.u_old = out[0];
+            // this.u = out[1];
+            this.u = this.diffuse(1, this.u, this.u_old);
+
+            // out = this.swap(this.v_old, this.v);
+            // this.v_old = out[0];
+            // this.v = out[1];
+            this.v = this.diffuse(2, this.v, this.v_old);
+
+            // out = this.swap(this.w_old, this.w);
+            // this.w_old = out[0];
+            // this.w = out[1];
+            this.w = this.diffuse(3, this.w, this.w_old);
+            
             out = this.project(this.u, this.v, this.w);
             
             this.u = out[0];
             this.v = out[1];
             this.w = out[2];
             
-            // SWAP(u_old, u);
-            // this.u = this.u_old;
-            // // SWAP(v_old, v);
-            // this.v = this.v_old;
-            // // SWAP(w_old, w);
-            // this.w = this.w_old;
+            // out = this.swap(this.u_old, this.u);
+            // this.u_old = out[0];
+            // this.u = out[1];
+            // out = this.swap(this.v_old, this.v);
+            // this.v_old = out[0];
+            // this.v = out[1];
+            // out = this.swap(this.w_old, this.w);
+            // this.w_old = out[0];
+            // this.w = out[1];
             
-            this.u = this.advect(1, this.u, this.u_old, dt);
-            this.v = this.advect(2, this.v, this.v_old, dt);
-            this.w = this.advect(3, this.w, this.w_old, dt);
-
-            // this.u = this.u_old;
-            // this.v = this.v_old;
-            // this.w = this.w_old;
+            this.u = this.advect(1, this.u, this.u_old);
+            this.v = this.advect(2, this.v, this.v_old);
+            this.w = this.advect(3, this.w, this.w_old);
             
-            out = [];
+            // out = [];
             out = this.project(this.u, this.v, this.w);
 
             this.u = out[0];
             this.v = out[1];
             this.w = out[2];
-            //console.log(this.density)
+        }
+
+        simulate() {
+            this.get_density()
+            this.get_velocity();
+            //this.test(flu.density);
+            //this.test2(flu.density)
+        }
+
+        lerp(a, b, amount) {
+            return a + (b-a) * Math.min( Math.max(amount, 0), 1)
+        }
+
+        swap(value_old, value_new) {
+            let temp = value_old;
+            value_old = value_new;
+            value_new = temp;
+
+            return [value_old, value_new]
         }
 
         dyeIdx(idx, dta, opaque_indicies, transparent_indicies) {
@@ -389,11 +384,9 @@ export default function TwoFluid({ name }) {
 
     let mat4 = require('gl-mat4');
     
-    // grid spacing
     let N = 20;
-    const length = 1;
-    const h = length / N;
-    const extra = 10; // used for extending a dimension for rectangular shape
+    let extra = 10; // used to extend a dimension for rectangular shape
+    let h = 1 / N;
     
     // vertices used to create box
     const box = [
@@ -462,61 +455,22 @@ export default function TwoFluid({ name }) {
         meshVertices = cubicMesh(box, N, extra);
 
 
-        let flu = new fluid(N, extra);
-
-        let dt = .05;
-        let viscosity = 0;
-
-        // flu.density_old[idx(2, 3, 2)] = 1;
-        // flu.density_old[idx(2, 3, 2)] = 1;
-        // flu.density_old[idx(5, 10, 10)] = 1;
-        // flu.density_old[idx(N, 10, 10)] = 1;
+        let flu = new fluid(0, 0.05);
 
 
-        for (let i = 0; i < 2; i++) {
-            for (let j = 0; j < 2; j++) {
-                flu.density_old[idx(N + extra - 3, i + 9, j + 9)] = 1;
+        for (let i = 0; i < 4; i++) {
+            for (let j = 0; j < 4; j++) {
+                //flu.s[idx(N + extra - 2, i + 9, j + 9)] = 1;
+                //flu.density_old[idx(1, i, j)] = 1;
             }
         }
-
-
-        //console.log(flu.s)
-        //flu.w[idx(N, N-1, 1)] = 0;
-        //console.log(flu.w)
-
-
-        // for (let i = 0; i < N + extra; i++) {
-        //     for (let j = 0; j < N; j++) {
-        //         flu.density[idx(i, j, N - 1)] = .5;
-        //     }
-        // }
-        //console.log(flu.density)
 
         animate();
 
         function animate() {
-            // count += 1;
-            // if (count == 1 || count == 1000) {
-            //     //console.log(flu.density_old);
-            //     console.log(flu.density_old[idx(1, 1, 1)]);
-            // }
-            //console.log(flu.density_old)
-            simulate();
+            flu.simulate();
             draw();
             requestAnimationFrame(animate);
-        }
-
-
-        function simulate() {
-
-            //console.log(flu.density)
-            flu.get_density(viscosity, dt)
-            //console.log(flu.density)
-            flu.get_velocity(viscosity, dt);
-            //console.log(flu.v)
-
-            //flu.test(flu.density);
-            //flu.test2(flu.density)
         }
 
         function draw() {
@@ -634,22 +588,16 @@ export default function TwoFluid({ name }) {
             gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
             //DRAW OPAQUE OBJECTS HERE
-            //console.log(opaque_indicies)
-            //console.log(meshVertices.length/3)
             for (let i = 0; i < opaque_indicies.length; i++) {
                 gl.drawArrays(gl.TRIANGLES, opaque_indicies[i] * 36, 36); // triangle, first vertex, draw all three
                 // divide length of vertices array by 3 to get the number of vertices. vertices = coordinateComponents/componentsPerCoordinate(x,y,z)
-                //console.log(opaque_indicies[i] * 36)
             };
-
-
             
             gl.disable(gl.DEPTH_TEST);
 
             //DRAW SEMI-TRANSPARENT OBJECTS HERE
             for (let i = 0; i < transparent_indicies.length; i++) {
-                gl.drawArrays(gl.TRIANGLES, transparent_indicies[i] * 36, 36); // triangle, first vertex, draw all three
-                // divide length of vertices array by 3 to get the number of vertices. vertices = coordinateComponents/componentsPerCoordinate(x,y,z)
+                gl.drawArrays(gl.TRIANGLES, transparent_indicies[i] * 36, 36);
             };
             
         }
@@ -668,14 +616,10 @@ export default function TwoFluid({ name }) {
     function cubicMesh(box, N, extra) {
         let vertices = [];
 
-        // z direction third
-        for (let z = 0; z < N; z++) {
-            // y direction second
-            for (let y = 0; y < N; y++) {
-                // x direction first
-                for (let x = 0; x < N + extra; x++) {
-                    // for each vertex
-                    for ( let i = 0; i < box.length / 3; i++){
+        for (let z = 0; z < N; z++) { // z direction third
+            for (let y = 0; y < N; y++) { // y direction second
+                for (let x = 0; x < N + extra; x++) { // x direction first
+                    for ( let i = 0; i < box.length / 3; i++){ // for each vertex
                         let idx = i * 3;
                         let translatedVertex = [
                                                 box[idx]     + 2 * x * h,
@@ -704,7 +648,7 @@ export default function TwoFluid({ name }) {
                 </Link>
             </h1>
             <div className="flex flex-col">
-                <canvas id={name} height="450" width="900" className="w-full mb-2 border-2 rounded-xl border-yellow-500"></canvas>
+                <canvas id={name} height="300" width="600" className="w-full mb-2 border-2 rounded-xl border-yellow-500"></canvas>
                 <div className="flex flex-row items-center justify-center space-x-2">
                     <button className="rounded-md p-1 bg-yellow-500 hover:bg-yellow-300 text-xs text-white">Button</button>
                     <button className="rounded-md p-1 bg-yellow-500 hover:bg-yellow-300 text-xs text-white">Button</button>

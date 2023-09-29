@@ -145,8 +145,8 @@ export default function TwoCollisions({ name }) {
 
 
     var scene = {
-        width : 900,
-        height : 450,
+        width : 300,
+        height : 150,
         gravity : new vector(0, 0),
         restitution : 1,
         dT : .175,
@@ -156,7 +156,7 @@ export default function TwoCollisions({ name }) {
 
     for (let i = 0; i < scene.n; i++) {
 
-        let radius = randInt(10, 50); // assign random radius
+        let radius = randInt(5, 25); // assign random radius
         let sign = Math.cos(Math.PI * randInt(0, 1)) // random positive or negative
 
         let ball = {

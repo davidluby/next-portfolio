@@ -8,7 +8,7 @@ module.exports = {
     screens: {
       'res': '950px',
       'app': '1000px',
-      'fhd': '1919px'
+      'fhd': '1800px'
     },
     fontFamily: {
       'base': ["Segoe UI Variable", "Trebuchet MS", "Arial", "Helvetica", "sans-serif", "Times New Roman"]
