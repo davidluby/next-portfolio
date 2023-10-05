@@ -17,8 +17,7 @@ export default function TwoFluid({ name }) {
 
             this.density = new Float32Array(this.cells);
             this.density_old = new Float32Array(this.cells);
-            //this.density.fill(0.000000000000001);
-            //this.density_old.fill(0);
+            this.density_old.fill(0.000001)
 
             this.u = new Float32Array(this.cells); // positive goes left
             this.v = new Float32Array(this.cells); // positive goes up
@@ -43,16 +42,24 @@ export default function TwoFluid({ name }) {
             }
         }
 
+        integrate(value) {
+            for (let i = 0; i < this.cells; i++) {
+                if (this.density[i] != 0) {
+                    value[i] += -10;
+                }
+            }
+        }
+
         boundary(value, flag) {
             for (let i = 0; i < N; i++) {
                 for (let j = 0; j < N; j++) {
                     // yz parallel horizontal plane
                     if (flag == 1) {
-                        value[idx(0, i, j)] = 0//-value[idx(1, i, j)];
-                        value[idx(N + extra - 1, i, j)] = 0//-value[idx(N + extra - 2, i, j)];
+                        value[idx(0, i, j)] = -value[idx(1, i, j)];
+                        value[idx(N + extra - 1, i, j)] = -value[idx(N + extra - 2, i, j)];
                     } else {
-                        value[idx(0, i, j)] = 0//value[idx(1, i, j)];
-                        value[idx(N + extra - 1, i, j)] = 0//value[idx(N + extra - 2, i, j)];
+                        value[idx(0, i, j)] = value[idx(1, i, j)];
+                        value[idx(N + extra - 1, i, j)] = value[idx(N + extra - 2, i, j)];
                     }
                 }
             }
@@ -61,36 +68,36 @@ export default function TwoFluid({ name }) {
                 for (let j = 0; j < N; j++) {
                     // xz parallel vertical plane
                     if (flag == 2) {
-                        value[idx(i, 0, j)] = 0//-value[idx(i, 1, j)];
-                        value[idx(i, N - 1, j)] = 0//-value[idx(i, N - 2, j)];
+                        value[idx(i, 0, j)] = -value[idx(i, 1, j)];
+                        value[idx(i, N - 1, j)] = -value[idx(i, N - 2, j)];
                     } else {
-                        value[idx(i, 0, j)] = 0//value[idx(i, 1, j)];
-                        value[idx(i, N - 1, j)] = 0//value[idx(i, N - 2, j)];
+                        value[idx(i, 0, j)] = value[idx(i, 1, j)];
+                        value[idx(i, N - 1, j)] = value[idx(i, N - 2, j)];
                     }
 
                     // xy perpendicular plane
                     if (flag == 3) {
-                        value[idx(i, j, 0)] = 0//-value[idx(i, j, 1)];
-                        value[idx(i, j, N - 1)] = 0//-value[idx(i, j, N - 2)];
+                        value[idx(i, j, 0)] = -value[idx(i, j, 1)];
+                        value[idx(i, j, N - 1)] = -value[idx(i, j, N - 2)];
                     } else {
-                        value[idx(i, j, 0)] = 0//value[idx(i, j, 1)];
-                        value[idx(i, j, N - 1)] = 0//value[idx(i, j, N - 2)];
+                        value[idx(i, j, 0)] = value[idx(i, j, 1)];
+                        value[idx(i, j, N - 1)] = value[idx(i, j, N - 2)];
                     }
                 }
             }
 
 
-            value[idx(0, 0, 0)] = 0//0.33 * (value[idx(1, 0, 0)] + value[idx(0, 1, 0)] + value[idx(0, 0, 1)]);  // right bottom close
-            value[idx(0, N - 1, 0)] = 0//0.33 * (value[idx(1, N - 1, 0)] + value[idx(0, N - 2, 0)] + value[idx(0, N - 1, 1)]);  // right top close
+            value[idx(0, 0, 0)] = 0.33 * (value[idx(1, 0, 0)] + value[idx(0, 1, 0)] + value[idx(0, 0, 1)]);  // right bottom close
+            value[idx(0, N - 1, 0)] = 0.33 * (value[idx(1, N - 1, 0)] + value[idx(0, N - 2, 0)] + value[idx(0, N - 1, 1)]);  // right top close
 
-            value[idx(N + extra - 1, 0, 0)] = 0//0.33 * (value[idx(N + extra - 2, 0, 0)] + value[idx(N + extra - 1, 1, 0)] + value[idx(N + extra - 1, 0, 1)]);  // left bottom close 
-            value[idx(N + extra - 1, N - 1, 0)] = 0//0.33 * (value[idx(N + extra - 2, N - 1, 0)] + value[idx(N + extra - 1, N - 2, 0)] + value[idx(N + extra - 1, N - 1, 1)]);  // left top close
+            value[idx(N + extra - 1, 0, 0)] = 0.33 * (value[idx(N + extra - 2, 0, 0)] + value[idx(N + extra - 1, 1, 0)] + value[idx(N + extra - 1, 0, 1)]);  // left bottom close 
+            value[idx(N + extra - 1, N - 1, 0)] = 0.33 * (value[idx(N + extra - 2, N - 1, 0)] + value[idx(N + extra - 1, N - 2, 0)] + value[idx(N + extra - 1, N - 1, 1)]);  // left top close
             
-            value[idx(0, 0, N - 1)] = 0//0.33 * (value[idx(1, 0, N - 1)] + value[idx(0, 1, N - 1)] + value[idx(0, 0, N - 2)]);  // right bottom far
-            value[idx(0, N - 1, N - 1)] = 0//0.33 * (value[idx(1, N - 1, N - 1)] + value[idx(0, N - 2, N - 1)] + value[idx(0, N - 1, N - 2)]);  // right top far
+            value[idx(0, 0, N - 1)] = 0.33 * (value[idx(1, 0, N - 1)] + value[idx(0, 1, N - 1)] + value[idx(0, 0, N - 2)]);  // right bottom far
+            value[idx(0, N - 1, N - 1)] =0.33 * (value[idx(1, N - 1, N - 1)] + value[idx(0, N - 2, N - 1)] + value[idx(0, N - 1, N - 2)]);  // right top far
             
-            value[idx(N + extra - 1, 0, N - 1)] = 0//0.33 * (value[idx(N + extra - 2, 0, N - 1)] + value[idx(N + extra - 1, 1, N - 1)] + value[idx(N + extra - 1, 0, N - 2)]);  // left bottom far
-            value[idx(N + extra - 1, N - 1, N - 1)] = 0//0.33 * (value[idx(N + extra - 2, N - 1, N - 1)] + value[idx(N + extra - 1, N - 2, N - 1)] + value[idx(N + extra - 1, N - 1, N - 2)]);  // left top far
+            value[idx(N + extra - 1, 0, N - 1)] = 0.33 * (value[idx(N + extra - 2, 0, N - 1)] + value[idx(N + extra - 1, 1, N - 1)] + value[idx(N + extra - 1, 0, N - 2)]);  // left bottom far
+            value[idx(N + extra - 1, N - 1, N - 1)] = 0.33 * (value[idx(N + extra - 2, N - 1, N - 1)] + value[idx(N + extra - 1, N - 2, N - 1)] + value[idx(N + extra - 1, N - 1, N - 2)]);  // left top far
 
             return value;
         }
@@ -128,9 +135,9 @@ export default function TwoFluid({ name }) {
             let dtOX = this.dt * (N + extra);
             let dtO = this.dt * N;
 
-            for (let i = 1; i <= N + extra - 1; i++) {
-                for (let j = 1; j <= N - 1; j++) {
-                    for (let k = 1; k <= N - 1; k++) {
+            for (let i = 1; i < N + extra - 1; i++) {
+                for (let j = 1; j < N - 1; j++) {
+                    for (let k = 1; k < N - 1; k++) {
 
                         let x = i - dtOX * this.u[idx(i, j, k)];
                         let y = j - dtO * this.v[idx(i, j, k)];
@@ -234,19 +241,11 @@ export default function TwoFluid({ name }) {
         get_density() {
             let out = [];
 
-            this.sources(this.density, this.s);
+            this.sources(this.density, this.density_old);
 
-            out = this.swap(this.density_old, this.density);
-            this.density_old = out[0];
-            this.density = out[1];
+            this.density = this.diffuse(0, this.density, this.density_old);
 
-            this.density_old = this.diffuse(0, this.density, this.density_old);
-
-            out = this.swap(this.density_old, this.density);
-            this.density_old = out[0];
-            this.density = out[1];
-
-            this.density_old = this.advect(0, this.density, this.density_old);
+            this.density = this.advect(0, this.density, this.density_old);
 
             out = this.swap(this.density_old, this.density);
             this.density_old = out[0];
@@ -256,7 +255,8 @@ export default function TwoFluid({ name }) {
         get_velocity() {
             let out = [];
 
-            this.sources(this.u, this.velocity);
+            //this.integrate(this.u)
+            //this.sources(this.u, this.velocity);
             this.sources(this.u, this.u_old);
             this.sources(this.v, this.v_old);
             this.sources(this.w, this.w_old);
@@ -264,16 +264,15 @@ export default function TwoFluid({ name }) {
             out = this.swap(this.u_old, this.u);
             this.u_old = out[0];
             this.u = out[1];
-            this.u = this.diffuse(1, this.u, this.u_old);
-
             out = this.swap(this.v_old, this.v);
             this.v_old = out[0];
             this.v = out[1];
-            this.v = this.diffuse(2, this.v, this.v_old);
-
             out = this.swap(this.w_old, this.w);
             this.w_old = out[0];
             this.w = out[1];
+
+            this.u = this.diffuse(1, this.u, this.u_old);
+            this.v = this.diffuse(2, this.v, this.v_old);
             this.w = this.diffuse(3, this.w, this.w_old);
             
             out = this.project(this.u, this.v, this.w);
@@ -295,6 +294,16 @@ export default function TwoFluid({ name }) {
             this.u = this.advect(1, this.u, this.u_old);
             this.v = this.advect(2, this.v, this.v_old);
             this.w = this.advect(3, this.w, this.w_old);
+
+            out = this.swap(this.u_old, this.u);
+            this.u_old = out[0];
+            this.u = out[1];
+            out = this.swap(this.v_old, this.v);
+            this.v_old = out[0];
+            this.v = out[1];
+            out = this.swap(this.w_old, this.w);
+            this.w_old = out[0];
+            this.w = out[1];
             
             out = [];
             out = this.project(this.u, this.v, this.w);
@@ -302,14 +311,21 @@ export default function TwoFluid({ name }) {
             this.u = out[0];
             this.v = out[1];
             this.w = out[2];
+
+            out = this.swap(this.u_old, this.u);
+            this.u_old = out[0];
+            this.u = out[1];
+            out = this.swap(this.v_old, this.v);
+            this.v_old = out[0];
+            this.v = out[1];
+            out = this.swap(this.w_old, this.w);
+            this.w_old = out[0];
+            this.w = out[1];
         }
 
         simulate() {
             this.get_density();
             this.get_velocity();
-            //this.integrate(this.u_old)
-            //this.test(flu.density);
-            //this.test2(flu.density)
         }
 
         swap(value_old, value_new) {
@@ -323,13 +339,13 @@ export default function TwoFluid({ name }) {
         dyeIdx(idx, dta, opaque_indicies, transparent_indicies) {
             let cubeIdx = idx * 144;
 
-            if (this.density[idx] > 0.1) {
+            if (this.density[idx] != 0) {
                 for (let i = 0; i < 36; i++) {
                     let vertexIdx = i*4;
-                    dta[cubeIdx + vertexIdx] = this.density[idx];
-                    dta[cubeIdx + vertexIdx + 1] = .75;
-                    dta[cubeIdx + vertexIdx + 2] = 1;
-                    dta[cubeIdx + vertexIdx + 3] = 1;
+                    dta[cubeIdx + vertexIdx] = this.density[idx];   // red
+                    dta[cubeIdx + vertexIdx + 1] = .5;   // green
+                    dta[cubeIdx + vertexIdx + 2] = 1;   // blue
+                    dta[cubeIdx + vertexIdx + 3] = 1;   // opacity
                 }
                 opaque_indicies.push(idx);
             } else {
@@ -342,9 +358,89 @@ export default function TwoFluid({ name }) {
                 }
                 transparent_indicies.push(idx);
             }
-    
             return [dta, opaque_indicies, transparent_indicies]
         };
+
+        box_graphic(colorData) {
+            // z axis
+            for (let i = 0; i < N + extra; i++) {
+                for (let j = 0; j < N; j++) {
+                    for (let vertex = 6; vertex < 12; vertex++) {
+                        let vertexIdx = vertex * 4;
+                        let id = idx(i, j, 0) * 144;
+                        colorData[id + vertexIdx] = 0;
+                        colorData[id + vertexIdx + 1] = .5;
+                        colorData[id + vertexIdx + 2] = 1;
+                        colorData[id + vertexIdx + 3] = .5;
+                    }
+                }
+            }
+            for (let i = 0; i < N + extra; i++) {
+                for (let j = 0; j < N; j++) {
+                    for (let vertex = 0; vertex < 6; vertex++) {
+                        let vertexIdx = vertex * 4;
+                        let id = idx(i, j, N - 1) * 144;
+                        colorData[id + vertexIdx] = 0;
+                        colorData[id + vertexIdx + 1] = .5;
+                        colorData[id + vertexIdx + 2] = 1;
+                        colorData[id + vertexIdx + 3] = .5;
+                    }
+                }
+            }
+
+            // y axis
+            for (let i = 0; i < N + extra; i++) {
+                for (let j = 0; j < N; j++) {
+                    for (let vertex = 30; vertex < 36; vertex++) {
+                        let vertexIdx = vertex * 4;
+                        let id = idx(i, 0, j) * 144;
+                        colorData[id + vertexIdx] = 0;
+                        colorData[id + vertexIdx + 1] = .5;
+                        colorData[id + vertexIdx + 2] = 1;
+                        colorData[id + vertexIdx + 3] = .5;
+                    }
+                }
+            }
+            for (let i = 0; i < N + extra; i++) {
+                for (let j = 0; j < N; j++) {
+                    for (let vertex = 24; vertex < 30; vertex++) {
+                        let vertexIdx = vertex * 4;
+                        let id = idx(i, N - 1, j) * 144;
+                        colorData[id + vertexIdx] = 0;
+                        colorData[id + vertexIdx + 1] = .5;
+                        colorData[id + vertexIdx + 2] = 1;
+                        colorData[id + vertexIdx + 3] = .5;
+                    }
+                }
+            }
+
+            // x axis
+            for (let i = 0; i < N; i++) {
+                for (let j = 0; j < N; j++) {
+                    for (let vertex = 12; vertex < 18; vertex++) {
+                        let vertexIdx = vertex * 4;
+                        let id = idx(0, i, j) * 144;
+                        colorData[id + vertexIdx] = 0;
+                        colorData[id + vertexIdx + 1] = .5;
+                        colorData[id + vertexIdx + 2] = 1;
+                        colorData[id + vertexIdx + 3] = .5;
+                    }
+                }
+            }
+            for (let i = 0; i < N; i++) {
+                for (let j = 0; j < N; j++) {
+                    for (let vertex = 18; vertex < 24; vertex++) {
+                        let vertexIdx = vertex * 4;
+                        let id = idx(N + extra - 1, i, j) * 144;
+                        colorData[id + vertexIdx] = 0;
+                        colorData[id + vertexIdx + 1] = .5;
+                        colorData[id + vertexIdx + 2] = 1;
+                        colorData[id + vertexIdx + 3] = .5;
+                    }
+                }
+            }
+            return colorData
+        }
     }
 
 
@@ -426,9 +522,9 @@ export default function TwoFluid({ name }) {
 
 
         for (let i = 0; i < 4; i++) {
-            for (let j = 0; j < N; j++) {
-                flu.s[idx(N + extra - 2, i + 8, j)] = 20;
-                flu.velocity[idx(N + extra - 2, i + 8, j)] = -1000 * Math.cos(Math.PI * j);
+            for (let j = 0; j < 4; j++) {
+                flu.density_old[idx(N + extra - 2, i + 8, j)] = 10;
+                //flu.u_old[idx(N + extra - 2, i + 8, j)] = -10;
             }
         }
 
@@ -441,7 +537,6 @@ export default function TwoFluid({ name }) {
         }
 
         function draw() {
-
             // Loop through each cube and assign color data
             let colorData = [];
             let opaque_indicies = [];
@@ -454,6 +549,9 @@ export default function TwoFluid({ name }) {
             colorData = out[0];
             opaque_indicies = out[1];
             transparent_indicies = out[2];
+
+            //colorData = flu.box_graphic(colorData);
+            // remove one layer of fluid render and take innermost boundary instead of outer
 
             // routine to output xyz coordinates from buffer into vertex shader
             const positionBuffer = gl.createBuffer();
@@ -476,7 +574,6 @@ export default function TwoFluid({ name }) {
             }
             `);
             gl.compileShader(vertexShader)
-
 
             //routine to assign color shader
             const colorBuffer = gl.createBuffer();
@@ -512,7 +609,6 @@ export default function TwoFluid({ name }) {
             gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
             gl.vertexAttribPointer(colorLocation, 4, gl.FLOAT, false, 0, 0);
 
-
             const uniformLocation = {
                 matrix : gl.getUniformLocation(program, `matrix`)
             };
@@ -520,10 +616,7 @@ export default function TwoFluid({ name }) {
             gl.useProgram(program);
             gl.enable(gl.DEPTH_TEST);
 
-
-
             let matrix = mat4.create();
-
 
             // change to 0, 0, 2.5 for redone origin
             mat4.translate(matrix, matrix, [0, .75, -4]);
@@ -537,7 +630,7 @@ export default function TwoFluid({ name }) {
             );
 
             let outMatrix = mat4.create();
-            
+
             mat4.rotateX(matrix, matrix, Math.PI/5);
             //mat4.rotateX(matrix, matrix, Math.PI/200);
             // comment for redone origin
@@ -547,7 +640,6 @@ export default function TwoFluid({ name }) {
             mat4.multiply(outMatrix, projectionMatrix, matrix);
             gl.uniformMatrix4fv(uniformLocation.matrix, false, outMatrix);
 
-
             //TRANSPARENCY
             gl.clearColor(0.0, 0.0, 0.0, 0.0);
             gl.enable(gl.BLEND);
@@ -555,6 +647,8 @@ export default function TwoFluid({ name }) {
             gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
             //DRAW OPAQUE OBJECTS HERE
+
+            // FLUID ELEMENTS
             for (let i = 0; i < opaque_indicies.length; i++) {
                 gl.drawArrays(gl.TRIANGLES, opaque_indicies[i] * 36, 36); // triangle, first vertex, draw all three
                 // divide length of vertices array by 3 to get the number of vertices. vertices = coordinateComponents/componentsPerCoordinate(x,y,z)
@@ -563,12 +657,29 @@ export default function TwoFluid({ name }) {
             gl.disable(gl.DEPTH_TEST);
 
             //DRAW SEMI-TRANSPARENT OBJECTS HERE
-            for (let i = 0; i < transparent_indicies.length; i++) {
-                gl.drawArrays(gl.TRIANGLES, transparent_indicies[i] * 36, 36);
-            };
-            
-        }
 
+            // EMPTY ELEMENTS
+            // for (let i = 0; i < transparent_indicies.length; i++) {
+            //     gl.drawArrays(gl.TRIANGLES, transparent_indicies[i] * 36, 36);
+            // };
+
+            // BOX ELEMENTS
+            // for (let i = 0; i < N + extra; i++) {
+            //     for (let j = 0; j < N; j++) {
+            //         gl.drawArrays(gl.TRIANGLES, idx(i, j, 0) * 36 + 6, 6);
+            //         gl.drawArrays(gl.TRIANGLES, idx(i, j, N - 1) * 36, 6);
+            //         gl.drawArrays(gl.TRIANGLES, idx(i, 0, j) * 36 + 30, 6);
+            //         gl.drawArrays(gl.TRIANGLES, idx(i, N - 1, j) * 36 + 24, 6);
+            //     }
+            // }
+
+            // for (let i = 0; i < N; i++) {
+            //     for (let j = 0; j < N; j++) {
+            //         gl.drawArrays(gl.TRIANGLES, idx(0, i, j) * 36 + 12, 6);
+            //         gl.drawArrays(gl.TRIANGLES, idx(N + extra - 1, i, j) * 36 + 18, 6);
+            //     }
+            // }
+        }
     }, [])
 
 
