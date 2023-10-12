@@ -3,7 +3,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 
 import TwoCollisions from "@components/simulations/TwoCollisions"
-import TwoFluid from "@components/simulations/TwoFluid"
+import ThreeFluid from "@src/components/simulations/ThreeFluid"
 
 import App from "@components/decks/App"
 
@@ -48,7 +48,7 @@ export default function Home() {
             <h1 className="w-[97%] res:w-5/6 mt-20 mb-5 border-b-4 border-yellow-500">Simulations</h1>
             <div className="flex flex-col w-full items-center space-y-5">
                 <div className="flex flex-col items-center res:flex-row justify-center space-y-5 res:space-y-0 res:space-x-5 w-[97%] res:w-5/6">
-                    <TwoFluid name="twoFluid" />
+                    <ThreeFluid name="threeFluid" />
                     <TwoCollisions name="twoCollisions"/>
                 </div>
             </div>

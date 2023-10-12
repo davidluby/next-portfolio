@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import TwoFluid from '@components/simulations/TwoFluid'
+import TwoFluid from '@src/components/simulations/ThreeFluid'
 import Slides from '@components/nav/Slides'
 
 export default function fluids() {
