@@ -10,7 +10,7 @@ export default function Show({ status, setDataDecks, setEmpty, setReveal }) {
             response => response.json()
             .then(
                 data => {
-                    setDataDecks(JSON.parse(data));
+                    setDataDecks(data);
                     setEmpty(false);
                     setReveal(false);
                 }

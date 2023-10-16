@@ -23,18 +23,6 @@ export default function Interface({ setHidden, searching, playerData, empty, set
 	}
 	
 	useEffect(() => {
-		fetch('/api/show_deck', {
-			method: "GET",
-		}
-		).then(
-			response => response.json()
-			.then(
-				data => {
-					setDataDecks(JSON.parse(data));
-				}
-			)
-		)
-
 		if (!reveal) {
 			setStatus("Refresh");
 		}
@@ -67,34 +55,31 @@ export default function Interface({ setHidden, searching, playerData, empty, set
 				</div>
 				<Show status={status} setDataDecks={setDataDecks} setEmpty={setEmpty} setReveal={setReveal} />
 			</div>
-			{ (!empty && !reveal) ? dataDecks.map(function(deck, idx) {
-				const dataCards = deck.slice(1);
-				const dataDeck = deck[0];
-				return <div key={dataDeck.id}
-							className="flex flex-col items-center w-[97%] res:w-5/6 p-5 app:p-12 mt-10 shadow-lg rounded-xl ring-1 ring-black/5 parquet">
-						<div className="flex flex-row space-x-10 font-bold">
-							<p className="py-2 px-4 rounded-md bg-yellow-500 shadow-lg ring-1 ring-black/5">Deck: {dataDeck.id}</p>
-							<p className="py-2 px-4 rounded-md bg-yellow-500 shadow-lg ring-1 ring-black/5">Last saved: {dataDeck.saved}</p>
+			{(!empty && !reveal) ? dataDecks.decks.map(function(deck, idx) {
+				return <div key={deck.id}
+								className="flex flex-col items-center w-[97%] res:w-5/6 p-5 app:p-12 mt-10 shadow-lg rounded-xl ring-1 ring-black/5 parquet">
+							<div className="flex flex-row space-x-10 font-bold">
+								<p className="py-2 px-4 rounded-md bg-yellow-500 shadow-lg ring-1 ring-black/5">Deck: {deck.id}</p>
+								<p className="py-2 px-4 rounded-md bg-yellow-500 shadow-lg ring-1 ring-black/5">Last saved: {deck.saved}</p>
+							</div>
+							<div className="flex flex-row justify-center my-4 -space-x-[20.5rem] fhd:-space-x-0 scale-75 app:scale-100">
+		 						{deck.cards.map(function(card, jdx) {
+									return <div key={jdx}
+												className="z-0 transition-all ease-in duration-300"
+												loc={idx+jdx}
+												id={"front-" + idx + jdx}
+												onClick={() => toFront(idx, jdx)}>
+												<Card data={card} loc={"front" + idx + jdx} />
+											</div>
+								})}
+							</div>
+							<div className="flex flex-row space-x-10">
+								<Edit dataCards={deck.cards} setCards={setCards} dataDeck={deck} setDeck={setDeck} setHidden={setHidden} />
+								<Delete dataDeck={deck.cards} setDataDecks={setDataDecks} setEmpty={setEmpty} setReveal={setReveal} />
+							</div>
 						</div>
-						<div className="flex flex-row justify-center my-4 -space-x-[20.5rem] fhd:-space-x-0 scale-75 app:scale-100">
-							{dataCards.map(function(card, jdx) {
-								return <div key={jdx}
-											className="z-0 transition-all ease-in duration-300"
-											loc={idx+jdx}
-											id={"front-" + idx + jdx}
-											onClick={() => toFront(idx, jdx)}>
-										<Card data={card} loc={"front" + idx + jdx} />
-									</div>
-										})
-									}
-						</div>
-						<div className="flex flex-row space-x-10">
-							<Edit dataCards={dataCards} setCards={setCards} dataDeck={dataDeck} setDeck={setDeck} setHidden={setHidden} />
-							<Delete dataDeck={dataDeck} setDataDecks={setDataDecks} setEmpty={setEmpty} setReveal={setReveal} />
-						</div>
-					</div>
 			}) : null
-        }
+        	}
 		</div>
 	)
 }
