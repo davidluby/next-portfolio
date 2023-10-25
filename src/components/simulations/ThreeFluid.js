@@ -26,7 +26,7 @@ export default function ThreeFluid({ name }) {
             this.u_old = new Float32Array(this.cells);
             this.v_old = new Float32Array(this.cells);
             this.w_old = new Float32Array(this.cells);
-            this.u_old.fill(-10);
+            //this.u_old.fill(-100);
             //this.v_old.fill(-10);
             // this.w_old.fill(0);
 
@@ -534,12 +534,15 @@ export default function ThreeFluid({ name }) {
     let h = 1 / N;
 
     let visc = 0;
-    let time_step = 0.05;
+    let time_step = 0.01;
     let flu = new fluid(visc, time_step);
 
     for (let i = 0; i < 4; i++) {
         for (let j = 0; j < N; j++) {
-            flu.density_old[idx(N + extra - 2, i + 8, j)] = 5;
+            flu.density_old[idx(N + extra - 2, i + 8, j)] = 20;
+            flu.u_old[idx(N + extra - 2, i + 8, j)] = -1000;
+            flu.u_old[idx(N + extra - 5, i + 8, j)] = -1000;
+            flu.u_old[idx(N + extra - 8, i + 8, j)] = -1000;
         }
     }
     
@@ -599,8 +602,12 @@ export default function ThreeFluid({ name }) {
     meshVertices = offsetVertices(box, N, h, extra);
     meshVertices = cubicMesh(box, N, extra);
 
+    let scene = {
+        angle : Math.PI
+    };
 
     useEffect(() => {
+
         let canvas = document.getElementById(name);
         let gl = canvas.getContext("webgl");
         
@@ -722,8 +729,9 @@ export default function ThreeFluid({ name }) {
 
             let matrix = mat4.create();
             mat4.translate(matrix, matrix, [0, .75, -3.5]);
+
             mat4.rotateX(matrix, matrix, Math.PI/5);
-            mat4.rotateY(matrix, matrix, Math.PI);
+            mat4.rotateY(matrix, matrix, scene.angle);
 
             let outMatrix = mat4.create();
             mat4.multiply(outMatrix, projectionMatrix, matrix);
@@ -772,6 +780,10 @@ export default function ThreeFluid({ name }) {
             //     }
             // }
         }
+
+        document.getElementById("rotation").oninput = function() {
+            scene.angle = this.value;
+        }
     }, [])
     
     return (
@@ -784,6 +796,11 @@ export default function ThreeFluid({ name }) {
             <div className="flex flex-col">
                 <canvas id={name} height="300" width="600" className="w-full mb-2 border-2 rounded-xl border-yellow-500"></canvas>
                 <div className="flex flex-row items-center justify-center space-x-2">
+                    <div className="flex flex-col items-center">
+                        <p className="text-xs">Rotation</p>
+                        <input id="rotation" type="range" min="0.0" max="6.28" step="0.0001" defaultValue="3.14" className="h-1 bg-yellow-500 rounded-lg appearance-none cursor-pointer range-sm"></input>
+                    </div>
+                    
                     {/* {
                     <button className="rounded-md p-1 bg-yellow-500 hover:bg-yellow-300 text-xs text-white" onClick={() => random_velocity()}>Velocity Bomb</button>
                     <button className="rounded-md p-1 bg-yellow-500 hover:bg-yellow-300 text-xs text-white">Button</button>
