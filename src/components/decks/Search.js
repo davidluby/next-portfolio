@@ -1,45 +1,42 @@
 import React, { useState } from 'react'
 
-export default function Search({ setPlayerData, setSearching, setHidden, hidden }) {
+export default function Search({ setCardData, hidden, setHidden }) {
     const [name, setName] = useState("");
-    const [active, setActive] = useState(false);
-    const [placeholder, setPlaceholder] = useState("Search for a player")
-
+    const [cooldown, setCooldown] = useState(false);
+    const [placeholder, setPlaceholder] = useState("Search for a player");
 
     const handleSubmit = event => {
         setName(event.target.value);
     };
     
+    const post = {
+        method: "POST",
+        headers: {"Content-Type":"application/json"},
+        body: JSON.stringify(name)
+    };
+
     const searchName = (event) => {
         if (event.key ===  "Enter") {
-            fetch('/api/get_data', {
-                method: "POST",
-                headers: {
-                    "Content-Type":"application/json"
-                },
-                body: JSON.stringify(name)
-            }).then(
-                response => {
-                    if(response.status >= 400) {
-                        alert("Error. Please see the Quick Start section for a list of known issues.")
-                    } 
+            fetch('/api/get_data', post)
+            .then(response => {
+                if(response.status >= 400) {
+                    alert("Error. Please see the Quick Start section for a list of known issues.")
+                }
                 return response.json()
-            })
-            .then(
-                data => {
-                    setPlayerData(JSON.parse(data.player_data));
-                    setName("");
-                    setSearching(false);
-                    setHidden(false);
-                    setActive(true);
-                    setPlaceholder("Search disabled for one minute. Fill the deck with repeated cards and edit later.")
-                    setTimeout(() => {
-                        setActive(active => !active)
-                        setPlaceholder("Search for a player")
-                    }, 60000);
                 }
             )
-            
+            .then(data => {
+                setCardData(data.player_data);
+                setName("");
+                setHidden(false);
+                setCooldown(true);
+                setPlaceholder("One minute cooldown. Fill the deck with duplicates.")
+                setTimeout(() => {
+                    setCooldown(cooldown => !cooldown)
+                    setPlaceholder("Search for a player")
+                }, 60000);
+                }
+            )
         }
     }
     
@@ -53,16 +50,16 @@ export default function Search({ setPlayerData, setSearching, setHidden, hidden 
                     placeholder={placeholder}
                     onChange={handleSubmit}
                     value={name}
-                    onKeyPress={searchName}
-                    disabled={active}>
+                    onKeyDown={searchName}
+                    disabled={cooldown}>
                 </input>
             </div>
-            { !hidden ? <h2 className="w-[97%] res:w-5/6 text-center mt-5 py-2 px-4 rounded-md bg-yellow-500 shadow-lg ring-1 ring-black/5">
-                            <b>Add the card to a deck below. You can fill your deck with duplicates or wait a minute to search again. Save, view, and edit your deck below.</b>
-                        </h2>
-                : <h2 className="w-[97%] res:w-5/6 text-center mt-5 py-2 px-4 rounded-md bg-yellow-500 shadow-lg ring-1 ring-black/5">
-                        <b>Enter an <i>active</i> NBA player&apos;s name above. Try typing in &#34;Al Horford&#34; (remove quotes) if you need a name.</b>
-                </h2>}
+            {!hidden ? <h2 className="w-[97%] res:w-5/6 text-center mt-5 py-2 px-4 rounded-md bg-yellow-500 shadow-lg ring-1 ring-black/5">
+                    <b>Add the card to a deck below. You can fill your deck with duplicates or wait a minute to search again. Save, view, and edit your deck below.</b>
+                </h2> : <h2 className="w-[97%] res:w-5/6 text-center mt-5 py-2 px-4 rounded-md bg-yellow-500 shadow-lg ring-1 ring-black/5">
+                    <b>Enter an <i>active</i> NBA player&apos;s name above. Try typing in &#34;Al Horford&#34; (remove quotes) if you need a name.</b>
+                </h2>
+            }
         </div>
   
     )

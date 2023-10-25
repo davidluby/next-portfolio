@@ -1,9 +1,10 @@
 import React from 'react'
 
-export default function Remove({ cards, setCards, loc }) {
+export default function Remove({ current, setCurrent, loc }) {
 	const removeCard = () => {
-		cards.splice(loc, 1)
-    	setCards([...cards]);
+		const newDeck = {...current};
+		newDeck.cards.splice(loc, 1);
+    	setCurrent(newDeck);
   	};
 
   return (

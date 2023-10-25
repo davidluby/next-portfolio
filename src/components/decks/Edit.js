@@ -1,10 +1,13 @@
 import React from 'react'
 
-export default function Edit({dataCards, setCards, dataDeck, setDeck, setHidden}) {
-	const editDeck = () => {
-		setCards(dataCards);
-		setDeck(dataDeck);
-		setHidden(false);
+export default function Edit({ setCurrent, deck, setEmpty }) {
+	function editDeck(deck) {
+		setEmpty(false);
+
+		const newDeck = {...deck};
+		newDeck.cards = [...deck.cards];
+		setCurrent({...newDeck});
+
 		const element = document.getElementById('editID');
 		window.scrollTo({
 			top:element.offsetTop,
@@ -13,7 +16,7 @@ export default function Edit({dataCards, setCards, dataDeck, setDeck, setHidden}
 	};
 	return (
 		<button className="py-2 px-4 rounded-full bg-yellow-500 hover:bg-yellow-300 shadow-lg ring-1 ring-black/5 transition all duration-500 text-white font-bold"
-			onClick={editDeck}>
+			onClick={() => editDeck(deck)}>
 			Edit Deck
 		</button>
   )

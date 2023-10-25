@@ -1,5 +1,5 @@
 import React from 'react'
-import Card from "@components/decks/Card"
+import CurrentCard from "@src/components/decks/CurrentCard"
 import Remove from "@components/decks/Remove"
 
 const zoomCard = (idx) => {
@@ -13,20 +13,20 @@ const zoomCard = (idx) => {
     };
 };
 
-export default function Deck({ cards, setCards }) {
+export default function CurrentDeck({ current, setCurrent }) {
   return (
     <div className="flex flex-col">
         <div className="flex flex-row justify-center -space-x-[20rem] app:-space-x-[21.5rem]"
             id="expand">
-                {cards.map(function(item, idx) {
+                {current.cards.map(function(card, idx) {
                     return <div className="relative scale-75 bottom-0 hover:bottom-2 transition-all ease-in duration-300"
                                 id={"zoomCard-"+idx}
                                 key={idx}>
                                 <div key={idx}
                                     onClick={() => zoomCard(idx)}>
-                                    <Card data={item} loc={'a'+idx} />
+                                    <CurrentCard cardData={card} loc={'a'+idx} />
                                 </div>
-                                <Remove cards={cards} setCards={setCards} loc={idx} />
+                                <Remove current={current} setCurrent={setCurrent} loc={idx} />
                             </div>
                     })
                 }

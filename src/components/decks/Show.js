@@ -1,28 +1,27 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
-export default function Show({ status, setDataDecks, setEmpty, setReveal }) {
+export default function Show({ setStored, setLoad }) {
+    const get = {
+        method: "GET",
+    };
 
     const loadDecks = () => {
-        fetch('/api/show_deck', {
-            method: "GET",
-        }
-        ).then(
-            response => response.json()
-            .then(
-                data => {
-                    setDataDecks(data);
-                    setEmpty(false);
-                    setReveal(false);
-                }
-            )
+        fetch('/api/show_deck', get)
+        .then(response =>
+            response.json()
         )
-    }
+        .then(data => {
+            setStored(data);
+            setLoad(false);
+            }
+        )
+    };
 
   return (
-    <div className="flex flex-col items-center mt-5">
+    <div className="flex flex-col items-center">
         <button className="py-2 px-4 rounded-full bg-yellow-500 hover:bg-yellow-300 shadow-lg ring-1 ring-black/5 transition all duration-500 text-white font-bold"
                 onClick={loadDecks}>
-            {status} Saved Decks
+            Load Saved Decks
         </button>
     </div>
   )
