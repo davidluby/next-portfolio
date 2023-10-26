@@ -17,7 +17,6 @@ export default function ThreeFluid({ name }) {
 
             this.density = new Float32Array(this.cells);
             this.density_old = new Float32Array(this.cells);
-            this.density_old.fill(0.000001)
 
             this.u = new Float32Array(this.cells); // positive goes left
             this.v = new Float32Array(this.cells); // positive goes up
@@ -26,29 +25,17 @@ export default function ThreeFluid({ name }) {
             this.u_old = new Float32Array(this.cells);
             this.v_old = new Float32Array(this.cells);
             this.w_old = new Float32Array(this.cells);
-            //this.u_old.fill(-100);
-            //this.v_old.fill(-10);
-            // this.w_old.fill(0);
 
             this.s = new Float32Array(this.cells);  // sources
-            this.velocity = new Float32Array(this.cells);
             this.p = new Float32Array(this.cells);  // pressure
             this.div = new Float32Array(this.cells); // divergence
-        }
+        };
 
         sources(value, sources) {
             for (let i = 0; i < this.cells; i++) {
                 value[i] += sources[i] * this.dt;
             }
-        }
-
-        integrate(value) {
-            for (let i = 0; i < this.cells; i++) {
-                if (this.density[i] != 0) {
-                    value[i] += -10;
-                }
-            }
-        }
+        };
 
         boundary(value, flag) {
             for (let i = 0; i < N; i++) {
@@ -98,9 +85,7 @@ export default function ThreeFluid({ name }) {
             
             value[idx(N + extra - 1, 0, N - 1)] = 0.33 * (value[idx(N + extra - 2, 0, N - 1)] + value[idx(N + extra - 1, 1, N - 1)] + value[idx(N + extra - 1, 0, N - 2)]);  // left bottom far
             value[idx(N + extra - 1, N - 1, N - 1)] = 0.33 * (value[idx(N + extra - 2, N - 1, N - 1)] + value[idx(N + extra - 1, N - 2, N - 1)] + value[idx(N + extra - 1, N - 1, N - 2)]);  // left top far
-
-            return value;
-        }
+        };
 
         linear_solve(flag, value, value_old, rate, c) {
             for (let k = 0; k < 20; k++) {
@@ -115,21 +100,21 @@ export default function ThreeFluid({ name }) {
                         }
                     }
                 }
-                value = this.boundary(value, flag);
+                this.boundary(value, flag);
             }
 
-            return value;
-        }
+
+        };
 
         diffuse(flag, value, value_old) {
             let rate = this.dt * this.viscosity * (N + extra) * N**2;
 
             let c = 1 + 6 * rate;
 
-            value = this.linear_solve(flag, value, value_old, rate, c);
+            this.linear_solve(flag, value, value_old, rate, c);
 
-            return value;
-        }
+
+        };
 
         advect(flag, value, value_old) {
             let dtOX = this.dt * (N + extra);
@@ -197,9 +182,8 @@ export default function ThreeFluid({ name }) {
                     }
                 }
             }
-            value = this.boundary(value, flag);
-            return value;
-        }
+            this.boundary(value, flag);
+        };
 
         project(u, v, w) {
 
@@ -216,10 +200,10 @@ export default function ThreeFluid({ name }) {
                 }
             }
 
-            this.div = this.boundary(this.div, 0);
-            this.p = this.boundary(this.p, 0);
+            this.boundary(this.div, 0);
+            this.boundary(this.p, 0);
 
-            this.p = this.linear_solve(0, this.p, this.div, 1, 6);
+            this.linear_solve(0, this.p, this.div, 1, 6);
 
             for (let x = 1; x < N + extra - 1; x++) {
                 for (let y = 1; y < N - 1; y++) {
@@ -231,32 +215,29 @@ export default function ThreeFluid({ name }) {
                 }
             }
 
-            u = this.boundary(u, 1);
-            v = this.boundary(v, 2);
-            w = this.boundary(w, 3);
-            return [u, v, w];
+            this.boundary(u, 1);
+            this.boundary(v, 2);
+            this.boundary(w, 3);
 
-        }
+        };
 
         get_density() {
             let out = [];
 
             this.sources(this.density, this.density_old);
 
-            this.density = this.diffuse(0, this.density, this.density_old);
+            this.diffuse(0, this.density, this.density_old);
 
-            this.density = this.advect(0, this.density, this.density_old);
+            this.advect(0, this.density, this.density_old);
 
             out = this.swap(this.density_old, this.density);
             this.density_old = out[0];
             this.density = out[1];
-        }
+        };
 
         get_velocity() {
             let out = [];
 
-            //this.integrate(this.u)
-            //this.sources(this.u, this.velocity);
             this.sources(this.u, this.u_old);
             this.sources(this.v, this.v_old);
             this.sources(this.w, this.w_old);
@@ -271,15 +252,11 @@ export default function ThreeFluid({ name }) {
             this.w_old = out[0];
             this.w = out[1];
 
-            this.u = this.diffuse(1, this.u, this.u_old);
-            this.v = this.diffuse(2, this.v, this.v_old);
-            this.w = this.diffuse(3, this.w, this.w_old);
+            this.diffuse(1, this.u, this.u_old);
+            this.diffuse(2, this.v, this.v_old);
+            this.diffuse(3, this.w, this.w_old);
             
-            out = this.project(this.u, this.v, this.w);
-            
-            this.u = out[0];
-            this.v = out[1];
-            this.w = out[2];
+            this.project(this.u, this.v, this.w);
             
             out = this.swap(this.u_old, this.u);
             this.u_old = out[0];
@@ -291,9 +268,9 @@ export default function ThreeFluid({ name }) {
             this.w_old = out[0];
             this.w = out[1];
             
-            this.u = this.advect(1, this.u, this.u_old);
-            this.v = this.advect(2, this.v, this.v_old);
-            this.w = this.advect(3, this.w, this.w_old);
+            this.advect(1, this.u, this.u_old);
+            this.advect(2, this.v, this.v_old);
+            this.advect(3, this.w, this.w_old);
 
             out = this.swap(this.u_old, this.u);
             this.u_old = out[0];
@@ -305,12 +282,7 @@ export default function ThreeFluid({ name }) {
             this.w_old = out[0];
             this.w = out[1];
             
-            out = [];
-            out = this.project(this.u, this.v, this.w);
-
-            this.u = out[0];
-            this.v = out[1];
-            this.w = out[2];
+            this.project(this.u, this.v, this.w);
 
             out = this.swap(this.u_old, this.u);
             this.u_old = out[0];
@@ -321,57 +293,165 @@ export default function ThreeFluid({ name }) {
             out = this.swap(this.w_old, this.w);
             this.w_old = out[0];
             this.w = out[1];
-        }
+        };
 
         simulate() {
             this.get_density();
             this.get_velocity();
-        }
+        };
 
-        swap(value_old, value_new) {
+        swap(value_old, value) {
             let temp = value_old;
-            value_old = value_new;
-            value_new = temp;
+            value_old = value;
+            value = temp;
 
-            return [value_old, value_new]
-        }
+            return [value_old, value]
+        };
 
-        dyeIdx(idx, dta, opaque_indicies, transparent_indicies) {
-            let cubeIdx = idx * 144;
-
-            if (this.density[idx] != 0) {
-                for (let i = 0; i < 36; i++) {
-                    let vertexIdx = i*4;
-                    dta[cubeIdx + vertexIdx] = this.density[idx] / 1.25;   // red
-                    dta[cubeIdx + vertexIdx + 1] = .5;   // green
-                    dta[cubeIdx + vertexIdx + 2] = 1;   // blue
-                    dta[cubeIdx + vertexIdx + 3] = 1;   // opacity
+        initial_conditions() {
+            let middle = Math.floor(N / 2) - 2;
+            for (let i = 0; i < 4; i++) {
+                for (let j = 0; j < 4; j++) {
+                    flu.density_old[idx(N + extra - 2, i + middle, j + middle)] = 500;
+                    flu.u_old[idx(N + extra - 2, i + middle, j + middle)] = -1000;
+                    flu.u_old[idx(N + extra - 4, i + middle, j + middle)] = -1000;
+                    flu.u_old[idx(N + extra - 6, i + middle, j + middle)] = -1000;
                 }
-                opaque_indicies.push(idx);
-            } else {
-                for (let i = 0; i < 36; i++) {
-                    let vertexIdx = i*4;
-                    dta[cubeIdx + vertexIdx] = 0;
-                    dta[cubeIdx + vertexIdx + 1] = 0;
-                    dta[cubeIdx + vertexIdx + 2] = 0;
-                    dta[cubeIdx + vertexIdx + 3] = 0;
-                }
-                transparent_indicies.push(idx);
             }
-            return [dta, opaque_indicies, transparent_indicies]
-        }
+        };
 
-        box_graphic(colorData) {
+        offset_element() {
+            // offset box vertices to center the mesh
+            for (let i = 0; i < box.length; i++) {
+                box[i] = box[i] - h * (N + extra - 1) + extra * h - h / 2;
+            };
+            return box;
+        };
+
+        create_mesh() {
+            let vertices = [];
+    
+            for (let z = 0; z < N; z++) { // z direction third
+                for (let y = 0; y < N; y++) { // y direction second
+                    for (let x = 0; x < N + extra; x++) { // x direction first
+                        for ( let i = 0; i < box.length / 3; i++){ // for each vertex
+                            let idx = i * 3;
+                            let translatedVertex = [
+                                                    box[idx]     + 2 * x * h,
+                                                    box[idx + 1] + 2 * y * h,
+                                                    box[idx + 2] + 2 * z * h
+                                                    ];
+                                                    
+                            vertices.push(...translatedVertex);
+                        }
+                    }
+                }
+            }
+            let offset = h * (N - 1) + h / 2;
+            let end = 2 * h * (N - 1);
+            let endX = 2 * h * (N + extra - 1);
+            // bottom close
+            vertices.push(...[-h - offset, -h - offset, -h - offset])
+            vertices.push(...[h - offset + endX, -h - offset, -h - offset])
+            // top close
+            vertices.push(...[-h - offset, h - offset + end, -h - offset])
+            vertices.push(...[h - offset + endX, h - offset + end, -h - offset])
+            // bottom far
+            vertices.push(...[-h - offset, -h - offset, h - offset + end])
+            vertices.push(...[h - offset + endX, -h - offset, h - offset + end])
+            // top far
+            vertices.push(...[-h - offset, h - offset + end, h - offset + end])
+            vertices.push(...[h - offset + endX, h - offset + end, h - offset + end])
+    
+    
+            // right close
+            vertices.push(...[-h - offset, -h - offset, -h - offset])
+            vertices.push(...[-h - offset, h - offset + end, -h - offset])
+            // left close
+            vertices.push(...[h - offset + endX, -h - offset, -h - offset])
+            vertices.push(...[h - offset + endX, h - offset + end, -h - offset])
+            // right far
+            vertices.push(...[-h - offset, -h - offset, h - offset + end])
+            vertices.push(...[-h - offset, h - offset + end, h - offset + end])
+            // left far
+            vertices.push(...[h - offset + endX, -h - offset, h - offset + end])
+            vertices.push(...[h - offset + endX, h - offset + end, h - offset + end])
+    
+            // right bottom into
+            vertices.push(...[-h - offset, -h - offset, -h - offset])
+            vertices.push(...[-h - offset, -h - offset, h - offset + end])
+            // left bottom into
+            vertices.push(...[h - offset + endX, -h - offset, -h - offset])
+            vertices.push(...[h - offset + endX, -h - offset, h - offset + end])
+            // right top into
+            vertices.push(...[-h - offset, h - offset + end, -h - offset])
+            vertices.push(...[-h - offset, h - offset + end, h - offset + end])
+            // left top into
+            vertices.push(...[h - offset + endX, h - offset + end, -h - offset])
+            vertices.push(...[h - offset + endX, h - offset + end, h - offset + end])
+            return vertices;
+        };
+
+        color_mesh() {
+            let dta = [];
+            let opaque_indicies = [];
+            let transparent_indicies = [];
+            for (let idx = 0; idx < (N + extra) * N * N; idx++) {
+                let cube_idx = idx * 144;
+
+                // COLOR FLUID
+                if (this.density[idx] >= 0.05) {
+                    for (let i = 0; i < 36; i++) {
+                        let vertex_idx = i*4;
+                        dta[cube_idx + vertex_idx] = (1 - this.density[idx]) / 1.25;   // red
+                        dta[cube_idx + vertex_idx + 1] = (1 - this.density[idx]) / 1.25;   // green
+                        dta[cube_idx + vertex_idx + 2] = (1 - this.density[idx]) / 1.25;   // blue
+                        dta[cube_idx + vertex_idx + 3] = 1;   // opacity
+                    }
+                    opaque_indicies.push(idx);
+                } else {
+                    for (let i = 0; i < 36; i++) {
+                        let vertex_idx = i*4;
+                        dta[cube_idx + vertex_idx] = 0;
+                        dta[cube_idx + vertex_idx + 1] = 0;
+                        dta[cube_idx + vertex_idx + 2] = 0;
+                        dta[cube_idx + vertex_idx + 3] = 0;
+                    }
+                    transparent_indicies.push(idx);
+                }
+
+                // COLOR EDGES
+                for (let i = 0; i < 24; i++) {
+                    dta.push(...[0, 0, 0, .75])
+                }
+            };
+
+
+            // COLOR BOX - remove one layer of fluid render and take inside box face triangles
+            //change to 0 <= i < N for full cube
+            // for (let i = 1; i < N + extra - 1; i++){
+            //     for (let j = 1; j < N - 1; j++) {
+            //         for (let k = 1; k < N - 1; k++) {
+            //             out = flu.dyeIdx(idx(i, j, k), color_data, opaque_indicies, transparent_indicies);
+            //         }
+            //     }
+            // }
+            //color_data = this.box_graphic(color_data)
+
+            return [dta, opaque_indicies, transparent_indicies]
+        };
+
+        color_box(color_data) {
             // z axis
             for (let i = 0; i < N + extra; i++) {
                 for (let j = 0; j < N; j++) {
                     for (let vertex = 0; vertex < 6; vertex++) {
                         let vertexIdx = vertex * 4;
                         let id = idx(i, j, 0) * 144;
-                        colorData[id + vertexIdx] = 0;
-                        colorData[id + vertexIdx + 1] = .5;
-                        colorData[id + vertexIdx + 2] = 1;
-                        colorData[id + vertexIdx + 3] = 0.3;
+                        color_data[id + vertexIdx] = 0;
+                        color_data[id + vertexIdx + 1] = .5;
+                        color_data[id + vertexIdx + 2] = 1;
+                        color_data[id + vertexIdx + 3] = 0.3;
                     }
                 }
             }
@@ -380,10 +460,10 @@ export default function ThreeFluid({ name }) {
                     for (let vertex = 6; vertex < 12; vertex++) {
                         let vertexIdx = vertex * 4;
                         let id = idx(i, j, N - 1) * 144;
-                        colorData[id + vertexIdx] = 0;
-                        colorData[id + vertexIdx + 1] = .5;
-                        colorData[id + vertexIdx + 2] = 1;
-                        colorData[id + vertexIdx + 3] = 0.3;
+                        color_data[id + vertexIdx] = 0;
+                        color_data[id + vertexIdx + 1] = .5;
+                        color_data[id + vertexIdx + 2] = 1;
+                        color_data[id + vertexIdx + 3] = 0.3;
                     }
                 }
             }
@@ -394,10 +474,10 @@ export default function ThreeFluid({ name }) {
                     for (let vertex = 24; vertex < 30; vertex++) {
                         let vertexIdx = vertex * 4;
                         let id = idx(i, 0, j) * 144;
-                        colorData[id + vertexIdx] = 0;
-                        colorData[id + vertexIdx + 1] = .5;
-                        colorData[id + vertexIdx + 2] = 1;
-                        colorData[id + vertexIdx + 3] = 0.3;
+                        color_data[id + vertexIdx] = 0;
+                        color_data[id + vertexIdx + 1] = .5;
+                        color_data[id + vertexIdx + 2] = 1;
+                        color_data[id + vertexIdx + 3] = 0.3;
                     }
                 }
             }
@@ -406,10 +486,10 @@ export default function ThreeFluid({ name }) {
                     for (let vertex = 30; vertex < 36; vertex++) {
                         let vertexIdx = vertex * 4;
                         let id = idx(i, N - 1, j) * 144;
-                        colorData[id + vertexIdx] = 0;
-                        colorData[id + vertexIdx + 1] = .5;
-                        colorData[id + vertexIdx + 2] = 1;
-                        colorData[id + vertexIdx + 3] = 0.3;
+                        color_data[id + vertexIdx] = 0;
+                        color_data[id + vertexIdx + 1] = .5;
+                        color_data[id + vertexIdx + 2] = 1;
+                        color_data[id + vertexIdx + 3] = 0.3;
                     }
                 }
             }
@@ -420,10 +500,10 @@ export default function ThreeFluid({ name }) {
                     for (let vertex = 18; vertex < 24; vertex++) {
                         let vertexIdx = vertex * 4;
                         let id = idx(0, i, j) * 144;
-                        colorData[id + vertexIdx] = 0;
-                        colorData[id + vertexIdx + 1] = .5;
-                        colorData[id + vertexIdx + 2] = 1;
-                        colorData[id + vertexIdx + 3] = 0.3;
+                        color_data[id + vertexIdx] = 0;
+                        color_data[id + vertexIdx + 1] = .5;
+                        color_data[id + vertexIdx + 2] = 1;
+                        color_data[id + vertexIdx + 3] = 0.3;
                     }
                 }
             }
@@ -432,121 +512,29 @@ export default function ThreeFluid({ name }) {
                     for (let vertex = 12; vertex < 18; vertex++) {
                         let vertexIdx = vertex * 4;
                         let id = idx(N + extra - 1, i, j) * 144;
-                        colorData[id + vertexIdx] = 0;
-                        colorData[id + vertexIdx + 1] = .5;
-                        colorData[id + vertexIdx + 2] = 1;
-                        colorData[id + vertexIdx + 3] = 0.3;
+                        color_data[id + vertexIdx] = 0;
+                        color_data[id + vertexIdx + 1] = .5;
+                        color_data[id + vertexIdx + 2] = 1;
+                        color_data[id + vertexIdx + 3] = 0.3;
                     }
                 }
             }
-            return colorData
-        }
-    }
-
-    function offsetVertices(vertices, N, h, extra) {
-        // offset box vertices to center the mesh
-        for (let i = 0; i < vertices.length; i++) {
-            vertices[i] = vertices[i] - h * (N + extra - 1);
+            return color_data
         };
-        return vertices;
+
     };
-
-    function cubicMesh(box, N, extra) {
-        let vertices = [];
-
-        for (let z = 0; z < N; z++) { // z direction third
-            for (let y = 0; y < N; y++) { // y direction second
-                for (let x = 0; x < N + extra; x++) { // x direction first
-                    for ( let i = 0; i < box.length / 3; i++){ // for each vertex
-                        let idx = i * 3;
-                        let translatedVertex = [
-                                                box[idx]     + 2 * x * h,
-                                                box[idx + 1] + 2 * y * h,
-                                                box[idx + 2] + 2 * z * h
-                                                ];
-                                                
-                        vertices.push(...translatedVertex);
-                    }
-                }
-            }
-        }
-        let offset = h * (N + extra - 1);
-        let end = 2 * h * (N - 1);
-        let endX = 2 * h * (N + extra - 1);
-        // bottom close
-        vertices.push(...[-h - offset, -h - offset, -h - offset])
-        vertices.push(...[h - offset + endX, -h - offset, -h - offset])
-        // top close
-        vertices.push(...[-h - offset, h - offset + end, -h - offset])
-        vertices.push(...[h - offset + endX, h - offset + end, -h - offset])
-        // bottom far
-        //vertices.push(...[-h - offset, -h - offset, h - offset + end])
-        //vertices.push(...[h - offset + endX, -h - offset, h - offset + end])
-        // top far
-        vertices.push(...[-h - offset, h - offset + end, h - offset + end])
-        vertices.push(...[h - offset + endX, h - offset + end, h - offset + end])
-
-
-        // right close
-        vertices.push(...[-h - offset, -h - offset, -h - offset])
-        vertices.push(...[-h - offset, h - offset + end, -h - offset])
-        // left close
-        vertices.push(...[h - offset + endX, -h - offset, -h - offset])
-        vertices.push(...[h - offset + endX, h - offset + end, -h - offset])
-        // right far
-        //vertices.push(...[-h - offset, -h - offset, h - offset + end])
-        //vertices.push(...[-h - offset, h - offset + end, h - offset + end])
-        // left far
-        //vertices.push(...[h - offset + endX, -h - offset, h - offset + end])
-        //vertices.push(...[h - offset + endX, h - offset + end, h - offset + end])
-
-        // right bottom into
-        //vertices.push(...[-h - offset, -h - offset, -h - offset])
-        //vertices.push(...[-h - offset, -h - offset, h - offset + end])
-        // left bottom into
-        //vertices.push(...[h - offset + endX, -h - offset, -h - offset])
-        //vertices.push(...[h - offset + endX, -h - offset, h - offset + end])
-        // right top into
-        vertices.push(...[-h - offset, h - offset + end, -h - offset])
-        vertices.push(...[-h - offset, h - offset + end, h - offset + end])
-        // left top into
-        vertices.push(...[h - offset + endX, h - offset + end, -h - offset])
-        vertices.push(...[h - offset + endX, h - offset + end, h - offset + end])
-        return vertices;
-    }
 
     function idx(i ,j ,k) {
         return i + j * (N + extra) + k * (N * (N + extra))
-    }
-
-    function random_velocity() {
-        flu.density_old[idx(1,1,1)] += 100000;
-        flu.density_old[idx(2,1,1)] += 100000;
-        flu.density_old[idx(3,1,1)] += 100000;
-        flu.density_old[idx(4,1,1)] += 100000;
-        flu.density_old[idx(5,1,1)] += 100000;
-    }
+    };
 
     let mat4 = require('gl-mat4');
     
     let N = 20;
-    let extra = 10; // used to extend a dimension for rectangular shape
+    let extra = 20; // used to extend a dimension for rectangular shape
     let h = 1 / N;
 
-    let visc = 0;
-    let time_step = 0.01;
-    let flu = new fluid(visc, time_step);
-
-    for (let i = 0; i < 4; i++) {
-        for (let j = 0; j < N; j++) {
-            flu.density_old[idx(N + extra - 2, i + 8, j)] = 20;
-            flu.u_old[idx(N + extra - 2, i + 8, j)] = -1000;
-            flu.u_old[idx(N + extra - 5, i + 8, j)] = -1000;
-            flu.u_old[idx(N + extra - 8, i + 8, j)] = -1000;
-        }
-    }
-    
-    // vertices used to create box
+    // vertices used to single fluid element (box)
     const box = [
 
         // Front
@@ -598,16 +586,24 @@ export default function ThreeFluid({ name }) {
         -h, -h, -h
     ];
 
-    let meshVertices = [];
-    meshVertices = offsetVertices(box, N, h, extra);
-    meshVertices = cubicMesh(box, N, extra);
+    let rotation_angle = 3.14;
 
-    let scene = {
-        angle : Math.PI
-    };
+    let viscosity = 0;
+    let time_step = 0.05;
+    let flu = new fluid(viscosity, time_step);
+
+    let mesh_vertices = [];
+    mesh_vertices = flu.offset_element(box, N, h, extra);
+    mesh_vertices = flu.create_mesh(box, N, extra);
+
+    let out = [];
+    let color_data = [];
+    let opaque_indicies = [];
+    //let transparent_indicies = [];
+
+    flu.initial_conditions();
 
     useEffect(() => {
-
         let canvas = document.getElementById(name);
         let gl = canvas.getContext("webgl");
         
@@ -624,146 +620,125 @@ export default function ThreeFluid({ name }) {
         }
 
         function draw() {
-            
-            // Loop through each cube and assign color data
-            let colorData = [];
-            let opaque_indicies = [];
-            let transparent_indicies = [];
-            let out = [];
-
-            //change to 0 <= i < N for full cube
-            // for (let i = 1; i < N + extra - 1; i++){
-            //     for (let j = 1; j < N - 1; j++) {
-            //         for (let k = 1; k < N - 1; k++) {
-            //             out = flu.dyeIdx(idx(i, j, k), colorData, opaque_indicies, transparent_indicies);
-            //         }
-            //     }
-            // }
-
-            for (let i = 0; i < (N + extra) * N * N; i++) {
-                out = flu.dyeIdx(i, colorData, opaque_indicies, transparent_indicies);
-            }
-
-            colorData = out[0];
-            
-            for (let i = 0; i < 24; i++) {
-                colorData.push(...[0, 0, 0, .75])
-            }
-
+            // COLOR FLUID - standard
+            out = flu.color_mesh();
+            color_data = out[0];
             opaque_indicies = out[1];
-            transparent_indicies = out[2];
+            //transparent_indicies = out[2];
 
-            //colorData = flu.box_graphic(colorData);
-            // remove one layer of fluid render and take innermost border triangles
 
-            // routine to output xyz coordinates from buffer into vertex shader
-            const positionBuffer = gl.createBuffer();
-            gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer); // bind to current array buffer
-            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(meshVertices), gl.STATIC_DRAW); // load vertex data into buffer and choose draw mode
+            // CREATE VERTEX SHADER
+            const position_buffer = gl.createBuffer();
+            gl.bindBuffer(gl.ARRAY_BUFFER, position_buffer); // bind to current array buffer
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(mesh_vertices), gl.STATIC_DRAW); // load vertex data into buffer and choose draw mode
 
-            const vertexShader = gl.createShader(gl.VERTEX_SHADER);
-            gl.shaderSource(vertexShader, `
+            const vertex_shader = gl.createShader(gl.VERTEX_SHADER);
+            gl.shaderSource(vertex_shader, `
             precision mediump float;
 
             attribute vec4 position;
             attribute vec4 color;
-            varying vec4 vColor;
+            varying vec4 vertex_color;
 
             uniform mat4 matrix;
 
             void main() {
-                vColor = color;
+                vertex_color = color;
                 gl_Position = matrix * position;
             }
             `);
-            gl.compileShader(vertexShader)
+            gl.compileShader(vertex_shader)
 
-            //routine to assign color shader
-            const colorBuffer = gl.createBuffer();
-            gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer); // bind to current array buffer
-            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colorData), gl.STATIC_DRAW); // load color data into buffer and choose draw mode
+            
+            // CREATE FRAGMENT SHADER
+            const color_buffer = gl.createBuffer();
+            gl.bindBuffer(gl.ARRAY_BUFFER, color_buffer); // bind to current array buffer
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(color_data), gl.STATIC_DRAW); // load color data into buffer and choose draw mode
 
-            const fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
-            gl.shaderSource(fragmentShader, `
+            const fragment_shader = gl.createShader(gl.FRAGMENT_SHADER);
+            gl.shaderSource(fragment_shader, `
             precision mediump float;
 
-            varying vec4 vColor;
+            varying vec4 vertex_color;
 
             void main() {
-                gl_FragColor = vColor;
+                gl_FragColor = vertex_color;
             }
             `);
-            gl.compileShader(fragmentShader);
+            gl.compileShader(fragment_shader);
 
-            // "link" vertex and color shaders
+
+            // LINK VERTEX AND FRAGMENT SHADERS
             const program = gl.createProgram();
-            gl.attachShader(program, vertexShader);
-            gl.attachShader(program, fragmentShader);
+            gl.attachShader(program, vertex_shader);
+            gl.attachShader(program, fragment_shader);
             gl.linkProgram(program);
 
-            // assign position, color, and uniform locations
-            const positionLocation = gl.getAttribLocation(program, 'position'); // attribute index
-            gl.enableVertexAttribArray(positionLocation);
-            gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-            gl.vertexAttribPointer(positionLocation, 3, gl.FLOAT, false, 0, 0);
 
-            const colorLocation = gl.getAttribLocation(program, 'color'); // attribute index
-            gl.enableVertexAttribArray(colorLocation);
-            gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
-            gl.vertexAttribPointer(colorLocation, 4, gl.FLOAT, false, 0, 0);
+            // CREATE UNIFORM
+            const position_location = gl.getAttribLocation(program, 'position'); // attribute index
+            gl.enableVertexAttribArray(position_location);
+            gl.bindBuffer(gl.ARRAY_BUFFER, position_buffer);
+            gl.vertexAttribPointer(position_location, 3, gl.FLOAT, false, 0, 0);
 
-            const uniformLocation = {
+            const color_location = gl.getAttribLocation(program, 'color'); // attribute index
+            gl.enableVertexAttribArray(color_location);
+            gl.bindBuffer(gl.ARRAY_BUFFER, color_buffer);
+            gl.vertexAttribPointer(color_location, 4, gl.FLOAT, false, 0, 0);
+
+            const uniform_location = {
                 matrix : gl.getUniformLocation(program, `matrix`)
             };
 
             gl.useProgram(program);
-            gl.enable(gl.DEPTH_TEST);
 
-            let projectionMatrix = mat4.create();
-            mat4.perspective(projectionMatrix,
-                50 * Math.PI / 180,   // vertical fov
+            // PROJECTION, TRANSLATION, ROTATION
+            let projection_matrix = mat4.create();
+            mat4.perspective(projection_matrix,
+                70 * Math.PI / 180,   // vertical fov
                 1 * canvas.width / canvas.height, // aspect ratio
                 1e-4,   // near cull distance
                 1e4 // far cull distance
             );
 
             let matrix = mat4.create();
-            mat4.translate(matrix, matrix, [0, .75, -3.5]);
+            mat4.translate(matrix, matrix, [0, 0.75, -5]);
+            mat4.rotateY(matrix, matrix, rotation_angle);
+            mat4.rotateZ(matrix, matrix, Math.PI / 2 * 3);
 
-            mat4.rotateX(matrix, matrix, Math.PI/5);
-            mat4.rotateY(matrix, matrix, scene.angle);
+            mat4.multiply(matrix, projection_matrix, matrix);
+            gl.uniformMatrix4fv(uniform_location.matrix, false, matrix);
 
-            let outMatrix = mat4.create();
-            mat4.multiply(outMatrix, projectionMatrix, matrix);
-            gl.uniformMatrix4fv(uniformLocation.matrix, false, outMatrix);
+
+            // DRAWING
 
             //TRANSPARENCY
-            gl.clearColor(0.0, 0.0, 0.0, 0.0);
+
+            // OPAQUE OBJECTS
+            gl.clearColor(0, 0, 0, 0);
+            gl.enable(gl.DEPTH_TEST);
             gl.enable(gl.BLEND);
             gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
             gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-            //DRAW OPAQUE OBJECTS HERE
+            // CONTAINER EDGES
+            gl.drawArrays(gl.LINES, 36 * (N + extra) * (N) * (N), 24);
 
             // FLUID ELEMENTS
             for (let i = 0; i < opaque_indicies.length; i++) {
                 gl.drawArrays(gl.TRIANGLE_STRIP, opaque_indicies[i] * 36, 36); // triangle, first vertex, draw all three
                 // divide length of vertices array by 3 to get the number of vertices. vertices = coordinateComponents/componentsPerCoordinate(x,y,z)
             };
-            
+
+            // SEMI-TRANSPARENT OBJECTS
             gl.disable(gl.DEPTH_TEST);
 
-            // CONTAINER BORDER
-            gl.drawArrays(gl.LINES, 36 * (N + extra) * (N) * (N), 14);
-
-            //DRAW SEMI-TRANSPARENT OBJECTS HERE
-
-            // EMPTY ELEMENTS
+            // EMPTY FLUID ELEMENTS
             // for (let i = 0; i < transparent_indicies.length; i++) {
             //     gl.drawArrays(gl.TRIANGLES, transparent_indicies[i] * 36, 36);
             // };
 
-            //BOX ELEMENTS
+            // BOX FACES
             // for (let i = 1; i < N + extra - 1; i++) {
             //     for (let j = 1; j < N - 1; j++) {
             //         gl.drawArrays(gl.TRIANGLES, idx(i, j, 0) * 36, 6);  // front face -- +6 for outer
@@ -782,33 +757,25 @@ export default function ThreeFluid({ name }) {
         }
 
         document.getElementById("rotation").oninput = function() {
-            scene.angle = this.value;
+            rotation_angle = this.value;
         }
+
     }, [])
     
     return (
-        <div className="w-full tile">
+        <div className="flex flex-col items-center w-full tile">
             <h1>
-                <Link href="/fluids" className="text-yellow-500 transition-all duration-300 ease-in animate-pulse">
-                    3-D WebGL Fluid Simulation
+                <Link href="/fluids" className="border-yellow-500 text-yellow-500 transition-all duration-300 ease-in animate-pulse">
+                    3-D Smoke Simulation
                 </Link>
             </h1>
-            <div className="flex flex-col">
-                <canvas id={name} height="300" width="600" className="w-full mb-2 border-2 rounded-xl border-yellow-500"></canvas>
+            <div className="flex flex-col items-center">
+                <canvas id={name} height="500" width="400" className="w-3/4 mb-2 border-2 rounded-xl border-yellow-500"></canvas>
                 <div className="flex flex-row items-center justify-center space-x-2">
                     <div className="flex flex-col items-center">
-                        <p className="text-xs">Rotation</p>
-                        <input id="rotation" type="range" min="0.0" max="6.28" step="0.0001" defaultValue="3.14" className="h-1 bg-yellow-500 rounded-lg appearance-none cursor-pointer range-sm"></input>
+                        <p className="text-xs">Z Rotation</p>
+                        <input id="rotation" type="range" min="0.0" max="6.28" step="0.01" defaultValue="3.14" className="h-1 bg-yellow-500 rounded-lg appearance-none cursor-pointer range-sm"></input>
                     </div>
-                    
-                    {/* {
-                    <button className="rounded-md p-1 bg-yellow-500 hover:bg-yellow-300 text-xs text-white" onClick={() => random_velocity()}>Velocity Bomb</button>
-                    <button className="rounded-md p-1 bg-yellow-500 hover:bg-yellow-300 text-xs text-white">Button</button>
-                    <div className="flex flex-col items-center">
-                        <p className="text-xs">Resolution</p>
-                        <input id="fluid" type="range" min="0.1" max="1" step="0.1" defaultValue="1" className="h-1 bg-yellow-500 rounded-lg appearance-none cursor-pointer range-sm"></input>
-                    </div>
-                    }    */}
                 </div>
             </div>
         </div>
