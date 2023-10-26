@@ -531,7 +531,7 @@ export default function ThreeFluid({ name }) {
     let mat4 = require('gl-mat4');
     
     let N = 20;
-    let extra = 20; // used to extend a dimension for rectangular shape
+    let extra = 10; // used to extend a dimension for rectangular shape
     let h = 1 / N;
 
     // vertices used to single fluid element (box)
@@ -612,6 +612,20 @@ export default function ThreeFluid({ name }) {
         };
 
         animate();
+
+        document.getElementById("rotation").oninput = function() {
+            rotation_angle = this.value;
+        };
+
+        document.getElementById("chaos").onclick = function() {
+            let index = Math.floor(Math.random() * flu.cells);
+            let angle = Math.random() * Math.PI;
+            flu.density_old[index] = 100;
+            flu.u_old[index] = Math.cos(angle) * 100;
+            flu.v_old[index] = Math.cos(angle) * 100;
+            flu.w_old[index] = Math.cos(angle) * 100;
+
+        };
 
         function animate() {
             flu.simulate();
@@ -702,7 +716,7 @@ export default function ThreeFluid({ name }) {
             );
 
             let matrix = mat4.create();
-            mat4.translate(matrix, matrix, [0, 0.75, -5]);
+            mat4.translate(matrix, matrix, [0, 0.5, -3.75]);
             mat4.rotateY(matrix, matrix, rotation_angle);
             mat4.rotateZ(matrix, matrix, Math.PI / 2 * 3);
 
@@ -755,11 +769,6 @@ export default function ThreeFluid({ name }) {
             //     }
             // }
         }
-
-        document.getElementById("rotation").oninput = function() {
-            rotation_angle = this.value;
-        }
-
     }, [])
     
     return (
@@ -776,6 +785,7 @@ export default function ThreeFluid({ name }) {
                         <p className="text-xs">Z Rotation</p>
                         <input id="rotation" type="range" min="0.0" max="6.28" step="0.01" defaultValue="3.14" className="h-1 bg-yellow-500 rounded-lg appearance-none cursor-pointer range-sm"></input>
                     </div>
+                    <button id="chaos" className="rounded-md p-1 bg-yellow-500 hover:bg-yellow-300 text-xs text-white">Add Chaos</button>
                 </div>
             </div>
         </div>

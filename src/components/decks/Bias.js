@@ -47,7 +47,7 @@ import React, { useState } from 'react'
 			'76ers'
 		]
 	return (
-		<div className="flex flex-col w-1/5 h-32 mt-5 font-bold">
+		<div className="flex flex-col w-[55%] app:w-1/3 h-40 mt-5 font-bold">
 			<button className="flex flex-row space-x-2 p-2 rounded-md bg-yellow-500 shadow-lg ring-1 ring-black/5 border-b-2 border-white" onClick={() => toggle()}>
 				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
 					<path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
