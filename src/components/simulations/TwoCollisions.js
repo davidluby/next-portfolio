@@ -156,7 +156,7 @@ export default function TwoCollisions({ name }) {
 
     for (let i = 0; i < scene.n; i++) {
 
-        let radius = randInt(5, 50); // assign random radius
+        let radius = randInt(5, 30); // assign random radius
         let sign = Math.cos(Math.PI * randInt(0, 1)) // random positive or negative
 
         let ball = {
