@@ -313,9 +313,9 @@ export default function ThreeFluid({ name }) {
             for (let i = 0; i < 4; i++) {
                 for (let j = 0; j < 4; j++) {
                     flu.density_old[idx(N + extra - 2, i + middle, j + middle)] = 500;
-                    flu.u_old[idx(N + extra - 2, i + middle, j + middle)] = -1000;
-                    flu.u_old[idx(N + extra - 4, i + middle, j + middle)] = -1000;
-                    flu.u_old[idx(N + extra - 6, i + middle, j + middle)] = -1000;
+                    flu.u_old[idx(N + extra - 2, i + middle, j + middle)] = -1100;
+                    flu.u_old[idx(N + extra - 4, i + middle, j + middle)] = -1100;
+                    flu.u_old[idx(N + extra - 6, i + middle, j + middle)] = -1100;
                 }
             }
         };
