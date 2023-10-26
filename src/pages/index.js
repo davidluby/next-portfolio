@@ -42,7 +42,7 @@ export default function Home() {
                 </div>
                 <p className="tile w-full res:w-1/3 mt-5">
                     This website is a collection of my favorite projects. You can see more detail under the Projects tab or by clicking pulsing gold text. All projects&#39; source code are on my&nbsp;
-                    <Link href="https://github.com/davidluby" className="underline text-blue-500 hover:text-blue-400" target="_blank" rel="noopener noreferrer">GitHub</Link>.
+                    <Link href="https://github.com/davidluby" className="underline text-blue-500 hover:text-blue-400" target="_blank" rel="noopener noreferrer">GitHub</Link>. Try it on mobile!
                 </p>
             </div>
             <h1 className="w-[97%] res:w-5/6 mt-20 mb-5 border-b-4 border-yellow-500">Simulations</h1>
