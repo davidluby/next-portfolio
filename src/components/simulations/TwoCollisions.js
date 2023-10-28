@@ -20,7 +20,7 @@ export default function TwoCollisions({ name }) {
     
     function randInt(min, max) {
         var max = max + 1;
-        return Math.floor(Math.random() * (max - min)) + min
+        return Math.round(Math.random() * (max - min)) + min
     };
 
 

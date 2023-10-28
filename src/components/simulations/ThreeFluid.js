@@ -138,7 +138,7 @@ export default function ThreeFluid({ name }) {
                             z = 0.5;
                         }
 
-                        // x > N - 2.5 or NaN unless rounding floor
+
                         if (x > N + extra - 1.5) {
                             x = N + extra - 1.5;
                         }
@@ -167,17 +167,17 @@ export default function ThreeFluid({ name }) {
 
                         value[idx(i, j, k)] = 
                             s0 * (
-                                    t0 * u0 * value_old[idx(i0, j0, k0)] +
-                                    t1 * u0 * value_old[idx(i0, j1, k0)] +
-                                    t0 * u1 * value_old[idx(i0, j0, k1)] +
-                                    t1 * u1 * value_old[idx(i0, j1, k1)]
+                                t0 * u0 * value_old[idx(i0, j0, k0)] +
+                                t1 * u0 * value_old[idx(i0, j1, k0)] +
+                                t0 * u1 * value_old[idx(i0, j0, k1)] +
+                                t1 * u1 * value_old[idx(i0, j1, k1)]
                                 ) +
 
                             s1 * (
-                                    t0 * u0 * value_old[idx(i1, j0, k0)] +
-                                    t1 * u0 * value_old[idx(i1, j1, k0)] +
-                                    t0 * u1 * value_old[idx(i1, j0, k1)] +
-                                    t1 * u1 * value_old[idx(i1, j1, k1)]
+                                t0 * u0 * value_old[idx(i1, j0, k0)] +
+                                t1 * u0 * value_old[idx(i1, j1, k0)] +
+                                t0 * u1 * value_old[idx(i1, j0, k1)] +
+                                t1 * u1 * value_old[idx(i1, j1, k1)]
                                 );
                     }
                 }
@@ -312,37 +312,35 @@ export default function ThreeFluid({ name }) {
             let middle = Math.floor(N / 2) - 2;
             for (let i = 0; i < 4; i++) {
                 for (let j = 0; j < 4; j++) {
-                    flu.density_old[idx(N + extra - 2, i + middle, j + middle)] = 500;
-                    flu.u_old[idx(N + extra - 2, i + middle, j + middle)] = -1100;
-                    flu.u_old[idx(N + extra - 4, i + middle, j + middle)] = -1100;
-                    flu.u_old[idx(N + extra - 6, i + middle, j + middle)] = -1100;
+                    this.density_old[idx(N + extra - 4, i + middle, j + middle)] = 20;
+                        for (let k = 4; k < 10; k++) {
+                            this.u_old[idx(N + extra - k, i + middle, j + middle)] = -50;
+                    }
                 }
             }
         };
 
         offset_element() {
-            // offset box vertices to center the mesh
-            for (let i = 0; i < box.length; i++) {
-                box[i] = box[i] - h * (N + extra - 1) + extra * h - h / 2;
+            // offset element vertices to center the mesh
+            for (let i = 0; i < element.length; i++) {
+                element[i] = element[i] - h * (N + extra - 1) + extra * h - h / 2;
             };
-            return box;
+            return element;
         };
 
-        create_mesh() {
-            let vertices = [];
-    
+        create_mesh(mesh_vertices, element) {
+            let idx = 0;
             for (let z = 0; z < N; z++) { // z direction third
                 for (let y = 0; y < N; y++) { // y direction second
                     for (let x = 0; x < N + extra; x++) { // x direction first
-                        for ( let i = 0; i < box.length / 3; i++){ // for each vertex
-                            let idx = i * 3;
+                        for (let i = 0; i < element.length / 3; i++){ // for each vertex
+                            idx = i * 3;
                             let translatedVertex = [
-                                                    box[idx]     + 2 * x * h,
-                                                    box[idx + 1] + 2 * y * h,
-                                                    box[idx + 2] + 2 * z * h
-                                                    ];
-                                                    
-                            vertices.push(...translatedVertex);
+                                element[idx]     + 2 * x * h,
+                                element[idx + 1] + 2 * y * h,
+                                element[idx + 2] + 2 * z * h
+                                ];                  
+                                mesh_vertices.push(...translatedVertex);
                         }
                     }
                 }
@@ -351,51 +349,51 @@ export default function ThreeFluid({ name }) {
             let end = 2 * h * (N - 1);
             let endX = 2 * h * (N + extra - 1);
             // bottom close
-            vertices.push(...[-h - offset, -h - offset, -h - offset])
-            vertices.push(...[h - offset + endX, -h - offset, -h - offset])
+            mesh_vertices.push(...[-h - offset, -h - offset, -h - offset]);
+            mesh_vertices.push(...[h - offset + endX, -h - offset, -h - offset]);
             // top close
-            vertices.push(...[-h - offset, h - offset + end, -h - offset])
-            vertices.push(...[h - offset + endX, h - offset + end, -h - offset])
+            mesh_vertices.push(...[-h - offset, h - offset + end, -h - offset]);
+            mesh_vertices.push(...[h - offset + endX, h - offset + end, -h - offset]);
             // bottom far
-            vertices.push(...[-h - offset, -h - offset, h - offset + end])
-            vertices.push(...[h - offset + endX, -h - offset, h - offset + end])
+            mesh_vertices.push(...[-h - offset, -h - offset, h - offset + end]);
+            mesh_vertices.push(...[h - offset + endX, -h - offset, h - offset + end]);
             // top far
-            vertices.push(...[-h - offset, h - offset + end, h - offset + end])
-            vertices.push(...[h - offset + endX, h - offset + end, h - offset + end])
+            mesh_vertices.push(...[-h - offset, h - offset + end, h - offset + end]);
+            mesh_vertices.push(...[h - offset + endX, h - offset + end, h - offset + end]);
     
     
             // right close
-            vertices.push(...[-h - offset, -h - offset, -h - offset])
-            vertices.push(...[-h - offset, h - offset + end, -h - offset])
+            mesh_vertices.push(...[-h - offset, -h - offset, -h - offset]);
+            mesh_vertices.push(...[-h - offset, h - offset + end, -h - offset]);
             // left close
-            vertices.push(...[h - offset + endX, -h - offset, -h - offset])
-            vertices.push(...[h - offset + endX, h - offset + end, -h - offset])
+            mesh_vertices.push(...[h - offset + endX, -h - offset, -h - offset]);
+            mesh_vertices.push(...[h - offset + endX, h - offset + end, -h - offset]);
             // right far
-            vertices.push(...[-h - offset, -h - offset, h - offset + end])
-            vertices.push(...[-h - offset, h - offset + end, h - offset + end])
+            mesh_vertices.push(...[-h - offset, -h - offset, h - offset + end]);
+            mesh_vertices.push(...[-h - offset, h - offset + end, h - offset + end]);
             // left far
-            vertices.push(...[h - offset + endX, -h - offset, h - offset + end])
-            vertices.push(...[h - offset + endX, h - offset + end, h - offset + end])
+            mesh_vertices.push(...[h - offset + endX, -h - offset, h - offset + end]);
+            mesh_vertices.push(...[h - offset + endX, h - offset + end, h - offset + end]);
     
             // right bottom into
-            vertices.push(...[-h - offset, -h - offset, -h - offset])
-            vertices.push(...[-h - offset, -h - offset, h - offset + end])
+            mesh_vertices.push(...[-h - offset, -h - offset, -h - offset]);
+            mesh_vertices.push(...[-h - offset, -h - offset, h - offset + end]);
             // left bottom into
-            vertices.push(...[h - offset + endX, -h - offset, -h - offset])
-            vertices.push(...[h - offset + endX, -h - offset, h - offset + end])
+            mesh_vertices.push(...[h - offset + endX, -h - offset, -h - offset]);
+            mesh_vertices.push(...[h - offset + endX, -h - offset, h - offset + end]);
             // right top into
-            vertices.push(...[-h - offset, h - offset + end, -h - offset])
-            vertices.push(...[-h - offset, h - offset + end, h - offset + end])
+            mesh_vertices.push(...[-h - offset, h - offset + end, -h - offset]);
+            mesh_vertices.push(...[-h - offset, h - offset + end, h - offset + end]);
             // left top into
-            vertices.push(...[h - offset + endX, h - offset + end, -h - offset])
-            vertices.push(...[h - offset + endX, h - offset + end, h - offset + end])
-            return vertices;
+            mesh_vertices.push(...[h - offset + endX, h - offset + end, -h - offset]);
+            mesh_vertices.push(...[h - offset + endX, h - offset + end, h - offset + end]);
+
+            return mesh_vertices;
         };
 
-        color_mesh() {
-            let dta = [];
-            let opaque_indicies = [];
-            let transparent_indicies = [];
+        color_mesh(dta) {
+            let opaque_idx = 0;
+            //let transparent_idx = 0;
             for (let idx = 0; idx < (N + extra) * N * N; idx++) {
                 let cube_idx = idx * 144;
 
@@ -403,30 +401,42 @@ export default function ThreeFluid({ name }) {
                 if (this.density[idx] >= 0.05) {
                     for (let i = 0; i < 36; i++) {
                         let vertex_idx = i*4;
-                        dta[cube_idx + vertex_idx] = (1 - this.density[idx]) / 1.25;   // red
-                        dta[cube_idx + vertex_idx + 1] = (1 - this.density[idx]) / 1.25;   // green
-                        dta[cube_idx + vertex_idx + 2] = (1 - this.density[idx]) / 1.25;   // blue
+                        dta[cube_idx + vertex_idx] = (0.75 - this.density[idx]);   // red
+                        dta[cube_idx + vertex_idx + 1] = (0.75 - this.density[idx]);   // green
+                        dta[cube_idx + vertex_idx + 2] = (0.75 - this.density[idx]);   // blue
                         dta[cube_idx + vertex_idx + 3] = 1;   // opacity
                     }
-                    opaque_indicies.push(idx);
-                } else {
-                    for (let i = 0; i < 36; i++) {
-                        let vertex_idx = i*4;
-                        dta[cube_idx + vertex_idx] = 0;
-                        dta[cube_idx + vertex_idx + 1] = 0;
-                        dta[cube_idx + vertex_idx + 2] = 0;
-                        dta[cube_idx + vertex_idx + 3] = 0;
-                    }
-                    transparent_indicies.push(idx);
+                    opaque_indicies[opaque_idx] = idx;
+                    opaque_idx += 1;
                 }
+
+                // } else { // USED TO RENDER EMPTY ELEMENTS (NOT NEEDED)
+                //     for (let i = 0; i < 36; i++) {
+                //         let vertex_idx = i*4;
+                //         dta[cube_idx + vertex_idx] = 0;
+                //         dta[cube_idx + vertex_idx + 1] = 0;
+                //         dta[cube_idx + vertex_idx + 2] = 0;
+                //         dta[cube_idx + vertex_idx + 3] = 0;
+                //     }
+                //     transparent_indicies[transparent_idx] = idx;
+                //     transparent_idx += 1;
+                // }
 
                 // COLOR EDGES
                 for (let i = 0; i < 24; i++) {
-                    dta.push(...[0, 0, 0, .75])
+                    //dta.append([...0, 0, 0, .75])
+                    let index = i * 4;
+                    dta[(this.cells) * 144 + index] = 0;
+                    dta[(this.cells) * 144 + index + 1] = 0;
+                    dta[(this.cells) * 144 + index + 2] = 0;
+                    dta[(this.cells) * 144 + index + 3] = .75;
                 }
             };
 
+            return [dta, opaque_indicies, transparent_indicies]
+        };
 
+        color_box(color_data) {
             // COLOR BOX - remove one layer of fluid render and take inside box face triangles
             //change to 0 <= i < N for full cube
             // for (let i = 1; i < N + extra - 1; i++){
@@ -438,10 +448,6 @@ export default function ThreeFluid({ name }) {
             // }
             //color_data = this.box_graphic(color_data)
 
-            return [dta, opaque_indicies, transparent_indicies]
-        };
-
-        color_box(color_data) {
             // z axis
             for (let i = 0; i < N + extra; i++) {
                 for (let j = 0; j < N; j++) {
@@ -535,7 +541,7 @@ export default function ThreeFluid({ name }) {
     let h = 1 / N;
 
     // vertices used to single fluid element (box)
-    const box = [
+    let element = [
 
         // Front
         h, h, h,
@@ -592,14 +598,14 @@ export default function ThreeFluid({ name }) {
     let time_step = 0.05;
     let flu = new fluid(viscosity, time_step);
 
+    let offset_element = flu.offset_element();
     let mesh_vertices = [];
-    mesh_vertices = flu.offset_element(box, N, h, extra);
-    mesh_vertices = flu.create_mesh(box, N, extra);
+    mesh_vertices = flu.create_mesh(mesh_vertices, offset_element);
 
     let out = [];
-    let color_data = [];
+    let color_data = new Float32Array(flu.cells * 36 * 4 + 24 * 4);
     let opaque_indicies = [];
-    //let transparent_indicies = [];
+    let transparent_indicies = [];
 
     flu.initial_conditions();
 
@@ -608,7 +614,7 @@ export default function ThreeFluid({ name }) {
         let gl = canvas.getContext("webgl");
         
         if (!gl) {
-            throw new Error("Web GL not supported.");
+            throw new Error("WebGL not supported.");
         };
 
         animate();
@@ -635,7 +641,7 @@ export default function ThreeFluid({ name }) {
 
         function draw() {
             // COLOR FLUID - standard
-            out = flu.color_mesh();
+            out = flu.color_mesh(color_data, opaque_indicies, transparent_indicies);
             color_data = out[0];
             opaque_indicies = out[1];
             //transparent_indicies = out[2];
@@ -716,7 +722,7 @@ export default function ThreeFluid({ name }) {
             );
 
             let matrix = mat4.create();
-            mat4.translate(matrix, matrix, [0, 0.5, -3.75]);
+            mat4.translate(matrix, matrix, [0, 0.45, -3.75]);
             mat4.rotateY(matrix, matrix, rotation_angle);
             mat4.rotateZ(matrix, matrix, Math.PI / 2 * 3);
 
