@@ -312,10 +312,10 @@ export default function ThreeFluid({ name }) {
             let middle = Math.floor(N / 2) - 2;
             for (let i = 0; i < 4; i++) {
                 for (let j = 0; j < 4; j++) {
-                    this.density_old[idx(N + extra - 4, i + middle, j + middle)] = 20;
-                        for (let k = 4; k < 10; k++) {
-                            this.u_old[idx(N + extra - k, i + middle, j + middle)] = -50;
-                    }
+                    flu.density_old[idx(N + extra - 2, i + middle, j + middle)] = 500;
+                    flu.u_old[idx(N + extra - 2, i + middle, j + middle)] = -1100;
+                    flu.u_old[idx(N + extra - 4, i + middle, j + middle)] = -1100;
+                    flu.u_old[idx(N + extra - 6, i + middle, j + middle)] = -1100;
                 }
             }
         };
