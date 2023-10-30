@@ -403,9 +403,10 @@ export default function ThreeFluid({ name }) {
             let r = 0;
             let g = 0;
             let b = 0;
+
             for (let idx = 0; idx < (N + extra) * N * N; idx++) {
                 let cube_idx = idx * 144;
-                if (this.density[idx] > 0.05) {
+                if (this.density[idx] >= 0.05) {
                 val = this.density[idx];
                 val = Math.min(Math.max(val, minVal), maxVal - 0.0001);
                 val = diff == 0.0 ? 0.5 : (val - minVal) / diff;
@@ -417,17 +418,20 @@ export default function ThreeFluid({ name }) {
                     case 1 : r = 0.0; g = 1.0; b = 1.0 - s; break;
                     case 2 : r = s; g = 1.0; b = 0.0; break;
                     case 3 : r = 1.0; g = 1.0 - s; b = 0.0; break;
-                }
+                };
+
                 for (let i = 0; i < 36; i++) {
                     let vertex_idx = i*4;
                     dta[cube_idx + vertex_idx] = r;   // red
                     dta[cube_idx + vertex_idx + 1] = g;   // green
                     dta[cube_idx + vertex_idx + 2] = b;   // blue
                     dta[cube_idx + vertex_idx + 3] = 1;   // opacity
-                }
+                };
+
                 opaque_indicies[opaque_idx] = idx;
                 opaque_idx += 1;
-            }
+
+                };
 
                 // COLOR EDGES
                 for (let i = 0; i < 24; i++) {
@@ -437,7 +441,7 @@ export default function ThreeFluid({ name }) {
                     dta[(this.cells) * 144 + index + 1] = 0;
                     dta[(this.cells) * 144 + index + 2] = 0;
                     dta[(this.cells) * 144 + index + 3] = .75;
-                }
+                };
             };
 
             return [dta, opaque_indicies]
@@ -627,12 +631,6 @@ export default function ThreeFluid({ name }) {
                 1e4 // far cull distance
             );
 
-            // GL SETTINGS
-            gl.clearColor(0, 0, 0, 0);
-            gl.enable(gl.DEPTH_TEST)
-            gl.enable(gl.BLEND);
-            gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
-
             return [projection_matrix, uniform_location]
 
         }
@@ -654,7 +652,11 @@ export default function ThreeFluid({ name }) {
             mat4.multiply(view_matrix, projection_matrix, view_matrix);
             gl.uniformMatrix4fv(uniform_location.matrix, false, view_matrix);
 
-            // CLEAR OLD
+            // GL SETTINGS
+            gl.clearColor(0, 0, 0, 0);
+            gl.enable(gl.DEPTH_TEST)
+            gl.enable(gl.BLEND);
+            gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
             gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
             // DRAW EDGES
@@ -671,7 +673,7 @@ export default function ThreeFluid({ name }) {
         <div className="flex flex-col items-center w-full tile">
             <h1>
                 <Link href="/fluids" className="border-yellow-500 text-yellow-500 transition-all duration-300 ease-in animate-pulse">
-                    3-D Smoke Simulation
+                    3-D Fluid Simulation
                 </Link>
             </h1>
             <div className="flex flex-col items-center">
