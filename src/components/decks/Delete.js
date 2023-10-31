@@ -1,8 +1,8 @@
 import React from 'react'
 
 export default function Delete({ id, setStored }) {
-	const post = {
-		method: "POST",
+	const del = {
+		method: "DELETE",
 		headers: {"Content-Type":"application/json"},
 		body: JSON.stringify(id)
 	};
@@ -12,14 +12,14 @@ export default function Delete({ id, setStored }) {
 	};
 
 	async function deleteDeck() {
-		let response = await fetch('/api/delete_deck', post);
+		await fetch('/api/delete_deck', del);
 
 		fetch('/api/show_deck', get)
 		.then(response => 
 			response.json()
 		)
 		.then(data => {
-			setStored([...data])
+			setStored({...data})
 			}
 		)
 	};

@@ -100,7 +100,7 @@ export default function Home() {
                         <Link className="underline text-blue-500 hover:text-blue-400" href="https://www.basketball-reference.com" target="_blank" rel="noopener noreferrer">www.basketball-reference.com</Link>
                         . This demonstration is intentionally limited to better align with the&nbsp;
                         <Link className="underline text-blue-500 hover:text-blue-400" href="https://www.sports-reference.com/data_use.html" target="_blank" rel="noopener noreferrer">guidelines</Link>
-                        &nbsp;issued by Sports Reference. Measures taken to limit this site&#x27;s footprint on Sports References&#x27; are described on the&nbsp;
+                        &nbsp;issued by Sports Reference. Measures taken to limit this site&#x27;s footprint on Sports Reference&#x27;s are described on the&nbsp;
                         <Link className="underline text-blue-500 hover:text-blue-400" href="/decks" target="_blank" rel="noopener noreferrer">explanation</Link>
                         &nbsp;page.<b> Data, images, statistics, etc. from Sports Reference are blurred.</b>
                     </i>

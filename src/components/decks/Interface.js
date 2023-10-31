@@ -20,7 +20,7 @@ import StoredDecks from './StoredDecks'
 export default function Interface({ cardData }) {
 
 	// Deck being edited
-	const [current, setCurrent] = useState({'id': 'null', 'saved': 'null', 'bias': 'null', 'cards': []});
+	const [current, setCurrent] = useState({'id': null, 'saved': null, 'bias': null, 'cards': []});
 	// Stored decks
 	const [stored, setStored] = useState([]);
 

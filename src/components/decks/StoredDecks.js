@@ -15,7 +15,7 @@ function StoredDecks({ stored, setStored, setCurrent, setEmpty }) {
 
     return (
         <div className="flex flex-col items-center w-full">
-            {stored.map(function(deck) {
+            {stored.decks.map(function(deck) {
             return <div key={deck.id}
                 className="flex flex-col items-center w-[97%] res:w-5/6 p-5 app:p-12 mt-10 shadow-lg rounded-xl ring-1 ring-black/5 parquet">
                 <div className="flex flex-row space-x-10 font-bold">

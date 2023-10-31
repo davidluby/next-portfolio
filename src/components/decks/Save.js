@@ -7,6 +7,12 @@ export default function Save({ current, setStored, setLoad }) {
         body: JSON.stringify(current)
     };
 
+    const put = {
+        method: 'PUT',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify(current)
+    };
+
     const get = {
         method: 'GET'
     };
@@ -16,17 +22,21 @@ export default function Save({ current, setStored, setLoad }) {
             alert("Each deck must have 5 cards and a favorite team.");
 
         } else {
-            let response = await fetch('/api/intake_deck', post);
+            if (current.id == null) {
+                await fetch('/api/create_deck', post);
+            } else {
+                await fetch('/api/update_deck', put);
+            }
 
             fetch('/api/show_deck', get)
             .then(response => 
                 response.json()
             )
             .then(data => {
-                setStored([...data]);
+                setStored({...data});
+                setLoad(false);
                 }
             )
-            setLoad(false);
         }
     };
     

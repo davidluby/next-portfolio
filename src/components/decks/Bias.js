@@ -5,13 +5,17 @@ import React, { useState } from 'react'
 
 		function toggle() {
 			setHide(!hide);
+			const dropdown = document.getElementById('dropdown');
+			dropdown.classList.toggle('h-10');
+			dropdown.classList.toggle('h-40');
 		};
 
 		function pickTeam(selection) {
-			setHide(!hide);
+			toggle();
 			const newDeck = {...current};
 			newDeck.bias = selection;
 			setCurrent(newDeck);
+
 		}
 
 		let teams = [
@@ -47,13 +51,13 @@ import React, { useState } from 'react'
 			'76ers'
 		]
 	return (
-		<div className="flex flex-col w-[55%] app:w-1/3 h-40 mt-5 font-bold">
-			<button className="flex flex-row space-x-2 p-2 rounded-md bg-yellow-500 shadow-lg ring-1 ring-black/5 border-b-2 border-white" onClick={() => toggle()}>
+		<div id="dropdown" className="flex flex-col w-3/4 app:w-2/5 h-10 mt-5 font-bold transition-all duration-500">
+			<button className="flex flex-row space-x-2 p-2 rounded-md bg-yellow-500 shadow-lg ring-1 ring-black/5" onClick={() => toggle()}>
 				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
 					<path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
 				</svg>
 				<div>
-					{current.bias == 'null' ? 'Select Favorite Team' : current.bias
+					{current.bias == null ? 'Select Favorite Team' : current.bias
 					}
 				</div>
 			</button>
