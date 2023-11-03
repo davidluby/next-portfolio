@@ -9,6 +9,7 @@ export default function Nav() {
         <div className="flex flex-row items-center">
 			<Link href="/" className="nav-logo animate-pulse" />
 			<Link href="/resume" className="nav-button">Resume</Link>
+			<Link href="https://www.api.davidluby.com/" className="nav-button">Backend API</Link>
 			<div className="nav-button relative cursor-default w-28" onMouseOver={() => setHide(false)} onMouseLeave={() => setHide(true)}>
 					Projects
 				{!hide ? 
