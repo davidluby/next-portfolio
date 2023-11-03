@@ -16,7 +16,7 @@ import React, { useState } from 'react'
 			newDeck.bias = selection;
 			setCurrent(newDeck);
 
-		}
+		};
 
 		let teams = [
 			'Bucks',

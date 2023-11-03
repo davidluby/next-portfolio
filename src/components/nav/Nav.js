@@ -11,13 +11,10 @@ export default function Nav() {
 			<Link href="/resume" className="nav-button">Resume</Link>
 			<div className="nav-button relative cursor-default w-28" onMouseOver={() => setHide(false)} onMouseLeave={() => setHide(true)}>
 					Projects
-				{ !hide ? 
+				{!hide ? 
 					<div className="absolute flex flex-col w-full mt-[.6rem] left-0 rounded-b-md shadow-lg ring-1 ring-black/5 bg-gray-200 z-50">
 						<Link className="nav-button text-xs" href="/fluids">Fluid Simulation</Link>
 						<Link className="nav-button text-xs" href="/collision">2-D Collisions</Link>
-						{/*
-						<Link className="p-[.5rem] hover:bg-slate-600 text-base" href="/projectile">3-D Projectile</Link>
-						*/}
 						<Link className="nav-button text-xs" href="/decks">Fullstack App</Link>
 						<Link className="nav-button text-xs" href="/mech">Mechatronics</Link>
 						<Link className="nav-button text-xs" href="/webgl">WebGL</Link>
