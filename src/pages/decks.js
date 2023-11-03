@@ -30,7 +30,7 @@ export default function Decks() {
 			
     		<p>
         		The appilcation&apos;s frontend is built on next.js and deployed via Netlify, communicating with an Apache web server, WSGI, and Flask API deployed on an Amazon Linux 2 instance. The API retrieves data directly from the internet and from an AWS MSSQL RDS instance, where data is also stored. An endpoint is available&nbsp;
-				<Link className="underline text-blue-500 hover:text-blue-400" href="https://davidluby.com/api/show_deck" target="_blank" rel="noopener noreferrer">here</Link>, and the&nbsp;
+				<Link className="underline text-blue-500 hover:text-blue-400" href="https://www.api.davidluby.com/api/show_deck" target="_blank" rel="noopener noreferrer">here</Link>, and the&nbsp;
 				<Link className="underline text-blue-500 hover:text-blue-400" href="https://github.com/davidluby/next-portfolio" target="_blank" rel="noopener noreferrer">frontend</Link> and&nbsp;
 				<Link className="underline text-blue-500 hover:text-blue-400" href="https://github.com/davidluby/flask-portfolio" target="_blank" rel="noopener noreferrer">backend</Link> repositories are public on GitHub. Below are a number of diagrams drawn before any of the application materialized. Their description of the app architecture is still mostly valid.
 			</p>
