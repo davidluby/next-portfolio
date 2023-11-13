@@ -2,7 +2,7 @@ import Head from 'next/head'
 import Slides from '@components/nav/Slides'
 import GL_triangle from '@components/simulations/GL_triangle'
 import GL_box from '@components/simulations/GL_box'
-import GL_canvas from '@components/simulations/GL_canvas'
+import GL_mesh from '@src/components/simulations/GL_mesh'
 
 export default function webgl() {
     const names = [
@@ -21,7 +21,7 @@ export default function webgl() {
             <title>WebGL</title>
         </Head>
         <div className="flex flex-col res:flex-row items-center space-y-5 res:space-y-0 res:space-x-5 w-[97%] res:w-5/6 mb-20">
-            <GL_canvas name="mesh" />
+            <GL_mesh name="mesh" />
             <GL_box name="GL_box"/>
             <GL_triangle name="GL_triangle" />
         </div>

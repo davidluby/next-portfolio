@@ -4,7 +4,7 @@
 
 html *{
     font-size: 100%;
-    font-family: "Segoe UI Variable", "Trebuchet MS", Arial, Helvetica, sans-serif, "Times New Roman";
+    font-family: 'Segoe UI Variable Text', 'Segoe UI Variable Small', 'Segoe UI Variable Display', "Trebuchet MS", Arial, Helvetica, sans-serif, "Times New Roman";
 }
 .tile {
     padding: 1.25rem;
