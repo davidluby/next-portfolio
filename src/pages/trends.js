@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 
 import Figure from '@components/trends/Figure'
 
-function trends() {
+function Trends() {
 	let figure_data = {
 		id: '1',
 		title: "Weight and Calories Against Time",
