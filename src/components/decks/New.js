@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function New({ current, setCurrent }) {
     const initialize = () => {
-      const newDeck = {'id': 'null', 'saved': 'null', 'bias': 'null', 'cards': []}
+      const newDeck = {'id': null, 'saved': null, 'bias': null, 'cards': []};
       newDeck.cards = current.cards
     	setCurrent(newDeck);
     };

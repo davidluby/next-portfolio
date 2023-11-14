@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react'
-import Link from 'next/link'
 
-function Figure({ data }) {
+import InputField from './InputField';
+
+function Figure({ data, setData }) {
     class figure {
         constructor(data) {
             this.id = data.id;
-            this.height = 600;
-            this.width = 1200;
+            this.height = 1200;
+            this.width = 2400;
 
             this.title = data.title;
             this.y_on = data.y_on;
@@ -111,18 +112,20 @@ function Figure({ data }) {
             return y;
         };
 
-        draw_point(x, y, color) {
+        draw_point(x, y, color, size) {
             const ctx = this.initialize();
             ctx.fillStyle = color;
             ctx.strokeStyle = color;
 
             ctx.beginPath();
-            ctx.arc(x * ctx.canvas.width, y * ctx.canvas.height, 3, 0, 2 * Math.PI);
+            ctx.arc(x * ctx.canvas.width, y * ctx.canvas.height, size, 0, 2 * Math.PI);
             ctx.fill();
             ctx.stroke();
+            ctx.closePath();
+            ctx.restore();
         };
 
-        draw_line(x1, x2, y1, y2, color, thickness, dashed) {
+        draw_line(x1, x2, y1, y2, dashed, color, thickness) {
             const ctx = this.initialize();
             ctx.strokeStyle = color;
             ctx.lineWidth = thickness;
@@ -135,33 +138,44 @@ function Figure({ data }) {
             ctx.moveTo(x1 * ctx.canvas.width, y1 * ctx.canvas.height);
             ctx.lineTo(x2 * ctx.canvas.width, y2 * ctx.canvas.height);
             ctx.stroke();
+            ctx.closePath();
+            ctx.restore();
+        };
 
+        draw_rectangle(x1, x2, y1, color) {
+            const ctx = this.initialize();
+            ctx.fillStyle = color;
+            
+            ctx.beginPath();
+            ctx.fillRect((x1 + 0.02) * ctx.canvas.width, y1 * ctx.canvas.height, (x2 - x1 - 0.02) * ctx.canvas.width, 0.95* ctx.canvas.height - y1 * ctx.canvas.height);
+            ctx.closePath();
+            ctx.restore();
         };
 
         draw_ticks(y, yy, y_color, yy_color) {
             // X AXIS
             for (let i = 1; i < this.x.length - 1; i++) {
-                this.draw_line(this.x[i], this.x[i], 0.95, 0.935, 'white', 2, false);
+                this.draw_line(this.x[i], this.x[i], 0.95, 0.935, false, 'white', 7.5);
             };
 
             // Y AXIS
             if (y) {
                 for (let i = 1; i < this.y_ticks.length - 1; i++) {
-                    this.draw_line(0.05, 0.065, this.y_ticks[i], this.y_ticks[i], y_color, 2, false);
+                    this.draw_line(0.05, 0.065, this.y_ticks[i], this.y_ticks[i], false, y_color, 7.5);
                 };
             };
             
             // YY AXIS
             if (yy) {
                 for (let i = 1; i < this.yy_ticks.length - 1; i++) {
-                    this.draw_line(0.95, 0.935, this.yy_ticks[i], this.yy_ticks[i], yy_color, 2, false);
+                    this.draw_line(0.95, 0.935, this.yy_ticks[i], this.yy_ticks[i], false, yy_color, 7.5);
                 };
             };
         };
 
         draw_labels(y, yy) {
             const ctx = this.initialize();
-            ctx.font = '15px Segoe UI Variable Text'
+            ctx.font = '30px Segoe UI Variable Text'
             ctx.fillStyle = 'white';
 
             let x_coordinate;
@@ -193,27 +207,28 @@ function Figure({ data }) {
                     ctx.fillText(Math.round(this.yy_grid[i]), x_coordinate, y_coordinate);
                 };
             };
+            ctx.restore();
         };
 
         draw_axes(y, yy, y_color, yy_color) {
             // X BOTTOM
-            this.draw_line(0.05, 0.95, 0.95, 0.95, 'white', 2, false);
+            this.draw_line(0.05, 0.95, 0.95, 0.95, false, 'white', 7.5);
 
             // X TOP
-            this.draw_line(0.05, 0.95, 0.05, 0.05, 'white', 2, false);
+            this.draw_line(0.05, 0.95, 0.05, 0.05, false, 'white', 7.5);
 
             // Y
             if (y) {
-                this.draw_line(0.05, 0.05, 0.05, 0.95, y_color, 2, false);
+                this.draw_line(0.05, 0.05, 0.05, 0.95, false, y_color, 7.5);
             } else {
-                this.draw_line(0.05, 0.05, 0.05, 0.95, 'black', 2, false);
+                this.draw_line(0.05, 0.05, 0.05, 0.95, false, 'black', 7.5);
             }
 
             // YY
             if (yy) {
-                this.draw_line(0.95, 0.95, 0.05, 0.95, yy_color, 2, false);
+                this.draw_line(0.95, 0.95, 0.05, 0.95, false, yy_color, 7.5);
             } else {
-                this.draw_line(0.95, 0.95, 0.05, 0.95, 'black', 2, false);
+                this.draw_line(0.95, 0.95, 0.05, 0.95, false, 'black', 7.5);
             }
 
             this.draw_ticks(y, yy, y_color, yy_color);
@@ -221,56 +236,63 @@ function Figure({ data }) {
 
         };
 
-        draw_plot(data, color, points, lines, dashed, regression) {
+        draw_plot(data, points, lines, rectangles, regression, dashed, color, size) {
             for (let i = 0; i < data.length; i++) {
                 if (points) {
-                    this.draw_point(this.x[i], 1 - data[i], color);
+                    this.draw_point(this.x[i], 1 - data[i], color, size);
                 };
                 
                 if (lines) {
-                    this.draw_line(this.x[i], this.x[i + 1], 1 - data[i], 1 - data[i + 1], color, 2, dashed);
+                    this.draw_line(this.x[i], this.x[i + 1], 1 - data[i], 1 - data[i + 1], dashed, color, size);
+                };
+
+                if (rectangles) {
+                    this.draw_rectangle(this.x[i], this.x[i + 1], 1 - data[i], color);
                 };
             };
+
             if (regression) {
-                this.draw_line(this.x[0], this.x[this.x.length - 1], 1 - data[0], 1 - data[1], color, 2, dashed);
-            }
+                this.draw_line(this.x[0], this.x[this.x.length - 1], 1 - data[0], 1 - data[1], dashed, color, size);
+            };
         };
 
         initialize() {
             const canvas = document.getElementById(this.id + 'figure');
             const ctx = canvas.getContext('2d');
+            ctx.save();
 
             return ctx;
         };
 
         draw_figure() {
+            let gray = 'rgb(34, 34, 34)'
+            let blue = 'rgb(58, 107, 186)';
+            let purple = 'rgb(149, 102, 192)';
+            let pink = 'rgb(218, 91, 171)';
+            let salmon = 'rgb(255, 92, 130)';
+            let orange = 'rgb(255, 122, 78)';
+            let gold = 'rgb(255, 166, 0)';
+
             const ctx = this.initialize();
             ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-            ctx.fillStyle = "rgb(34, 34, 34)";
+            ctx.fillStyle = gray;
             ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-
-            let navy = 'rgb(0, 63, 92)';
-            let blue = 'rgb(47, 75, 124)';
-            let purple = 'rgb(122, 81, 149)';
-            let pink = 'rgb(239, 86, 117)';
-            let salmon = 'rgb(255, 99, 97)';
-            let orange = 'rgb(255, 166, 0)';
-            let gold = 'rgb(255, 166, 0)';
+            ctx.restore();
 
             this.initialize_data();
 
-            this.draw_axes(this.y_on, this.yy_on, salmon, orange);
+            this.draw_axes(this.y_on, this.yy_on, blue, gold);
 
             if (this.y_on) {
-                this.draw_plot(this.y, salmon, true, true);
+                this.draw_plot(this.y, true, true, false, false, false, blue, 7.5);
             };
 
             if (this.yy_on) {
-                this.draw_plot(this.yy, orange, true, true);
+                this.draw_plot(this.yy, true, true, false, false, false, gold, 7.5);
             };
 
-            this.draw_plot(this.least_sq_y, blue, false, false, true, true);
-            this.draw_plot(this.least_sq_yy, purple, false, false, true, true);
+            this.draw_plot(this.least_sq_y, false, false, false, true, true, orange, 7.5);
+            this.draw_plot(this.least_sq_yy, false, false, false, true, true, purple, 7.5);
         };
     };
 
@@ -280,17 +302,17 @@ function Figure({ data }) {
         fig.draw_figure();
     }, []);
 
-
   return (
-    <div className="flex flex-col justify-center w-[97%] app:w-2/3 tile">
-        <h1 className="w-full text-center">
-            <Link href="/trends" className="text-yellow-500 transition-all duration-300 ease-in animate-pulse">
-                {fig.title}
-            </Link>
-        </h1>
-        <canvas id={fig.id + 'figure'} width={fig.width} height={fig.height} className="w-full border-2 border-yellow-500"></canvas>
+    <div className="flex flex-col w-5/6 border-2">
+        <InputField className="w-full" data={data} setData={setData} field="title"/>
+        <div className="flex flex-row items-center justify-center -space-x-10 w-full space-x-0 border-2">
+            <InputField data={data} setData={setData} field='y_label'/>
+            <canvas id={fig.id + 'figure'} width={fig.width} height={fig.height} className="w-5/6 border-2"></canvas>
+            <InputField data={data} setData={setData} field='yy_label'/>
+        </div>
+        <InputField data={data} setData={setData} field='x_label'/>
     </div>
-  )
+    )
 }
 
 export default Figure
