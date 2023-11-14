@@ -59,4 +59,4 @@ function Trends() {
 	)
 }
 
-export default trends
+export default Trends
