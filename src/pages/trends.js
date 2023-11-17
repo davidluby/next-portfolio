@@ -4,33 +4,58 @@ import { useRouter } from 'next/router'
 import Figure from '@components/trends/Figure'
 
 function Trends() {
-	let figure_data = {
+	const white = 'rgb(0, 0, 0)';
+	const gray = 'rgb(34, 34, 34)';
+	const blue = 'rgb(58, 107, 186)';
+	const purple = 'rgb(149, 102, 192)';
+	const pink = 'rgb(218, 91, 171)';
+	const salmon = 'rgb(255, 92, 130)';
+	const orange = 'rgb(255, 122, 78)';
+	const gold = 'rgb(255, 166, 0)';
+
+
+	const [data, setData] = useState({
 		id: '1',
-		title: "Weight and Calories Against Time",
-		x_label: "Day",
-		y_label: "Weight",
-		yy_label: "Calories",
-		y_on: true,
-		yy_on: true,
-		x_range: [1, 31],
-		y_range: [150, 200],
-		yy_range: [1000, 3000],
-		y_data: [190, 187, 188, 185, 188, 186, 185, 184, 185, 186, 183, 184, 184, 182, 179, 181, 179, 177, 182, 178, 178, 179, 177, 178, 176, 177, 175, 174, 173, 174, 172],
-		yy_data: [2100, 2200, 1900, 2100, 1700, 1800, 1700, 1800, 1900, 1900, 1800, 1800, 1900, 1700, 1700, 1800, 1700, 1500, 1900, 2000, 1800, 1700, 1900, 1900, 1700, 1800, 1700, 1800, 1700, 2000, 1900],
-	};
-	
-	let figure_data2 = {
-		...figure_data,
-		id : '2',
-		title : "Bench Press and Calories Against Time"
-	};
-	
-	let figure_data3 = {
-		...figure_data,
-		id : '3',
-		title : "Body Weight and Calories Against Time"
-	};
-	const [data, setData] = useState({...figure_data3});
+
+		base: {
+			background: gray,
+			title_on: true,
+			y_on: true,
+			yy_on: true,
+			x_on: true,
+
+			title: "Weight and Calories Against Time",
+			x_label: "Day",
+
+			x_range: [1, 31],
+
+		},
+
+		y_series: {
+			show_data: true,
+			show_ticks: true,
+			show_label: true,
+			show_ls: true,
+			dashed: true,
+			label: "Body Weight (lbs)",
+			data_color: orange,
+			ls_color: purple,
+			range: [150, 200],
+			data: [190, 187, 188, 185, 188, 186, 185, 184, 185, 186, 183, 184, 184, 182, 179, 181, 179, 177, 182, 178, 178, 179, 177, 178, 176, 177, 175, 174, 173, 174, 172], 
+		},
+		yy_series:{
+			show_data: true,
+			show_ticks: true,
+			show_label: true,
+			show_ls: true,
+			dashed: true,
+			label: "Calories (kCal)",
+			data_color: blue,
+			ls_color: salmon,
+			range: [1000, 3000],
+			data: [2100, 2200, 1900, 2100, 1700, 1800, 1700, 1800, 1900, 1900, 1800, 1800, 1900, 1700, 1700, 1800, 1700, 1500, 1900, 2000, 1800, 1700, 1900, 1900, 1700, 1800, 1700, 1800, 1700, 2000, 1900],
+		},
+	});
 
 	const router = useRouter();
 
