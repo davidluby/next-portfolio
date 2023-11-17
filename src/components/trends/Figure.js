@@ -6,8 +6,8 @@ function Figure({ data, setData }) {
     class figure {
         constructor(data) {
             this.id = data.id;
-            this.height = 1200;
-            this.width = 1800;
+            this.height = 1000;
+            this.width = 2000;
             this.margin = 0.8;
             this.background = data.base.background
 
@@ -177,27 +177,27 @@ function Figure({ data, setData }) {
         draw_ticks(y, yy, y_color, yy_color) {
             // X AXIS
             for (let i = 1; i < this.x.length - 1; i++) {
-                this.draw_line(this.x[i], this.x[i], 1, 1 - 0.015, false, 'white', 7.5);
+                this.draw_line(this.x[i], this.x[i], 1, 1 - 0.015, false, 'white', 3);
             };
 
             // Y AXIS
             if (y) {
                 for (let i = 1; i < this.y_ticks.length - 1; i++) {
-                    this.draw_line(0, 0.015, this.y_ticks[i], this.y_ticks[i], false, y_color, 7.5);
+                    this.draw_line(0, 0.015, this.y_ticks[i], this.y_ticks[i], false, y_color, 3);
                 };
             };
             
             // YY AXIS
             if (yy) {
                 for (let i = 1; i < this.yy_ticks.length - 1; i++) {
-                    this.draw_line(1, 1 - 0.015, this.yy_ticks[i], this.yy_ticks[i], false, yy_color, 7.5);
+                    this.draw_line(1, 1 - 0.015, this.yy_ticks[i], this.yy_ticks[i], false, yy_color, 3);
                 };
             };
         };
 
-        draw_labels(y, yy) {
+        draw_tick_labels(y, yy) {
             const ctx = this.initialize();
-            ctx.font = '200% Segoe UI Variable Text'
+            ctx.font = '250% Segoe UI Variable Text, Segoe UI Variable Small, Segoe UI Variable Display, Trebuchet MS, Arial, Helvetica, sans-serif, Times New Roman';
             ctx.fillStyle = 'white';
 
             let x_coordinate;
@@ -234,6 +234,11 @@ function Figure({ data, setData }) {
         };
 
         draw_axes(y, yy, y_color, yy_color) {
+            const ctx = this.initialize();
+            ctx.strokeStyle = 'white';
+            ctx.lineWidth = 7.5;
+
+            const extend = 0.005;
             // X BOTTOM
             this.draw_line(0, 1, 1, 1, false, 'white', 7.5);
 
@@ -242,22 +247,59 @@ function Figure({ data, setData }) {
 
             // Y
             if (y) {
-                this.draw_line(0, 0, 0, 1, false, y_color, 7.5);
+                this.draw_line(0, 0, 0 - extend, 1 + extend, false, y_color, 7.5);
             } else {
-                this.draw_line(0, 0, 0, 1, false, 'white', 7.5);
+                this.draw_line(0, 0, 0 - extend, 1 + extend, false, 'white', 7.5);
             }
 
             // YY
             if (yy) {
-                this.draw_line(1, 1, 0, 1, false, yy_color, 7.5);
+                this.draw_line(1, 1, 0 - extend, 1 + extend, false, yy_color, 7.5);
             } else {
-                this.draw_line(1, 1, 0, 1, false, 'white', 7.5);
+                this.draw_line(1, 1, 0 - extend, 1 + extend, false, 'white', 7.5);
             }
 
             this.draw_ticks(y, yy, y_color, yy_color);
-            this.draw_labels(y, yy);
+            this.draw_tick_labels(y, yy);
 
         };
+
+        draw_axes_labels() {
+            let ctx = this.initialize();
+            ctx.font = '250% Segoe UI Variable Text, Segoe UI Variable Small, Segoe UI Variable Display, Trebuchet MS, Arial, Helvetica, sans-serif, Times New Roman';
+            ctx.fillStyle = 'white';
+            ctx.textAlign = "center";
+            ctx.textBaseline = 'top'
+
+            // TITLE
+            ctx.fillText(this.title, 0.5 * this.width, 0.05 * this.height);
+
+            // X
+            ctx.fillText(this.x_label, 0.5 * this.width, 0.95 * this.height);
+            ctx.restore();
+
+            ctx = this.initialize();
+            ctx.font = '250% Segoe UI Variable Text, Segoe UI Variable Small, Segoe UI Variable Display, Trebuchet MS, Arial, Helvetica, sans-serif, Times New Roman';
+            ctx.fillStyle = 'white';
+            ctx.textAlign = "center";
+            ctx.textBaseline = 'top'
+            // Y
+            ctx.rotate(-Math.PI/2);
+            ctx.fillText(this.y_series.label, -0.5 * this.height, 0.025 * this.width);
+            ctx.restore();
+
+            ctx = this.initialize();
+            ctx.font = '250% Segoe UI Variable Text, Segoe UI Variable Small, Segoe UI Variable Display, Trebuchet MS, Arial, Helvetica, sans-serif, Times New Roman';
+            ctx.fillStyle = 'white';
+            ctx.textAlign = "center";
+            ctx.textBaseline = 'top'
+            // YY
+            ctx.rotate(Math.PI/2);
+            ctx.fillText(this.yy_series.label, 0.5 * this.height, -0.975 * this.width);
+            ctx.restore();
+
+
+        }
 
         draw_plot(data, points, lines, rectangles, regression, dashed, color, size) {
             for (let i = 0; i < data.length; i++) {
@@ -292,6 +334,8 @@ function Figure({ data, setData }) {
                 this.yy_series.show_ticks,
                 this.y_series.data_color,
                 this.yy_series.data_color);
+
+            this.draw_axes_labels();
 
             if (this.y_series.show_data) {
                 this.draw_plot(this.y,
@@ -341,18 +385,10 @@ function Figure({ data, setData }) {
     }, []);
 
   return (
-    <div className="flex flex-col w-full border-2 rounded-xl">
-        {fig.title_on ? <TextField data={data} setData={setData} object="base" field="title"/> : null}
-        <div className="relative flex flex-row justify-center w-full">
-            <canvas id={fig.id + 'figure'} width={fig.width} height={fig.height} className="w-full border-2"></canvas>
-            {//
-            //<div className="absolute inset-0">
-            //    {fig.y_series.show_label ? <TextField data={data} setData={setData} object="y_series" field='label'/> : null}
-            //    {fig.yy_series.show_label ? <TextField data={data} setData={setData} object="yy_series" field='label'/> : null}
-            //</div>
-            }
+    <div className="flex flex-col w-full">
+        <div className="flex flex-row justify-center w-full">
+            <canvas id={fig.id + 'figure'} className="w-full" width={fig.width} height={fig.height}></canvas>
         </div>
-        {fig.x_on ? <TextField data={data} setData={setData} object="base" field='x_label'/> : null}
     </div>
     )
 }

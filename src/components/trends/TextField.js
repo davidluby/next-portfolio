@@ -3,13 +3,15 @@ import React, { useState } from 'react'
 function TextField({ data, setData, object, field }) {
 	const [entry, setEntry] = useState(data[object][field]);
 		
-	let classes;
+	let classes = "text-xs app:text-base z-50";
 	if (object === 'y_series') {
-		classes += ' absolute -rotate-90 inset-x-0 -left-[95%] top-1/2';
+		classes += ' absolute -rotate-90 -left-[5%]';
 	} else if (object === 'yy_series') {
-		classes += ' absolute rotate-90 inset-x-0 -right-[95%] top-1/2';
+		classes += ' absolute rotate-90 -right-[5%]';
+	} else if (field === 'title') {
+		classes += ' w-full -mb-[5%]'
 	} else {
-		classes += ' w-full'
+		classes += ' w-full -mt-[3%]'
 	}
 
 	const handleSubmit = e => {

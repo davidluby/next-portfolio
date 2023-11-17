@@ -61,9 +61,11 @@ function Trends() {
 
 	useEffect(() => {
 		document.querySelector('body').classList.add('bg-[#222222]');
+		document.querySelector('nav').classList.remove('mb-10');
 
 		const exitingFunction = () => {
 			document.querySelector('body').classList.remove('bg-[#222222]');
+			document.querySelector('nav').classList.add('mb-10');
 		};
 
 		router.events.on("routeChangeStart", exitingFunction);
@@ -78,7 +80,7 @@ function Trends() {
 	}, [data]);
 
 	return (
-		<div className="flex flex-col items-center w-full h-full text-white">
+		<div className="flex flex-col items-center w-full text-white">
 			<Figure data={data} setData={setData} />
 		</div>
 	)
