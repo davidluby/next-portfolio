@@ -7,7 +7,8 @@ function Figure({ data, setData }) {
         constructor(data) {
             this.id = data.id;
             this.height = 1200;
-            this.width = 2400;
+            this.width = 1800;
+            this.margin = 0.8;
             this.background = data.base.background
 
             // CONTROLS
@@ -65,7 +66,7 @@ function Figure({ data, setData }) {
 
             let out = [];
             for (let i = 0; i < data.length; i++) {
-                out.push((data[i] - range[0]) / diff * 0.9 + 0.05);
+                out.push((data[i] - range[0]) / diff);
             };
 
             return out;
@@ -113,13 +114,26 @@ function Figure({ data, setData }) {
             return y;
         };
 
+        initialize() {
+            const canvas = document.getElementById(this.id + 'figure');
+            const ctx = canvas.getContext('2d');
+            ctx.save();
+
+            return ctx;
+        };
+
         draw_point(x, y, color, size) {
             const ctx = this.initialize();
             ctx.fillStyle = color;
             ctx.strokeStyle = color;
 
+            const offset = (1 - this.margin) / 2;
+
             ctx.beginPath();
-            ctx.arc(x * this.width, y * this.height, size, 0, 2 * Math.PI);
+            ctx.arc((x * this.margin + offset) * this.width,
+            (y * this.margin + offset) * this.height, size,
+            0,
+            2 * Math.PI);
             ctx.fill();
             ctx.stroke();
             ctx.closePath();
@@ -135,9 +149,13 @@ function Figure({ data, setData }) {
                 ctx.setLineDash([15, 30]);
             };
 
+            const offset = (1 - this.margin) / 2;
+
             ctx.beginPath();
-            ctx.moveTo(x1 * this.width, y1 * this.height);
-            ctx.lineTo(x2 * this.width, y2 * this.height);
+            ctx.moveTo((x1 * this.margin + offset) * this.width,
+            (y1 * this.margin + offset) * this.height);
+            ctx.lineTo((x2 * this.margin + offset) * this.width,
+            (y2 * this.margin + offset) * this.height);
             ctx.stroke();
             ctx.closePath();
             ctx.restore();
@@ -159,37 +177,38 @@ function Figure({ data, setData }) {
         draw_ticks(y, yy, y_color, yy_color) {
             // X AXIS
             for (let i = 1; i < this.x.length - 1; i++) {
-                this.draw_line(this.x[i], this.x[i], 0.95, 0.935, false, 'white', 7.5);
+                this.draw_line(this.x[i], this.x[i], 1, 1 - 0.015, false, 'white', 7.5);
             };
 
             // Y AXIS
             if (y) {
                 for (let i = 1; i < this.y_ticks.length - 1; i++) {
-                    this.draw_line(0.05, 0.065, this.y_ticks[i], this.y_ticks[i], false, y_color, 7.5);
+                    this.draw_line(0, 0.015, this.y_ticks[i], this.y_ticks[i], false, y_color, 7.5);
                 };
             };
             
             // YY AXIS
             if (yy) {
                 for (let i = 1; i < this.yy_ticks.length - 1; i++) {
-                    this.draw_line(0.95, 0.935, this.yy_ticks[i], this.yy_ticks[i], false, yy_color, 7.5);
+                    this.draw_line(1, 1 - 0.015, this.yy_ticks[i], this.yy_ticks[i], false, yy_color, 7.5);
                 };
             };
         };
 
         draw_labels(y, yy) {
             const ctx = this.initialize();
-            ctx.font = '30px Segoe UI Variable Text'
+            ctx.font = '200% Segoe UI Variable Text'
             ctx.fillStyle = 'white';
 
             let x_coordinate;
             let y_coordinate;
+            const offset = (1 - this.margin) / 2;
 
             ctx.textAlign = "center";
             ctx.textBaseline = 'top'
             for (let i = 0; i < this.x_data.length; i++) {
-                x_coordinate = this.x[i] * ctx.canvas.width;
-                y_coordinate = (this.y_ticks[this.y_ticks.length - 1] + 0.0075) * this.height;
+                x_coordinate = (this.x[i] * this.margin + offset) * this.width;
+                y_coordinate = (this.y_ticks[this.y_ticks.length - 1] * this.margin + offset + 0.0075) * this.height;
                 ctx.fillText(this.x_data[i], x_coordinate, y_coordinate);
             };
 
@@ -197,8 +216,8 @@ function Figure({ data, setData }) {
                 ctx.textAlign = "right";
                 ctx.textBaseline = 'middle'
                 for (let i = 0; i < this.y_ticks.length; i++) {
-                    x_coordinate = (this.x[0] - 0.0075) * this.width;
-                    y_coordinate = (1 - this.y_ticks[i]) * this.height;
+                    x_coordinate = (this.x[0] * this.margin + offset - 0.0075) * this.width;
+                    y_coordinate = ((1 - this.y_ticks[i]) * this.margin + offset) * this.height;
                     ctx.fillText(Math.round(this.y_grid[i]), x_coordinate, y_coordinate);
                 };
             };
@@ -206,8 +225,8 @@ function Figure({ data, setData }) {
             if (yy) {
                 ctx.textAlign = "left";
                 for (let i = 0; i < this.yy_ticks.length; i++) {
-                    x_coordinate = (this.x[this.x.length - 1] + 0.0075) * ctx.canvas.width;
-                    y_coordinate = (1 - this.yy_ticks[i]) * ctx.canvas.height;
+                    x_coordinate = (this.x[this.x.length - 1] * this.margin + offset + 0.0075) * this.width;
+                    y_coordinate = ((1 - this.yy_ticks[i]) * this.margin + offset) * this.height;
                     ctx.fillText(Math.round(this.yy_grid[i]), x_coordinate, y_coordinate);
                 };
             };
@@ -216,23 +235,23 @@ function Figure({ data, setData }) {
 
         draw_axes(y, yy, y_color, yy_color) {
             // X BOTTOM
-            this.draw_line(0.05, 0.95, 0.95, 0.95, false, 'white', 7.5);
+            this.draw_line(0, 1, 1, 1, false, 'white', 7.5);
 
             // X TOP
-            this.draw_line(0.05, 0.95, 0.05, 0.05, false, 'white', 7.5);
+            this.draw_line(0, 1, 0, 0, false, 'white', 7.5);
 
             // Y
             if (y) {
-                this.draw_line(0.05, 0.05, 0.05, 0.95, false, y_color, 7.5);
+                this.draw_line(0, 0, 0, 1, false, y_color, 7.5);
             } else {
-                this.draw_line(0.05, 0.05, 0.05, 0.95, false, 'white', 7.5);
+                this.draw_line(0, 0, 0, 1, false, 'white', 7.5);
             }
 
             // YY
             if (yy) {
-                this.draw_line(0.95, 0.95, 0.05, 0.95, false, yy_color, 7.5);
+                this.draw_line(1, 1, 0, 1, false, yy_color, 7.5);
             } else {
-                this.draw_line(0.95, 0.95, 0.05, 0.95, false, 'white', 7.5);
+                this.draw_line(1, 1, 0, 1, false, 'white', 7.5);
             }
 
             this.draw_ticks(y, yy, y_color, yy_color);
@@ -258,14 +277,6 @@ function Figure({ data, setData }) {
             if (regression) {
                 this.draw_line(this.x[0], this.x[this.x.length - 1], 1 - data[0], 1 - data[1], dashed, color, size);
             };
-        };
-
-        initialize() {
-            const canvas = document.getElementById(this.id + 'figure');
-            const ctx = canvas.getContext('2d');
-            ctx.save();
-
-            return ctx;
         };
 
         draw_figure() {
@@ -330,12 +341,16 @@ function Figure({ data, setData }) {
     }, []);
 
   return (
-    <div className="flex flex-col w-full border-2">
+    <div className="flex flex-col w-full border-2 rounded-xl">
         {fig.title_on ? <TextField data={data} setData={setData} object="base" field="title"/> : null}
-        <div className="relative flex flex-row justify-center w-full border-2 border-yellow-500">
-            {fig.y_series.show_label ? <TextField data={data} setData={setData} object="y_series" field='label'/> : null}
-            <canvas id={fig.id + 'figure'} width={fig.width} height={fig.height} className="w-[98%] border-2"></canvas>
-            {fig.yy_series.show_label ? <TextField data={data} setData={setData} object="yy_series" field='label'/> : null}
+        <div className="relative flex flex-row justify-center w-full">
+            <canvas id={fig.id + 'figure'} width={fig.width} height={fig.height} className="w-full border-2"></canvas>
+            {//
+            //<div className="absolute inset-0">
+            //    {fig.y_series.show_label ? <TextField data={data} setData={setData} object="y_series" field='label'/> : null}
+            //    {fig.yy_series.show_label ? <TextField data={data} setData={setData} object="yy_series" field='label'/> : null}
+            //</div>
+            }
         </div>
         {fig.x_on ? <TextField data={data} setData={setData} object="base" field='x_label'/> : null}
     </div>

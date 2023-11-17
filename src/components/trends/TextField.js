@@ -3,11 +3,11 @@ import React, { useState } from 'react'
 function TextField({ data, setData, object, field }) {
 	const [entry, setEntry] = useState(data[object][field]);
 		
-	let classes = "border-2";
+	let classes;
 	if (object === 'y_series') {
-		classes += ' -rotate-90 absolute -left-14 top-1/2';
+		classes += ' absolute -rotate-90 inset-x-0 -left-[95%] top-1/2';
 	} else if (object === 'yy_series') {
-		classes += ' rotate-90 absolute -right-14 top-1/2';
+		classes += ' absolute rotate-90 inset-x-0 -right-[95%] top-1/2';
 	} else {
 		classes += ' w-full'
 	}
@@ -27,7 +27,7 @@ function TextField({ data, setData, object, field }) {
 
   return (
     <form className={classes}>
-		<label htmlFor={field} className="w-full">
+		<label htmlFor={field}>
 			<input className="w-full bg-transparent text-center hover:animate-pulse"
 				name={field}
 				value={entry}
