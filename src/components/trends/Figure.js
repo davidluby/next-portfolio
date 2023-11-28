@@ -6,7 +6,7 @@ function Figure({ data, setData }) {
             this.id = data.id;
             this.height = 1000;
             this.width = 2000;
-            this.margin = 0.8;
+            this.margin = 0.83;
             this.background = data.base.background
 
             // CONTROLS
@@ -70,17 +70,17 @@ function Figure({ data, setData }) {
             return out;
         };
 
-        least_squares(data) {
+        least_squares(data_series) {
             let sum_x = 0;
             let sum_y = 0;
             let sum_xy = 0;
             let sum_xx = 0;
-            let n = data.length;
+            let n = data_series.length;
 
             for (let i = 0; i < n; i++) {
                 sum_x += this.x[i];
-                sum_y += data[i];
-                sum_xy += this.x[i] * data[i];
+                sum_y += data_series[i];
+                sum_xy += this.x[i] * data_series[i];
                 sum_xx += this.x[i] * this.x[i];
             };
 
@@ -204,29 +204,36 @@ function Figure({ data, setData }) {
             let ctx = this.get_context();
             ctx.font = '250% Segoe UI Variable Text, Segoe UI Variable Small, Segoe UI Variable Display, Trebuchet MS, Arial, Helvetica, sans-serif, Times New Roman';
             ctx.fillStyle = 'white';
-            ctx.textAlign = "center";
-            ctx.textBaseline = 'top'
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'top';
 
             // TITLE
             if (this.title_on) {
-                ctx.fillText(this.title, 0.5 * this.width, 0.05 * this.height);
+                ctx.fillText(this.title, 0.5 * this.width, 0.025 * this.height);
             };
 
             // X
             if (this.x_on) {
-            ctx.fillText(this.x_label, 0.5 * this.width, 0.95 * this.height);
+                ctx.fillText(this.x_label, 0.5 * this.width, 0.9575 * this.height);
             };
 
             if (this.y_series.show_label) {
                 // Y
                 ctx.rotate(-Math.PI/2);
-                ctx.fillText(this.y_series.label, -0.5 * this.height, 0.025 * this.width);
+                ctx.textBaseline = 'top';
+                ctx.fillText(this.y_series.label, -0.5 * this.height, 0.01 * this.width);
+                ctx.restore();
             };
 
             if (this.yy_series.show_label) {
                 // YY
-                ctx.rotate(Math.PI);
-                ctx.fillText(this.yy_series.label, 0.5 * this.height, -0.975 * this.width);
+                ctx = this.get_context();
+                ctx.font = '250% Segoe UI Variable Text, Segoe UI Variable Small, Segoe UI Variable Display, Trebuchet MS, Arial, Helvetica, sans-serif, Times New Roman';
+                ctx.fillStyle = 'white';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'top';
+                ctx.rotate(Math.PI/2);
+                ctx.fillText(this.yy_series.label, 0.5 * this.height, -0.99 * this.width);
             };
 
             ctx.restore();
@@ -255,7 +262,7 @@ function Figure({ data, setData }) {
 
         draw_tick_labels() {
             const ctx = this.get_context();
-            ctx.font = '250% Segoe UI Variable Text, Segoe UI Variable Small, Segoe UI Variable Display, Trebuchet MS, Arial, Helvetica, sans-serif, Times New Roman';
+            ctx.font = '200% Segoe UI Variable Text, Segoe UI Variable Small, Segoe UI Variable Display, Trebuchet MS, Arial, Helvetica, sans-serif, Times New Roman';
             ctx.fillStyle = 'white';
 
             let x_coordinate;
@@ -269,6 +276,7 @@ function Figure({ data, setData }) {
                 y_coordinate = (this.y_ticks[this.y_ticks.length - 1] * this.margin + offset + 0.0075) * this.height;
                 ctx.fillText(this.x_data[i], x_coordinate, y_coordinate);
             };
+
 
             if (this.y_series.show_tick_labels) {
                 ctx.textAlign = "right";
@@ -370,7 +378,7 @@ function Figure({ data, setData }) {
     }, [data]);
 
   return (
-        <canvas id={fig.id + 'figure'} className="w-full" width={fig.width} height={fig.height}></canvas>
+        <canvas id={fig.id + 'figure'} className="w-full app:w-11/12" width={fig.width} height={fig.height}></canvas>
     )
 }
 

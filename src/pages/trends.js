@@ -88,18 +88,15 @@ function Trends() {
 		<div className="flex flex-col items-center w-full text-white">
 			<Figure data={data} setData={setData} />
 			<div className="flex flex-row justify-evenly w-full border-2">
-				<div className="flex flex-col w-1/5 border-2 border-green-500">
-					<h1>Title</h1>
+				<div className="flex flex-col w-1/4 border-2 border-green-500">
 					<TextField data={data} setData={setData} object='base' field='title' />
-					<Checkbox data={data} setData={setData} object='base' field='title_on'/>
-				</div>
-				<div className="flex flex-col w-1/5 border-2 border-green-500">
-					<h1>X Label</h1>
 					<TextField data={data} setData={setData} object='base' field='label' />
+					<Checkbox data={data} setData={setData} object='base' field='title_on'/>
 					<Checkbox data={data} setData={setData} object='base' field='x_on'/>
+					<Checkbox data={data} setData={setData} object='base' field='y_on'/>
+					<Checkbox data={data} setData={setData} object='base' field='yy_on'/>
 				</div>
-				<div className="flex flex-col w-1/5 border-2 border-green-500">
-					<h1>Y Label</h1>
+				<div className="flex flex-col w-1/4 border-2 border-green-500">
 					<TextField data={data} setData={setData} object='y_series' field='label' />
 					<Checkbox data={data} setData={setData} object='y_series' field='show_data'/>
 					<Checkbox data={data} setData={setData} object='y_series' field='show_ticks'/>
@@ -107,8 +104,7 @@ function Trends() {
 					<Checkbox data={data} setData={setData} object='y_series' field='show_tick_labels'/>
 					<Checkbox data={data} setData={setData} object='y_series' field='show_ls'/>
 				</div>
-				<div className="flex flex-col w-1/5 border-2 border-green-500">
-					<h1>YY Label</h1>
+				<div className="flex flex-col w-1/4 border-2 border-green-500">
 					<TextField data={data} setData={setData} object='yy_series' field='label' />
 					<Checkbox data={data} setData={setData} object='yy_series' field='show_data'/>
 					<Checkbox data={data} setData={setData} object='yy_series' field='show_ticks'/>

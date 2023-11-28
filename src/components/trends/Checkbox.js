@@ -8,13 +8,46 @@ function Checkbox({ data, setData, object, field }) {
                 ...data[object],
                 [field]: !data[object][field]
             }
-        })
+        });
+
+        // if (data.y_on === false) {
+        //     setData({
+        //         ...data,
+        //         y_series: {
+        //             ...data['y_series'],
+        //             show_data: false,
+        //             show_ticks: false,
+        //             show_label: false,
+        //             show_tick_labels: false,
+        //             show_ls: false,
+        //             dashed: false,
+        //         }
+        //     })
+        // } else if (data.yy_on === false) {
+        //     setData({
+        //         ...data,
+        //         y_series: {
+        //             ...data['yy_series'],
+        //             show_data: false,
+        //             show_ticks: false,
+        //             show_label: false,
+        //             show_tick_labels: false,
+        //             show_ls: false,
+        //             dashed: false,
+        //         }
+        //     })
+        // }
     }
 
   return (
-    <div className="flex items-center">
-        <input id="checkbox" type="checkbox" onChange={handleChange} value={data[object][field]} className="w-4 h-4 text-blue-600 bg-gray-700 border-gray-600 rounded"></input>
-        <label htmlFor="checkbox" className="ms-2 text-sm font-medium">{field}</label>
+    <div className="flex items-center space-x-2">
+        <input className="w-4 h-4 hover:cursor-pointer"
+            id={object + field}
+            type="checkbox"
+            checked={data[object][field]}
+            onChange={handleChange}/>
+        <label htmlFor={object + field}
+            className="hover:cursor-pointer">{field}</label>
     </div>
   )
 }
