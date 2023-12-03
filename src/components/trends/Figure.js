@@ -1,29 +1,29 @@
 import React, { useEffect } from 'react'
 
-function Figure({ data, setData }) {
+function Figure({ figData, setFigData }) {
     class figure {
-        constructor(data) {
-            this.id = data.id;
+        constructor(figData) {
+            this.id = figData.id;
             this.height = 1000;
             this.width = 2000;
             this.margin = 0.83;
-            this.background = data.base.background
+            this.background = figData.base.background
 
             // CONTROLS
-            this.title_on = data.base.title_on;
-            this.y_on = data.base.y_on;
-            this.yy_on = data.base.yy_on;
-            this.x_on = data.base.x_on;
+            this.title_on = figData.base.title_on;
+            this.y_on = figData.base.y_on;
+            this.yy_on = figData.base.yy_on;
+            this.x_on = figData.base.x_on;
 
-            this.title = data.base.title;
-            this.x_label = data.base.label;
+            this.title = figData.base.title;
+            this.x_label = figData.base.label;
 
             // RAW DATA
-            this.x_range = data.base.x_range;
+            this.x_range = figData.base.x_range;
             this.x_data = [];
 
-            this.y_series = data.y_series;
-            this.yy_series = data.yy_series;
+            this.y_series = figData.y_series;
+            this.yy_series = figData.yy_series;
 
             // NORMALIZED DATA
             this.x = [];
@@ -88,8 +88,8 @@ function Figure({ data, setData }) {
             let b = (sum_y - sum_x * m) / n;
 
             let y = [];
-            y.push(m * this.x[0] + b);
-            y.push(m * this.x[this.x.length - 1] + b);
+            y.push((m * this.x[0] + b));
+            y.push((m * this.x[this.x.length - 1] + b));
 
             return y;
         };
@@ -98,9 +98,19 @@ function Figure({ data, setData }) {
             this.x_data = this.linspace(true, this.x_range, 31);
             this.x = this.normalize(this.x_data, this.x_range);
 
-            this.y = this.normalize(this.y_series.data, this.y_series.range);
-            
-            this.yy = this.normalize(this.yy_series.data, this.yy_series.range);
+            // MAYBE CHANGE TO OBJECT DATA TYPE, MAYBE CLEAN FOR LOOPS
+            let raw_y = [];
+            for (let i = 0; i < this.y_series.data.length; i++) {
+                raw_y.push(this.y_series.data[i][1]);
+            };
+
+            let raw_yy = [];
+            for (let i = 0; i < this.yy_series.data.length; i++) {
+                raw_yy.push(this.yy_series.data[i][1]);
+            };
+
+            this.y = this.normalize(raw_y, this.y_series.range);
+            this.yy = this.normalize(raw_yy, this.yy_series.range);
 
             this.y_grid = this.linspace(false, this.y_series.range, 10);
             this.y_ticks = this.normalize(this.y_grid, this.y_series.range);
@@ -108,8 +118,8 @@ function Figure({ data, setData }) {
             this.yy_grid = this.linspace(false, this.yy_series.range, 10);
             this.yy_ticks = this.normalize(this.yy_grid, this.yy_series.range);
 
-            this.ls_y = this.least_squares(this.y);
-            this.ls_yy = this.least_squares(this.yy);
+            this.ls_y = this.least_squares(this.y, this.y_series.range);
+            this.ls_yy = this.least_squares(this.yy, this.yy_series.range);
         };
 
         get_context() {
@@ -371,11 +381,11 @@ function Figure({ data, setData }) {
         };
     };
 
-    let fig = new figure(data);
+    let fig = new figure(figData);
     
     useEffect(() => {
         fig.draw_figure();
-    }, [data]);
+    }, [figData]);
 
   return (
         <canvas id={fig.id + 'figure'} className="w-full app:w-11/12" width={fig.width} height={fig.height}></canvas>

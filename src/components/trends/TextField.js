@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 
-function TextField({ data, setData, object, field }) {
-	const [entry, setEntry] = useState(data[object][field]);
+function TextField({ figData, setFigData, object, field }) {
+	const [entry, setEntry] = useState(figData[object][field]);
 
 	const handleSubmit = e => {
 		if (e.key === 'Enter') {
-			setData({
-				...data,
+			setFigData({
+				...figData,
 				[object]: {
-					...data[object],
+					...figData[object],
 					[e.target.name]: e.target.value
 				}
 			});

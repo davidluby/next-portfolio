@@ -1,15 +1,16 @@
 import React from 'react'
 
-function Checkbox({ data, setData, object, field }) {
+function Checkbox({ figData, setFigData, object, field }) {
     const handleChange = () => {
-        setData({
-            ...data,
+        setFigData({
+            ...figData,
             [object]: {
-                ...data[object],
-                [field]: !data[object][field]
+                ...figData[object],
+                [field]: !figData[object][field]
             }
         });
 
+        // COULD BE USED AS GLOBAL CONTROL
         // if (data.y_on === false) {
         //     setData({
         //         ...data,
@@ -44,7 +45,7 @@ function Checkbox({ data, setData, object, field }) {
         <input className="w-4 h-4 hover:cursor-pointer"
             id={object + field}
             type="checkbox"
-            checked={data[object][field]}
+            checked={figData[object][field]}
             onChange={handleChange}/>
         <label htmlFor={object + field}
             className="hover:cursor-pointer">{field}</label>
