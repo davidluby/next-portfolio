@@ -18,7 +18,7 @@ export default function collision() {
         <Head>
             <title>2D Collisions</title>
         </Head>
-        <div className="w-[97%] res:w-1/2 mb-5 res:mb-10">
+        <div className="w-[97%] res:w-1/2 mb-5 res:mb-10 z-10">
             <TwoCollisions name="twoCollisions" />
         </div>
         <Slides names={names} pictures={pictures} />

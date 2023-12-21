@@ -108,7 +108,7 @@ export default function GL_box({ name }) {
             gl_Position = matrix * vec4(position, 1);
         }
         `);
-        gl.compileShader(vertexShader)
+        gl.compileShader(vertexShader);
 
         //routine to assign color shader
         const fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);

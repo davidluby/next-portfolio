@@ -688,7 +688,7 @@ export default function ThreeFluid({ name }) {
                         <input id="rotation" type="range" min="0.0" max="6.28" step="0.01" defaultValue="3.14" className="h-1 bg-yellow-500 rounded-lg appearance-none cursor-pointer range-sm"></input>
                     </div>
                     <button id="chaos" className="rounded-md p-1 bg-yellow-500 hover:bg-yellow-300 text-xs text-white">Add Chaos</button>
-                    <button className="rounded-md p-1 bg-yellow-500 hover:bg-yellow-300 text-xs text-white" onClick={() => restart()}>Restart</button>
+                    <button className="rounded-md p-1 bg-yellow-500 hover:bg-yellow-300 text-xs text-white" onClick={() => restart()}>Refresh</button>
                 </div>
             </div>
         </div>

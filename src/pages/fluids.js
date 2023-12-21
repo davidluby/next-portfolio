@@ -19,7 +19,7 @@ export default function fluids() {
         <Head>
             <title>Fluid Simulation</title>
         </Head>
-        <div className="w-[97%] res:w-1/2 mb-5 res:mb-10">
+        <div className="w-[97%] res:w-1/2 mb-5 res:mb-10 z-10">
             <TwoFluid name="twoFluid" />
         </div>
         <Slides names={names} pictures={pictures} />
