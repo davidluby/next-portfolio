@@ -45,8 +45,8 @@ function FortSearch() {
     };
 
   return (
-    <div>
-        <input className="w-full border-2 rounded"
+    <div className="text-white">
+        <input className="w-full border-2 rounded bg-transparent"
             placeholder="Search for a player"
             onChange={handleChange}
             onKeyDown={(e) => handleSubmit(e)}

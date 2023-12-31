@@ -71,6 +71,13 @@ function Figure({ figData, setFigData }) {
         };
 
         least_squares(data_series) {
+            let set = {
+                x1 : null,
+                x2 : null,
+                y1 : null,
+                y2 : null
+            };
+
             let sum_x = 0;
             let sum_y = 0;
             let sum_xy = 0;
@@ -84,14 +91,26 @@ function Figure({ figData, setFigData }) {
                 sum_xx += this.x[i] * this.x[i];
             };
 
-            let m = (sum_x * sum_y - sum_xy * n) / (sum_x * sum_x - sum_xx * n);
-            let b = (sum_y - sum_x * m) / n;
+            const m = (sum_x * sum_y - sum_xy * n) / (sum_x * sum_x - sum_xx * n);
+            const b = (sum_y - sum_x * m) / n;
 
             let y = [];
-            y.push((m * this.x[0] + b));
-            y.push((m * this.x[this.x.length - 1] + b));
+            set.x1 = this.x[0];
+            set.x2 = this.x[this.x.length - 1];
+            set.y1 = m * this.x[0] + b;
+            set.y2 = m * set.x2 + b;
 
-            return y;
+            // make sure regression not outside figure boundary
+            if (set.y2 < 0) {
+                set.x2 = (0 - b) / m;
+                set.y2 = m * set.x2 + b;
+
+            } else if (set.y2 > 1) {
+                set.x2 = (1 - b) / m;
+                set.y2 = m * set.x2 + b;
+            };
+
+            return set;
         };
 
         initialize_data() {
@@ -139,9 +158,9 @@ function Figure({ figData, setFigData }) {
 
             ctx.beginPath();
             ctx.arc((x * this.margin + offset) * this.width,
-            (y * this.margin + offset) * this.height, size,
-            0,
-            2 * Math.PI);
+                (y * this.margin + offset) * this.height, size,
+                0,
+                2 * Math.PI);
             ctx.fill();
             ctx.stroke();
             ctx.closePath();
@@ -335,8 +354,6 @@ function Figure({ figData, setFigData }) {
         draw_figure() {
             const ctx = this.get_context();
             ctx.clearRect(0, 0, this.width, this.height);
-            ctx.fillStyle = this.background;
-            ctx.fillRect(0, 0, this.width, this.height);
             ctx.restore();
 
             this.initialize_data();
@@ -358,10 +375,10 @@ function Figure({ figData, setFigData }) {
 
             // REGRESSIONS
             if (this.y_series.show_ls) {
-                this.draw_line(this.x[0],
-                    this.x[this.x.length - 1],
-                    1 - this.ls_y[0],
-                    1 - this.ls_y[1], 
+                this.draw_line(this.ls_y.x1,
+                    this.ls_y.x2,
+                    1 - this.ls_y.y1,
+                    1 - this.ls_y.y2, 
                     this.y_series.dashed,
                     this.y_series.ls_color,
                     7.5
@@ -369,10 +386,10 @@ function Figure({ figData, setFigData }) {
             };
 
             if (this.yy_series.show_ls) {
-                this.draw_line(this.x[0],
-                    this.x[this.x.length - 1],
-                    1 - this.ls_yy[0],
-                    1 - this.ls_yy[1], 
+                this.draw_line(this.ls_yy.x1,
+                    this.ls_yy.x2,
+                    1 - this.ls_yy.y1,
+                    1 - this.ls_yy.y2, 
                     this.yy_series.dashed,
                     this.yy_series.ls_color,
                     7.5

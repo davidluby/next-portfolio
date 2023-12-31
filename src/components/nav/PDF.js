@@ -7,7 +7,7 @@ function PDF({names, files}) {
         setIndex(id)
     }
   return (
-    <div className="w-[97%] res:w-2/3 z-10">
+    <div className="w-[97%] res:w-2/3">
         <div className="flex flex-wrap justify-left w-full mb-5 border-b-4 border-yellow-500">
             {names.map(function(name, id) {
                 return <button key={id} className="rounded-t-[4px] rounded-b-0 nav-button mr-2 mt-2 bg-white" onClick={() => clickIdx(id)}>

@@ -64,7 +64,7 @@ function Trends() {
 			data_color: orange,
 			ls_color: purple,
 			range: [150, 200],
-			data: [['2023-11-23', 190], ['2023-11-24', 191], ['2023-11-25', 188], ['2023-11-26', 185], ['2023-11-27', 188]]//, 186, 185, 184, 185, 186, 183, 184, 184, 182, 179, 181, 179, 177, 182, 178, 178, 179, 177, 178, 176, 177, 175, 174, 173, 174, 172], 
+			data: [['2023-12-23', 175], ['2023-12-24', 185], ['2023-12-25', 188], ['2023-12-26', 185], ['2023-12-27', 188]]//, 186, 185, 184, 185, 186, 183, 184, 184, 182, 179, 181, 179, 177, 182, 178, 178, 179, 177, 178, 176, 177, 175, 174, 173, 174, 172], 
 		},
 		yy_series:{
 			show_data: true,
@@ -77,7 +77,7 @@ function Trends() {
 			data_color: blue,
 			ls_color: gold,
 			range: [1000, 3000],
-			data: [['2023-11-23', 2100], ['2023-11-24', 2200], ['2023-11-25', 1900], ['2023-11-26', 2100], ['2023-11-27', 1700]]//1800, 1700, 1800, 1900, 1900, 1800, 1800, 1900, 1700, 1700, 1800, 1700, 1500, 1800, 1700, 1600, 1700, 1700, 1800, 1700, 1800, 1700, 1800, 1700, 1500, 1400],
+			data: [['2023-12-23', 2200], ['2023-12-24', 2200], ['2023-12-25', 1900], ['2023-12-26', 2100], ['2023-12-27', 1700]]//1800, 1700, 1800, 1900, 1900, 1800, 1800, 1900, 1700, 1700, 1800, 1700, 1500, 1800, 1700, 1600, 1700, 1700, 1800, 1700, 1800, 1700, 1800, 1700, 1500, 1400],
 		},
 	});
 
@@ -86,7 +86,8 @@ function Trends() {
 	}, [figData]);
 
 	return (
-		<div className="flex flex-col items-center w-full text-white">
+		<div className="flex flex-col items-center w-full text-white z-10">
+			<p className="text-3xl z-10"><i>Work in progress</i></p>
 			<Figure figData={figData} setFigData={setFigData} />
 			<DataControls figData={figData} setFigData={setFigData} />
 			<div className="flex flex-row justify-evenly w-full border-2">
@@ -113,7 +114,6 @@ function Trends() {
 					<Checkbox figData={figData} setFigData={setFigData} object='yy_series' field='show_label'/>
 					<Checkbox figData={figData} setFigData={setFigData} object='yy_series' field='show_tick_labels'/>
 					<Checkbox figData={figData} setFigData={setFigData} object='yy_series' field='show_ls'/>
-					
 				</div>
 			</div>
 		</div>

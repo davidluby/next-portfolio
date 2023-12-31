@@ -29,7 +29,7 @@ function Background() {
         varying vec3 vColor;
 
         void main() {
-            gl_FragColor = vec4(1, 1, 1, 1);
+            gl_FragColor = vec4(vColor, 1);
         }`;
 
         const vertex_shader = create_shader(gl, gl.VERTEX_SHADER, vertex_function);
@@ -37,9 +37,10 @@ function Background() {
 
         const program = create_program(gl, vertex_shader, fragment_shader);
 
-        const mesh = create_mesh(1000);
+        const mesh = create_mesh(2000);
+        const colors = color_mesh(2000);
         create_buffer(gl, program, mesh, 'position');
-        create_buffer(gl, program, mesh, 'color');
+        create_buffer(gl, program, colors, 'color');
 
         const uniform_location = {
             matrix : gl.getUniformLocation(program, 'matrix')
@@ -75,8 +76,8 @@ function Background() {
 
         function create_mesh(count) {
             let points = [];
+            const random = () => Math.random() - 0.5;
             for (let i = 0; i < count; i++) {
-                const random = () => Math.random() - 0.5;
                 const random_point = [random(), random(), random()];
                 const out = vec3.normalize(vec3.create(), random_point);
 
@@ -84,6 +85,16 @@ function Background() {
             };
 
             return points;
+        };
+
+        function color_mesh(count) {
+            let color = [];
+            const random = () => Math.random() - 0.5;
+            for (let i = 0; i < count; i++) {
+                color.push(...[0, random() + 0.9, 1]);
+            };
+
+            return color;
         };
 
         function create_shader(gl, type, source) {
@@ -133,7 +144,7 @@ function Background() {
         };
     }, [])
     return (
-        <div className="fixed w-full h-full top-0 left-0 z-0">
+        <div className="fixed w-full h-full top-0 left-0 z-[-100]">
             <canvas id="Background" className="w-full h-full" width="1000px" height="1000px"></canvas>
         </div>
     )

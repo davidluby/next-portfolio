@@ -5,7 +5,7 @@ export default function Nav() {
 	const [hide, setHide] = useState(true);
 
   return (
-    <nav className="flex justify-center mb-10 bg-[#333336]/[.125] bg-gray-100 shadow-lg sticky top-0 z-50">
+    <nav className="sticky w-full top-0 mb-10 flex justify-center bg-slate-700 shadow-lg text-white z-[100]">
         <div className="flex flex-row items-center">
 			<Link href="/" className="nav-logo animate-pulse" />
 			<Link href="https://www.api.davidluby.com/" className="nav-button">Backend API</Link>
@@ -13,7 +13,8 @@ export default function Nav() {
 			<div className="nav-button relative cursor-default w-28" onMouseOver={() => setHide(false)} onMouseLeave={() => setHide(true)}>
 					Projects
 				{!hide ? 
-					<div className="absolute flex flex-col w-full mt-[.6rem] left-0 rounded-b-md shadow-lg ring-1 ring-black/5 bg-gray-200 z-50">
+					<div className="absolute flex flex-col w-full mt-[.625rem] left-0 rounded-b-md bg-slate-700">
+						<Link className="nav-button text-xs" href="/trends">Trends</Link>
 						<Link className="nav-button text-xs" href="/fluids">Fluid Simulation</Link>
 						<Link className="nav-button text-xs" href="/collision">2-D Collisions</Link>
 						<Link className="nav-button text-xs" href="/decks">Fullstack App</Link>

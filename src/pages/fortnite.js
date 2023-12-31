@@ -4,9 +4,9 @@ import FortSearch from '@src/components/FortSearch'
 
 
 function fortnite() {
-  return (
-    <FortSearch />
-  )
+	return (
+        <FortSearch />
+    )
 }
 
 export default fortnite

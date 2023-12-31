@@ -14,9 +14,9 @@ export default function Home() {
             <Head>
                 <title>Homepage</title>
             </Head>
-            <h1 className="w-[97%] res:w-5/6 mb-5 border-b-4 border-yellow-500 z-10 text-white">Welcome</h1>
+            <h1 className="w-[97%] res:w-5/6 mb-5 border-b-4 border-yellow-500 text-white">Welcome</h1>
             <div className="flex flex-col items-center res:flex-row res:items-center res:justify-evenly w-[97%] res:w-5/6">
-                <div className="res:relative flex flex-col items-center justify-center res:items-end res:w-[26rem] res:h-[8rem] px-3 py-5 shadow-lg rounded-xl ring-1 ring-black/5 text-center res:text-left bg-white z-10">
+                <div className="res:relative flex flex-col items-center justify-center res:items-end res:w-[26rem] res:h-[8rem] px-3 py-5 shadow-lg rounded-xl ring-1 ring-black/5 text-center res:text-left bg-white">
                     <img className="res:absolute res:-left-12 w-60 res:w-[12rem] rounded-full shadow-lg" src="headshot.jpg"></img>
                     <div>
                         <ul className="flex flex-row items-center justify-center res:justify-start mt-2 res:mt-0 space-x-2">
@@ -45,14 +45,14 @@ export default function Home() {
                     <Link href="https://github.com/davidluby" className="underline text-blue-500 hover:text-blue-400" target="_blank" rel="noopener noreferrer">GitHub</Link>. Try it on mobile!
                 </p>
             </div>
-            <h1 className="w-[97%] res:w-5/6 mt-20 mb-5 border-b-4 border-yellow-500 z-10 text-white">Simulations</h1>
+            <h1 className="w-[97%] res:w-5/6 mt-20 mb-5 border-b-4 border-yellow-500 text-white">Simulations</h1>
             <div className="flex flex-col w-full items-center space-y-5">
                 <div className="flex flex-col items-center res:flex-row justify-center space-y-5 res:space-y-0 res:space-x-5 w-[97%] res:w-5/6">
                     <ThreeFluid name="threeFluid" />
                     <TwoCollisions name="twoCollisions"/>
                 </div>
             </div>
-            <h1 className="w-[97%] res:w-5/6 mt-20 border-b-4 border-yellow-500 z-10">
+            <h1 className="w-[97%] res:w-5/6 mt-20 border-b-4 border-yellow-500">
                 <Link href="/mech" className="text-yellow-500 transition-all duration-500 animate-pulse">Mechatronic Color Sorting Conveyor</Link>
             </h1>
             <div className="flex flex-wrap justify-evenly w-[97%] res:w-5/6">
@@ -67,7 +67,7 @@ export default function Home() {
                     <iframe className="rounded-md w-full h-full shadow-xl" src="https://www.youtube.com/embed/8P3UF1Z6qRs" title="v1" frameBorder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
                 </div>
             </div>
-            <h1 className="w-[97%] res:w-5/6 mt-20 mb-5 border-b-4 border-yellow-500 z-10">
+            <h1 className="w-[97%] res:w-5/6 mt-20 mb-5 border-b-4 border-yellow-500">
                 <Link href="/decks" className="text-yellow-500 transition-all duration-500 animate-pulse">Fullstack Basketball Card Deck App</Link>
             </h1>
             <App />
@@ -106,7 +106,7 @@ export default function Home() {
                     </i>
                 </p>
             </div>
-            <h1 className="w-[97%] res:w-5/6 mt-20 border-b-4 border-yellow-500 z-10 text-white">Motorized Bike</h1>
+            <h1 className="w-[97%] res:w-5/6 mt-20 border-b-4 border-yellow-500 text-white">Motorized Bike</h1>
             <div className="flex flex-col items-center res:flex-row justify-center space-y-5 res:space-y-0 res:space-x-5 w-[97%] res:w-5/6 mt-5">
                 <div className="tile">
                     <img src="bike.jpg" className="rounded-md shadow-xl"></img>

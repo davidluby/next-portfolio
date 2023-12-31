@@ -12,9 +12,10 @@ export default function ScrollProgress() {
 	useEffect(() => {
 		window.onscroll = scrollBar;
 	}, [])
+	
   	return (
-		<div id="scrollContainer" className="sticky top-11 border-0 -mt-28 mb-28 z-40">
-			<div id="scrollBar" className="bg-yellow-500 h-[.35rem] w-0 z-100"></div>
+		<div id="scrollContainer" className="fixed w-full top-10 border-0 z-[99]">
+			<div id="scrollBar" className="bg-yellow-500 h-[.45rem] w-0 z-[99]"></div>
 		</div>
 	)
 }

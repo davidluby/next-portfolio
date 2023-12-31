@@ -9,7 +9,7 @@ export default function App() {
 	const [hidden, setHidden] = useState(true);
 
   return (
-	<div className="flex flex-col items-center mb-10 w-full text-white z-10">
+	<div className="flex flex-col items-center mb-10 w-full text-white">
 		<Search setCardData={setCardData} setHidden={setHidden} hidden={hidden} />
 		<div className="flex justify-center w-full">
 			{!hidden ? <Interface cardData={cardData} /> : null}

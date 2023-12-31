@@ -61,7 +61,7 @@ function DataControls({ figData, setFigData }) {
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
                 min="2022-01-01"
-                max={date} />
+                max={yyyy + '-' + mm + '-' + dd} />
         </div>
         <div className="border-2 border-blue-500">
             <label htmlFor="y_entry">{figData.y_series.label + " "}</label>
