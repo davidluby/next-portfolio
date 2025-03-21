@@ -57,7 +57,7 @@ function DataControls({ figData, setFigData }) {
             <input className="bg-transparent"
                 type="date"
                 id="start"
-                name="trip-start" 
+                name="start-date" 
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
                 min="2022-01-01"

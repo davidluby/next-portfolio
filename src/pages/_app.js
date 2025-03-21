@@ -1,5 +1,5 @@
 import '@styles/globals.css'
-import Background from '@components/Background'
+import Background from '@src/components/Background'
 import Nav from "@components/nav/Nav";
 import ScrollProgress from '@components/ScrollProgress';
 

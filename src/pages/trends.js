@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 
+import Head from 'next/head'
+
+import Login from "@components/trends/Login"
+import Create from "@components/trends/Create"
+
 import Figure from '@components/trends/Figure'
 import DataControls from '@components/trends/DataControls'
 import TextField from '@components/trends/TextField'
 import Checkbox from '@components/trends/Checkbox'
+
 
 function Trends() {
 
@@ -26,7 +32,6 @@ function Trends() {
 		};
 	});
 
-
 	const white = 'rgb(0, 0, 0)';
 	const gray = 'rgb(34, 34, 34)';
 	const blue = 'rgb(58, 107, 186)';
@@ -36,15 +41,27 @@ function Trends() {
 	const orange = 'rgb(255, 122, 78)';
 	const gold = 'rgb(255, 166, 0)';
 
+	const [user, setUser] = useState({
+		first_name: null,
+		last_name: null,
+		auth: null,
+		username: null,
+		password: null,
+		email: null,
+		birthday: null,
+		jwt: null
+	})
+
+
 	const [figData, setFigData] = useState({
 		id: '1',
 
 		base: {
 			background: gray,
-			title_on: true,
+			title_on: false,
 			y_on: true,
 			yy_on: true,
-			x_on: true,
+			x_on: false,
 
 			title: "Weight and Calories Against Time",
 			label: "Day",
@@ -56,7 +73,7 @@ function Trends() {
 		y_series: {
 			show_data: true,
 			show_ticks: true,
-			show_label: true,
+			show_label: false,
 			show_tick_labels: true,
 			show_ls: true,
 			dashed: true,
@@ -64,12 +81,12 @@ function Trends() {
 			data_color: orange,
 			ls_color: purple,
 			range: [150, 200],
-			data: [['2023-12-23', 175], ['2023-12-24', 185], ['2023-12-25', 188], ['2023-12-26', 185], ['2023-12-27', 188]]//, 186, 185, 184, 185, 186, 183, 184, 184, 182, 179, 181, 179, 177, 182, 178, 178, 179, 177, 178, 176, 177, 175, 174, 173, 174, 172], 
+			data: [['2023-12-23', 187], ['2023-12-24', 185], ['2023-12-25', 188], ['2023-12-26', 185], ['2023-12-27', 188]]//, 186, 185, 184, 185, 186, 183, 184, 184, 182, 179, 181, 179, 177, 182, 178, 178, 179, 177, 178, 176, 177, 175, 174, 173, 174, 172], 
 		},
 		yy_series:{
 			show_data: true,
 			show_ticks: true,
-			show_label: true,
+			show_label: false,
 			show_tick_labels: true,
 			show_ls: true,
 			dashed: true,
@@ -77,18 +94,23 @@ function Trends() {
 			data_color: blue,
 			ls_color: gold,
 			range: [1000, 3000],
-			data: [['2023-12-23', 2200], ['2023-12-24', 2200], ['2023-12-25', 1900], ['2023-12-26', 2100], ['2023-12-27', 1700]]//1800, 1700, 1800, 1900, 1900, 1800, 1800, 1900, 1700, 1700, 1800, 1700, 1500, 1800, 1700, 1600, 1700, 1700, 1800, 1700, 1800, 1700, 1800, 1700, 1500, 1400],
+			data: [['2023-12-23', 2200], ['2023-12-24', 2200], ['2023-12-25', 1900], ['2023-12-26', 2100], ['2023-12-27', 2200]]//1800, 1700, 1800, 1900, 1900, 1800, 1800, 1900, 1700, 1700, 1800, 1700, 1500, 1800, 1700, 1600, 1700, 1700, 1800, 1700, 1800, 1700, 1800, 1700, 1500, 1400],
 		},
 	});
 
 	useEffect(() => {
-		console.log(figData);
-	}, [figData]);
+		console.log(figData, user);
+	}, [figData, user]);
 
 	return (
 		<div className="flex flex-col items-center w-full text-white z-10">
+			<Head>
+				<title>Trends</title>
+			</Head>
+			<Create user={user} setUser={setUser} />
+			<Login setUser={setUser} />
 			<p className="text-3xl z-10"><i>Work in progress</i></p>
-			<Figure figData={figData} setFigData={setFigData} />
+			<Figure figData={figData} />
 			<DataControls figData={figData} setFigData={setFigData} />
 			<div className="flex flex-row justify-evenly w-full border-2">
 				<div className="flex flex-col w-1/4 border-2 border-green-500">

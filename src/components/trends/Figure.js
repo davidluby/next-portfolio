@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react'
 
-function Figure({ figData, setFigData }) {
+function Figure({ figData }) {
     class figure {
         constructor(figData) {
             this.id = figData.id;
             this.height = 1000;
             this.width = 2000;
-            this.margin = 0.83;
+            this.margin = 0.91; // 0.83
             this.background = figData.base.background
 
             // CONTROLS
@@ -171,6 +171,7 @@ function Figure({ figData, setFigData }) {
             const ctx = this.get_context();
             ctx.strokeStyle = color;
             ctx.lineWidth = thickness;
+            ctx.lineCap = 'round';
 
             if (dashed) {
                 ctx.setLineDash([15, 30]);
@@ -202,31 +203,25 @@ function Figure({ figData, setFigData }) {
         };
 
         draw_axes() {
-            const ctx = this.get_context();
-            ctx.strokeStyle = 'white';
-            ctx.lineWidth = 7.5;
-
-            const extend = 0.005; // used to extend axes lines in lieu of miter
-            // X BOTTOM
-            this.draw_line(0, 1, 1, 1, false, 'white', 7.5);
-
-            // X TOP
-            this.draw_line(0, 1, 0, 0, false, 'white', 7.5);
-
             // Y
             if (this.y_on) {
-                this.draw_line(0, 0, 0 - extend, 1 + extend, false, this.y_series.data_color, 7.5);
+                this.draw_line(0, 0, 0, 1, false, this.y_series.data_color, 7.5);
             } else {
-                this.draw_line(0, 0, 0 - extend, 1 + extend, false, 'white', 7.5);
+                this.draw_line(0, 0, 0, 1, false, 'white', 7.5);
             };
 
             // YY
             if (this.yy_on) {
-                this.draw_line(1, 1, 0 - extend, 1 + extend, false, this.yy_series.data_color, 7.5);
+                this.draw_line(1, 1, 0, 1, false, this.yy_series.data_color, 7.5);
             } else {
-                this.draw_line(1, 1, 0 - extend, 1 + extend, false, 'white', 7.5);
+                this.draw_line(1, 1, 0, 1, false, 'white', 7.5);
             };
 
+            // X
+            this.draw_line(0, 1, 1, 1, false, 'white', 7.5);
+
+            // TOP
+            this.draw_line(0, 1, 0, 0, false, 'white', 7.5);
         };
 
         draw_axes_labels() {
@@ -405,7 +400,15 @@ function Figure({ figData, setFigData }) {
     }, [figData]);
 
   return (
-        <canvas id={fig.id + 'figure'} className="w-full app:w-11/12" width={fig.width} height={fig.height}></canvas>
+    <div className="border-2 flex flex-col items-center">
+        <p>{fig.title}</p>
+        <canvas id={fig.id + 'figure'} className="w-full app:w-11/12 border-2" width={fig.width} height={fig.height}></canvas>
+        <p>{fig.x_label}</p>
+        <div className="border-2 flex flex-row space-x-5">
+            <p className="text-orange-500">{fig.y_series.label}</p>
+            <p className="text-blue-500">{fig.yy_series.label}</p>
+        </div>
+    </div>
     )
 }
 
