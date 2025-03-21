@@ -1,10 +1,10 @@
 import React from 'react'
 import Sim_GL from '../components/simulations/Sim_GL'
 
-function Comsol_Fluid() {
+function Follow_up_fluid() {
   return (
     <Sim_GL />
   )
 }
 
-export default Comsol_Fluid
+export default Follow_up_fluid
