@@ -33,14 +33,14 @@ export default function CurrentCard({ cardData, loc }) {
                     style={{backgroundImage: `url(${"./fullstack/cities/" + cardData.team.toLowerCase() + ".jpg"})`}}>
                     <div className="flex flex-col items-center justify-evenly h-full w-full rounded-xl bg-black/60 [transform:rotateY(180deg)]">
                         <div className="flex flex-row space-x-6">
-                            <img src={cardData.pic} className="rounded-full blur-[3px]"/>
+                            <img src={cardData.pic} className="rounded-full "/>
                             <div className="flex flex-row space-x-3">
                                 <div className="flex flex-col justify-evenly">
                                     <p> Pos: </p>
                                     <p> Team: </p>
                                     <p> Age: </p>
                                 </div>
-                                <div className="flex flex-col justify-evenly blur-[3px]">
+                                <div className="flex flex-col justify-evenly ">
                                     <p> {cardData.pos} </p>
                                     <p> {cardData.team} </p>
                                     <p> {cardData.age} </p>
@@ -61,15 +61,15 @@ export default function CurrentCard({ cardData, loc }) {
                                 <p> TOV </p>
                                 <p> FG% </p>
                                 <p> 3P% </p>
-                                <p className="blur-[3px]"> {cardData.min} </p>
-                                <p className="blur-[3px]"> {cardData.ppg} </p>
-                                <p className="blur-[3px]"> {cardData.reb} </p>
-                                <p className="blur-[3px]"> {cardData.ast} </p>
-                                <p className="blur-[3px]"> {cardData.stl} </p>
-                                <p className="blur-[3px]"> {cardData.blk} </p>
-                                <p className="blur-[3px]"> {cardData.tov} </p>
-                                <p className="blur-[3px]"> {(cardData.fg*100).toFixed(1)} </p>
-                                <p className="blur-[3px]"> {(cardData.thr*100).toFixed(1)} </p>
+                                <p className=""> {cardData.min} </p>
+                                <p className=""> {cardData.ppg} </p>
+                                <p className=""> {cardData.reb} </p>
+                                <p className=""> {cardData.ast} </p>
+                                <p className=""> {cardData.stl} </p>
+                                <p className=""> {cardData.blk} </p>
+                                <p className=""> {cardData.tov} </p>
+                                <p className=""> {(cardData.fg*100).toFixed(1)} </p>
+                                <p className=""> {(cardData.thr*100).toFixed(1)} </p>
                             </div>
                             <div>
                                 <Overall category="Overall" overall={overallRTG} />
