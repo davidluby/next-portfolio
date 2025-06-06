@@ -29,12 +29,12 @@ export default function Search({ setCardData, hidden, setHidden }) {
                 setCardData(data.player_data);
                 setName("");
                 setHidden(false);
-                setCooldown(true);
+                /* setCooldown(true);
                 setPlaceholder("One minute cooldown. Fill the deck with duplicates.")
                 setTimeout(() => {
                     setCooldown(cooldown => !cooldown)
                     setPlaceholder("Search for a player")
-                }, 60000);
+                }, 60000); */
                 }
             )
         }
